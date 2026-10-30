@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  distDir: ".next-dev",
+  ...(process.env.NODE_ENV === "development" ? { distDir: ".next-dev" } : {}),
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {
