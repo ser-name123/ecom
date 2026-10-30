@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#222051" />
+      <stop offset="100%" stop-color="#0c0b22" />
+    </linearGradient>
+    <linearGradient id="pinkGrad" x1="12" y1="10" x2="52" y2="54" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff5e97" />
+      <stop offset="50%" stop-color="#f43777" />
+      <stop offset="100%" stop-color="#686cff" />
+    </linearGradient>
+    <linearGradient id="cyanAccent" x1="20" y1="14" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#ffb8d0" />
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bgGrad)" stroke="#f43777" stroke-width="2" stroke-opacity="0.45" />
+  <path
+    d="M32 10L50 20.4V41.2L32 51.6L14 41.2V20.4L32 10Z"
+    stroke="url(#pinkGrad)"
+    stroke-width="3.5"
+    stroke-linejoin="round"
+    fill="rgba(244, 55, 119, 0.08)"
+  />
+  <path
+    d="M35.5 16L21 33.5H31.5L28.5 46L43 28.5H32.5L35.5 16Z"
+    fill="url(#pinkGrad)"
+  />
+  <path
+    d="M35.5 16L21 33.5H31.5L28.5 46L43 28.5H32.5L35.5 16Z"
+    stroke="url(#cyanAccent)"
+    stroke-width="1.2"
+    stroke-linejoin="round"
+  />
+</svg>
+

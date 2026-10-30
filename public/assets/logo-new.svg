@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 48" fill="none">
+  <defs>
+    <linearGradient id="logoIconBg" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f43777" />
+      <stop offset="55%" stop-color="#d92663" />
+      <stop offset="100%" stop-color="#686cff" />
+    </linearGradient>
+    <linearGradient id="logoTextGrad" x1="125" y1="8" x2="235" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff548e" />
+      <stop offset="50%" stop-color="#f43777" />
+      <stop offset="100%" stop-color="#7c80ff" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left 3D Geometric Tech Emblem -->
+  <g transform="translate(2, 2)">
+    <rect x="0" y="0" width="44" height="44" rx="12" fill="url(#logoIconBg)" />
+    <rect x="1" y="1" width="42" height="42" rx="11" stroke="white" stroke-opacity="0.25" stroke-width="1.2" />
+    <!-- Outer Hexagon Outline -->
+    <path
+      d="M22 7L35 14.5V29.5L22 37L9 29.5V14.5L22 7Z"
+      stroke="white"
+      stroke-opacity="0.35"
+      stroke-width="1.6"
+      stroke-linejoin="round"
+    />
+    <!-- Center Dynamic Power Bolt -->
+    <path
+      d="M24.5 10.5L13.5 23.5H21.5L19.5 33.5L30.5 20.5H22.5L24.5 10.5Z"
+      fill="#ffffff"
+    />
+  </g>
+
+  <!-- Brand Wordmark: NEXOVA -->
+  <text
+    x="56"
+    y="33"
+    fill="#ffffff"
+    font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif"
+    font-size="27"
+    font-weight="900"
+    letter-spacing="0.5"
+  >
+    NEX<tspan fill="url(#logoTextGrad)">OVA</tspan>
+  </text>
+
+  <!-- Glowing Tech Dot -->
+  <circle cx="204" cy="29" r="3.5" fill="#f43777" />
+</svg>
+
