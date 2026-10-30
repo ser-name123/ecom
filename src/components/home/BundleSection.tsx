@@ -132,23 +132,23 @@ export default function BundleSection() {
         </ScrollReveal>
 
         {/* Main Layout: Left 9-Product Grid (9 cols) + Right Sticky Bundle Card (3 cols) */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[20px] items-start">
-          {/* Left 3x3 Product Cards Grid */}
-          <div className="lg:col-span-9 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-[18px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-[16px] sm:gap-[20px] items-start">
+          {/* Left 3x3 Product Cards Grid (2 Cols on Mobile) */}
+          <div className="lg:col-span-9 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-[18px]">
             {BUNDLE_PRODUCTS.map((product, idx) => {
               const isAdded = selectedBundle.some((p) => p.id === product.id);
               return (
                 <ScrollReveal key={product.id} delay={(idx % 3) * 80} animation="fade-up">
                   <div
                     onClick={() => handleToggleBundle(product)}
-                    className={`group bg-white rounded-[18px] p-3 flex flex-col justify-between card-hover-lift cursor-pointer border ${
+                    className={`group bg-white rounded-[14px] sm:rounded-[18px] p-2 sm:p-3 flex flex-col justify-between card-hover-lift cursor-pointer border h-full ${
                       isAdded
                         ? "border-[#f43777] shadow-[0_8px_28px_rgba(244,55,119,0.14)]"
                         : "border-transparent hover:border-[#eaeaea]"
                     }`}
                   >
                     {/* Top Image Container */}
-                    <div className="relative w-full h-[175px] p-2 rounded-[12px] overflow-hidden flex items-center justify-center mb-3">
+                    <div className="relative w-full h-[135px] sm:h-[175px] p-1.5 sm:p-2 rounded-[10px] sm:rounded-[12px] overflow-hidden flex items-center justify-center mb-2 sm:mb-3">
                       {/* Discount Badge */}
                       {product.discountBadge && (
                         <span className="absolute top-2.5 left-2.5 z-10 bg-[#f43777] text-white text-[10px] font-semibold px-2.5 py-1 badge-leaf leading-none">

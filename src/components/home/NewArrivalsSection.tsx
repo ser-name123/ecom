@@ -240,20 +240,20 @@ export default function NewArrivalsSection() {
           </div>
         </ScrollReveal>
 
-        {/* 2. 5-Column Infinite Sliding Product Carousel */}
+        {/* 2. 5-Column Infinite Sliding Product Carousel (2 Cols on Mobile) */}
         <ScrollReveal animation="fade-up" delay={100}>
-          <div key={activeTab} className="mb-[36px] animate-fade-up">
+          <div key={activeTab} className="mb-[28px] sm:mb-[36px] animate-fade-up">
             <CarouselTrack
               items={items}
               keyExtractor={(item) => item.id}
-              visibleCount={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }}
-              gap={16}
+              visibleCount={{ xs: 2, sm: 2, md: 3, lg: 4, xl: 5 }}
+              gap={12}
               autoPlayMs={4800}
               arrowPositionClass="top-[38%] -translate-y-1/2"
               renderItem={(product) => (
-                <div className="group bg-white rounded-[18px] p-3 border border-transparent hover:border-[#eaeaea] card-hover-lift flex flex-col h-full">
+                <div className="group bg-white rounded-[14px] sm:rounded-[18px] p-2 sm:p-3 border border-[#f0f0f0] sm:border-transparent hover:border-[#eaeaea] card-hover-lift flex flex-col h-full">
                   {/* Image & Badges Container */}
-                  <div className="relative w-full h-[185px] p-2 rounded-[12px] overflow-hidden bg-white mb-3 flex items-center justify-center">
+                  <div className="relative w-full h-[140px] sm:h-[185px] p-1.5 sm:p-2 rounded-[10px] sm:rounded-[12px] overflow-hidden bg-white mb-2 sm:mb-3 flex items-center justify-center">
                     {/* Top-Left Badges */}
                     {product.badges && product.badges.length > 0 && (
                       <div className="absolute top-2.5 left-2.5 z-10 flex flex-col items-start gap-1.5">

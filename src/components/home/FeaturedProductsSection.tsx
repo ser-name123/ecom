@@ -280,20 +280,20 @@ export default function FeaturedProductsSection() {
             </ScrollReveal>
           </div>
 
-          {/* Right 3-Column Product Carousel */}
+          {/* Right 3-Column Product Carousel (2 Cols on Mobile) */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             <div key={activeTab} className="w-full animate-fade-up">
               <CarouselTrack
                 items={items}
                 keyExtractor={(item) => item.id}
-                visibleCount={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 3 }}
-                gap={15}
+                visibleCount={{ xs: 2, sm: 2, md: 3, lg: 3, xl: 3 }}
+                gap={12}
                 autoPlayMs={4600}
                 arrowPositionClass="top-[40%] -translate-y-1/2"
                 renderItem={(product) => (
-                  <div className="group bg-white rounded-[18px] p-3 border border-transparent hover:border-[#eaeaea] card-hover-lift flex flex-col justify-between h-full">
+                  <div className="group bg-white rounded-[14px] sm:rounded-[18px] p-2 sm:p-3 border border-[#f0f0f0] sm:border-transparent hover:border-[#eaeaea] card-hover-lift flex flex-col justify-between h-full">
                     {/* Top Image & Badges */}
-                    <div className="relative w-full h-[180px] p-2 rounded-[12px] overflow-hidden flex items-center justify-center mb-3">
+                    <div className="relative w-full h-[140px] sm:h-[180px] p-1.5 sm:p-2 rounded-[10px] sm:rounded-[12px] overflow-hidden flex items-center justify-center mb-2 sm:mb-3">
                       {/* Top-Left Badges */}
                       {(product.discountBadge || product.preorderBadge) && (
                         <div className="absolute top-2.5 left-2.5 z-10 flex flex-col items-start gap-1.5">

@@ -32,24 +32,24 @@ const POLICIES = [
 
 export default function TrustBar() {
   return (
-    <section className="w-full bg-[#f7f7f7] pt-1 pb-6">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-2">
+    <section className="w-full bg-[#f7f7f7] pt-1 pb-5 sm:pb-6">
+      <div className="max-w-[1440px] mx-auto px-3 sm:px-4 md:px-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5 pt-1 sm:pt-2">
           {POLICIES.map((item, idx) => (
             <ScrollReveal key={item.id} delay={idx * 90} animation="fade-up">
-              <div className="flex items-center gap-3.5 group py-1.5 cursor-default">
-                <div className="w-[40px] h-[40px] shrink-0 flex items-center justify-center">
+              <div className="flex items-center gap-2.5 sm:gap-3.5 group p-2.5 sm:py-1.5 sm:px-0 rounded-[12px] bg-white sm:bg-transparent shadow-[0_2px_10px_rgba(0,0,0,0.03)] sm:shadow-none cursor-default">
+                <div className="w-[32px] h-[32px] sm:w-[40px] sm:h-[40px] shrink-0 flex items-center justify-center">
                   <img
                     src={item.icon}
                     alt={item.title}
-                    className="w-[36px] h-[36px] object-contain icon-flip-hover"
+                    className="w-[28px] h-[28px] sm:w-[36px] sm:h-[36px] object-contain icon-flip-hover"
                   />
                 </div>
-                <div>
-                  <h3 className="text-[15px] font-semibold text-[#000000] group-hover:text-[#f43777] transition-colors duration-300 leading-[20px] mb-0.5">
+                <div className="min-w-0">
+                  <h3 className="text-[12.5px] sm:text-[15px] font-semibold text-[#000000] group-hover:text-[#f43777] transition-colors duration-300 leading-tight sm:leading-[20px] mb-0.5 truncate">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-[#535353] font-normal leading-[18px]">
+                  <p className="text-[11px] sm:text-[13px] text-[#535353] font-normal leading-tight sm:leading-[18px] line-clamp-2">
                     {item.subtitle}
                   </p>
                 </div>

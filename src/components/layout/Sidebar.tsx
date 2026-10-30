@@ -541,6 +541,13 @@ export default function Sidebar() {
   const [drawerReady, setDrawerReady] = useState(false);
   const readyTimerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Mobile & Tablet Drawer States (< lg)
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileTab, setMobileTab] = useState<"categories" | "menu">("categories");
+  const [openCatId, setOpenCatId] = useState<string | null>("laptop");
+  const [openMenuId, setOpenMenuId] = useState<string | null>("Home");
+  const [mobileFilter, setMobileFilter] = useState("");
+
   useEffect(() => {
     if (expanded) {
       readyTimerRef.current = setTimeout(() => {
@@ -555,6 +562,47 @@ export default function Sidebar() {
       if (readyTimerRef.current) clearTimeout(readyTimerRef.current);
     };
   }, [expanded]);
+
+  // Listen for custom open events from Header or Mobile Bottom Bar
+  useEffect(() => {
+    const handleOpenDrawer = (e: Event) => {
+      const customEvent = e as CustomEvent<{ tab?: "categories" | "menu" }>;
+      if (customEvent.detail?.tab) {
+        setMobileTab(customEvent.detail.tab);
+      }
+      setMobileOpen(true);
+    };
+    window.addEventListener("nexova:open-mobile-drawer", handleOpenDrawer);
+    return () => {
+      window.removeEventListener("nexova:open-mobile-drawer", handleOpenDrawer);
+    };
+  }, []);
+
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
+  const filteredCategories = SIDEBAR_ITEMS.filter((item) => {
+    if (!mobileFilter.trim()) return true;
+    const q = mobileFilter.toLowerCase();
+    return (
+      item.label.toLowerCase().includes(q) ||
+      item.subtitle.toLowerCase().includes(q) ||
+      item.subGroups.some(
+        (g) =>
+          g.heading.toLowerCase().includes(q) ||
+          g.links.some((l) => l.label.toLowerCase().includes(q))
+      )
+    );
+  });
 
   const showFlyout = Boolean(expanded && drawerReady && hoveredItem);
 
@@ -944,6 +992,630 @@ export default function Sidebar() {
           )}
         </div>
       </aside>
+
+      {/* =====================================================================
+          MOBILE & TABLET ADVANCED MEGA DRAWER (< lg)
+          - Dual Segmented Tabs: "Categories (9)" & "Main Menu"
+          - 2-Level Expandable Accordions + Badges + Featured Deal Cards
+          ===================================================================== */}
+      <div
+        onClick={() => setMobileOpen(false)}
+        className={`lg:hidden fixed inset-0 bg-black/55 backdrop-blur-[2px] z-50 transition-opacity duration-300 ${
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      />
+
+      <aside
+        aria-label="Mobile Navigation Drawer"
+        style={{
+          transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
+        }}
+        className={`lg:hidden fixed top-0 left-0 bottom-0 w-[88vw] max-w-[380px] bg-white z-50 flex flex-col shadow-[20px_0_50px_rgba(0,0,0,0.28)] transition-transform duration-350 select-none ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        {/* 1. Drawer Dark Gradient Header (Logo + Close + Quick Filter) */}
+        <div
+          className="px-4 pt-4 pb-3.5 text-white shrink-0"
+          style={{
+            background: "linear-gradient(135deg, #0c0b22 0%, #222051 100%)",
+          }}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <a
+              href="/"
+              onClick={() => setMobileOpen(false)}
+              className="inline-flex items-center"
+            >
+              <img
+                src="/assets/logo-new.svg"
+                alt="Nexova"
+                className="h-[28px] w-auto object-contain"
+              />
+            </a>
+            <button
+              type="button"
+              onClick={() => setMobileOpen(false)}
+              aria-label="Close menu"
+              className="w-[34px] h-[34px] rounded-full bg-white/10 hover:bg-[#f43777] text-white flex items-center justify-center transition-colors cursor-pointer"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Segmented 2-Tab Switcher: Categories vs Main Menu */}
+          <div className="grid grid-cols-2 p-1 rounded-[12px] bg-white/10">
+            <button
+              type="button"
+              onClick={() => setMobileTab("categories")}
+              className={`py-2 px-3 rounded-[9px] text-[12.5px] font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                mobileTab === "categories"
+                  ? "bg-[#f43777] text-white shadow-sm"
+                  : "text-white/80 hover:text-white"
+              }`}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                <rect x="14" y="14" width="7" height="7" rx="1.5" />
+              </svg>
+              <span>Categories (9)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setMobileTab("menu")}
+              className={`py-2 px-3 rounded-[9px] text-[12.5px] font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
+                mobileTab === "menu"
+                  ? "bg-[#f43777] text-white shadow-sm"
+                  : "text-white/80 hover:text-white"
+              }`}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+              <span>Main Menu</span>
+            </button>
+          </div>
+        </div>
+
+        {/* 2. Scrollable Drawer Body */}
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-3.5 space-y-2.5">
+          {mobileTab === "categories" ? (
+            <>
+              {/* Quick Category Filter Input */}
+              <div className="relative mb-2">
+                <input
+                  type="text"
+                  value={mobileFilter}
+                  onChange={(e) => setMobileFilter(e.target.value)}
+                  placeholder="Filter categories, brands or gear..."
+                  className="w-full h-[38px] pl-9 pr-8 rounded-[10px] bg-[#f5f5f7] border border-[#e8e8ec] text-[13px] text-[#222222] placeholder-[#888888] focus:outline-none focus:border-[#f43777] focus:bg-white transition-colors"
+                />
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#888888"
+                  strokeWidth="2.2"
+                  className="absolute left-3 top-1/2 -translate-y-1/2"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="20" y1="20" x2="16" y2="16" strokeLinecap="round" />
+                </svg>
+                {mobileFilter && (
+                  <button
+                    type="button"
+                    onClick={() => setMobileFilter("")}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#888888] hover:text-[#222222] text-[12px]"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+
+              {/* 9 Expandable Category Accordions */}
+              {filteredCategories.map((cat) => {
+                const isOpen = openCatId === cat.id || Boolean(mobileFilter.trim());
+                return (
+                  <div
+                    key={cat.id}
+                    className={`rounded-[14px] border transition-all duration-200 overflow-hidden ${
+                      isOpen
+                        ? "border-[#f43777]/40 bg-[#fff9fb] shadow-[0_6px_20px_rgba(244,55,119,0.08)]"
+                        : "border-[#efefef] bg-white"
+                    }`}
+                  >
+                    {/* Category Header Row */}
+                    <button
+                      type="button"
+                      onClick={() => setOpenCatId(isOpen ? null : cat.id)}
+                      className="w-full px-3.5 py-3 flex items-center justify-between text-left cursor-pointer"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div
+                          className={`w-[36px] h-[36px] rounded-[10px] flex items-center justify-center shrink-0 transition-colors ${
+                            isOpen ? "bg-[#f43777]/15" : "bg-[#f6f6f8]"
+                          }`}
+                        >
+                          <img
+                            src={cat.icon}
+                            alt={cat.label}
+                            className="w-[19px] h-[19px] object-contain"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <div
+                            className={`text-[14px] font-bold leading-tight truncate ${
+                              isOpen ? "text-[#f43777]" : "text-[#141233]"
+                            }`}
+                          >
+                            {cat.label}
+                          </div>
+                          <div className="text-[11px] text-[#777777] truncate mt-0.5">
+                            {cat.subtitle}
+                          </div>
+                        </div>
+                      </div>
+
+                      <span
+                        className={`w-[26px] h-[26px] rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                          isOpen
+                            ? "bg-[#f43777] text-white rotate-180"
+                            : "bg-[#f5f5f7] text-[#555555]"
+                        }`}
+                      >
+                        <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
+                          <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
+                        </svg>
+                      </span>
+                    </button>
+
+                    {/* Expanded Subcategory Groups + Featured Deal Card + Brand Chips */}
+                    {isOpen && (
+                      <div className="px-3.5 pb-3.5 pt-1 border-t border-[#f43777]/15 space-y-3.5 bg-white">
+                        {/* Subcategory Groups */}
+                        <div className="grid grid-cols-1 gap-3 pt-2">
+                          {cat.subGroups.map((grp) => (
+                            <div
+                              key={grp.heading}
+                              className="rounded-[10px] bg-[#fafafa] p-2.5 border border-[#f0f0f0]"
+                            >
+                              <div className="text-[12px] font-bold text-[#141233] mb-2 flex items-center justify-between">
+                                <span>{grp.heading}</span>
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#f43777]" />
+                              </div>
+                              <ul className="space-y-1.5">
+                                {grp.links.map((lnk) => (
+                                  <li key={lnk.label}>
+                                    <a
+                                      href={`#${cat.id}`}
+                                      onClick={() => setMobileOpen(false)}
+                                      className="flex items-center justify-between text-[12.5px] text-[#444444] hover:text-[#f43777] py-0.5 transition-colors"
+                                    >
+                                      <span>{lnk.label}</span>
+                                      {lnk.badge && (
+                                        <span
+                                          className={`text-[8.5px] font-bold uppercase px-1.5 py-0.5 rounded-[4px] leading-none ${
+                                            BADGE_STYLES[lnk.badge]
+                                          }`}
+                                        >
+                                          {lnk.badge}
+                                        </span>
+                                      )}
+                                    </a>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Compact Featured Deal Card inside Mobile Accordion */}
+                        <a
+                          href={`#${cat.id}`}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 p-2.5 rounded-[12px] border border-[#eaeaea] bg-[#fdfdfd] hover:border-[#f43777] transition-all"
+                        >
+                          <div className="w-[62px] h-[62px] rounded-[10px] bg-white p-1.5 border border-[#f0f0f0] flex items-center justify-center shrink-0">
+                            <img
+                              src={cat.featuredProduct.image}
+                              alt={cat.featuredProduct.title}
+                              className="w-full h-full object-contain"
+                            />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-1.5 mb-0.5">
+                              <span className="bg-[#f43777] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px] leading-none">
+                                {cat.featuredProduct.discount}
+                              </span>
+                              <span className="text-[9.5px] font-bold uppercase text-[#888888]">
+                                TOP PICK
+                              </span>
+                            </div>
+                            <div className="text-[12.5px] font-bold text-[#141233] truncate">
+                              {cat.featuredProduct.title}
+                            </div>
+                            <div className="flex items-baseline gap-1.5 mt-0.5">
+                              <span className="text-[13.5px] font-extrabold text-[#f43777]">
+                                ${cat.featuredProduct.price.toFixed(2)}
+                              </span>
+                              <span className="text-[11px] text-[#999999] line-through">
+                                ${cat.featuredProduct.oldPrice.toFixed(2)}
+                              </span>
+                            </div>
+                          </div>
+                        </a>
+
+                        {/* Popular Brands Row */}
+                        <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
+                          {cat.popularBrands.map((b) => (
+                            <a
+                              key={b}
+                              href={`#brand-${b.toLowerCase()}`}
+                              onClick={() => setMobileOpen(false)}
+                              className="px-2.5 py-1 rounded-full bg-[#f4f4f6] hover:bg-[#f43777] text-[#333333] hover:text-white text-[11px] font-medium transition-colors"
+                            >
+                              {b}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            /* TAB 2: MAIN NAVIGATION MEGA MENU ACCORDIONS */
+            <div className="space-y-2.5">
+              {/* 1. Home Showcase Accordion */}
+              <div className="rounded-[14px] border border-[#efefef] bg-white overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenMenuId(openMenuId === "Home" ? null : "Home")}
+                  className="w-full px-3.5 py-3 flex items-center justify-between text-left cursor-pointer"
+                >
+                  <span className="text-[14px] font-bold text-[#141233]">Home Sections</span>
+                  <span
+                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${
+                      openMenuId === "Home"
+                        ? "bg-[#f43777] text-white rotate-180"
+                        : "bg-[#f5f5f7] text-[#555555]"
+                    }`}
+                  >
+                    <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
+                      <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
+                    </svg>
+                  </span>
+                </button>
+                {openMenuId === "Home" && (
+                  <div className="px-3.5 pb-3.5 pt-1 border-t border-[#f3f3f3] grid grid-cols-2 gap-2.5">
+                    {[
+                      { title: "New Arrivals", badge: "NEW", img: "/assets/laptop-9.jpg", href: "/#new-arrivals" },
+                      { title: "Flash Sale Off", badge: "HOT", img: "/assets/watch-2.jpg", href: "/#sale-off" },
+                      { title: "Bundle & Save", badge: "-30%", img: "/assets/audio-10.jpg", href: "/#bundle" },
+                      { title: "Featured Gear", badge: "PRO", img: "/assets/game-1.jpg", href: "/#featured" },
+                      { title: "Collections", badge: "TREND", img: "/assets/collection-1.jpg", href: "/#collections" },
+                      { title: "Tech Journal", badge: "BLOG", img: "/assets/blog-2.jpg", href: "/#all-blogs" },
+                    ].map((c) => (
+                      <a
+                        key={c.title}
+                        href={c.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="rounded-[10px] border border-[#eaeaea] hover:border-[#f43777] p-2 bg-[#fafafa] flex flex-col items-center text-center relative"
+                      >
+                        <span className="absolute top-1.5 left-1.5 bg-[#f43777] text-white text-[8px] font-bold px-1.5 py-0.5 rounded-[4px]">
+                          {c.badge}
+                        </span>
+                        <div className="w-full h-[58px] bg-white rounded-[8px] p-1.5 flex items-center justify-center mb-1.5">
+                          <img src={c.img} alt={c.title} className="w-full h-full object-contain" />
+                        </div>
+                        <span className="text-[11.5px] font-bold text-[#141233]">{c.title}</span>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* 2. Shop Layouts Accordion */}
+              <div className="rounded-[14px] border border-[#efefef] bg-white overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenMenuId(openMenuId === "Shop" ? null : "Shop")}
+                  className="w-full px-3.5 py-3 flex items-center justify-between text-left cursor-pointer"
+                >
+                  <span className="text-[14px] font-bold text-[#141233]">Shop & Catalog</span>
+                  <span
+                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${
+                      openMenuId === "Shop"
+                        ? "bg-[#f43777] text-white rotate-180"
+                        : "bg-[#f5f5f7] text-[#555555]"
+                    }`}
+                  >
+                    <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
+                      <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
+                    </svg>
+                  </span>
+                </button>
+                {openMenuId === "Shop" && (
+                  <div className="px-3.5 pb-3.5 pt-2 border-t border-[#f3f3f3] space-y-2">
+                    {[
+                      { label: "Collection Left Sidebar", badge: "HOT" },
+                      { label: "Collection Top Filter" },
+                      { label: "Flash Deals Grid", badge: "SALE" },
+                      { label: "Canvas Filter Drawer", badge: "NEW" },
+                      { label: "Bundle Builder 30% Off", badge: "-30%" },
+                      { label: "Shop All Categories" },
+                    ].map((l) => (
+                      <a
+                        key={l.label}
+                        href="#shop"
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center justify-between text-[13px] text-[#444444] hover:text-[#f43777] py-1"
+                      >
+                        <span>{l.label}</span>
+                        {l.badge && (
+                          <span className="bg-[#f43777] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
+                            {l.badge}
+                          </span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* 3. Product Pages Accordion */}
+              <div className="rounded-[14px] border border-[#efefef] bg-white overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenMenuId(openMenuId === "Product" ? null : "Product")}
+                  className="w-full px-3.5 py-3 flex items-center justify-between text-left cursor-pointer"
+                >
+                  <span className="text-[14px] font-bold text-[#141233]">Product Features</span>
+                  <span
+                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${
+                      openMenuId === "Product"
+                        ? "bg-[#f43777] text-white rotate-180"
+                        : "bg-[#f5f5f7] text-[#555555]"
+                    }`}
+                  >
+                    <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
+                      <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
+                    </svg>
+                  </span>
+                </button>
+                {openMenuId === "Product" && (
+                  <div className="px-3.5 pb-3.5 pt-2 border-t border-[#f3f3f3] space-y-2">
+                    {[
+                      { label: "Product Detail Default", badge: "HOT" },
+                      { label: "Product Deals Countdown", badge: "SALE" },
+                      { label: "Product 3D & AR Model", badge: "PRO" },
+                      { label: "Color & Storage Swatches", badge: "NEW" },
+                      { label: "Frequently Bought Together" },
+                    ].map((l) => (
+                      <a
+                        key={l.label}
+                        href="#product"
+                        onClick={() => setMobileOpen(false)}
+                        className="flex items-center justify-between text-[13px] text-[#444444] hover:text-[#f43777] py-1"
+                      >
+                        <span>{l.label}</span>
+                        {l.badge && (
+                          <span className="bg-[#686cff] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
+                            {l.badge}
+                          </span>
+                        )}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* 4. Store Pages & Blogs Accordion */}
+              <div className="rounded-[14px] border border-[#efefef] bg-white overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setOpenMenuId(openMenuId === "Pages" ? null : "Pages")}
+                  className="w-full px-3.5 py-3 flex items-center justify-between text-left cursor-pointer"
+                >
+                  <span className="text-[14px] font-bold text-[#141233]">Pages & Tech Blog</span>
+                  <span
+                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${
+                      openMenuId === "Pages"
+                        ? "bg-[#f43777] text-white rotate-180"
+                        : "bg-[#f5f5f7] text-[#555555]"
+                    }`}
+                  >
+                    <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
+                      <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
+                    </svg>
+                  </span>
+                </button>
+                {openMenuId === "Pages" && (
+                  <div className="px-3.5 pb-3.5 pt-2 border-t border-[#f3f3f3] grid grid-cols-2 gap-2">
+                    {[
+                      { label: "About Us", href: "#about" },
+                      { label: "Contact Us", href: "#contact" },
+                      { label: "FAQs & Help", href: "#faq" },
+                      { label: "Store Locator", href: "#locations" },
+                      { label: "Order Tracking", href: "#tracking" },
+                      { label: "Tech Journal", href: "#all-blogs" },
+                    ].map((p) => (
+                      <a
+                        key={p.label}
+                        href={p.href}
+                        onClick={() => setMobileOpen(false)}
+                        className="px-3 py-2 rounded-[8px] bg-[#f7f7f9] hover:bg-[#f43777] text-[#222222] hover:text-white text-[12.5px] font-semibold transition-colors"
+                      >
+                        {p.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* 5. Special Offer & Bundle Banner Card */}
+              <div
+                className="rounded-[16px] p-4 text-white"
+                style={{
+                  background: "linear-gradient(135deg, #141233 0%, #2a2468 55%, #f43777 100%)",
+                }}
+              >
+                <span className="inline-block bg-white/15 text-[9.5px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1.5">
+                  SPECIAL OFFER!
+                </span>
+                <h4 className="text-[16px] font-extrabold leading-snug mb-1">
+                  Buy Any 3 Gear & Save 30%
+                </h4>
+                <p className="text-[12px] text-white/80 mb-3">
+                  Mix & match headphones, watches, or accessories for instant 30% discount.
+                </p>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="#bundle"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex-1 py-2 rounded-full bg-white text-[#141233] text-center text-[11.5px] font-bold uppercase tracking-wide"
+                  >
+                    Build Bundle
+                  </a>
+                  <a
+                    href="#sale-off"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex-1 py-2 rounded-full bg-[#f43777] text-white text-center text-[11.5px] font-bold uppercase tracking-wide"
+                  >
+                    Flash Deals
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 3. Drawer Footer: 24/7 Support & Quick Utility Links */}
+        <div className="p-3.5 border-t border-[#efefef] bg-[#fafafa] shrink-0">
+          <div className="flex items-center justify-between mb-2">
+            <a
+              href="tel:1888456789"
+              className="flex items-center gap-2 text-[12.5px] font-bold text-[#141233] hover:text-[#f43777]"
+            >
+              <span className="w-[26px] h-[26px] rounded-full bg-[#f43777]/15 text-[#f43777] flex items-center justify-center">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+              </span>
+              <span>24/7 Support: 1-888-456-789</span>
+            </a>
+            <span className="text-[11px] font-semibold text-[#10b981] bg-[#10b981]/10 px-2 py-0.5 rounded-full">
+              Online
+            </span>
+          </div>
+          <div className="flex items-center justify-between text-[11.5px] text-[#666666] pt-1.5 border-t border-[#eaeaea]">
+            <a href="#help-center" onClick={() => setMobileOpen(false)} className="hover:text-[#f43777]">
+              Help Center
+            </a>
+            <span>•</span>
+            <a href="#find-store" onClick={() => setMobileOpen(false)} className="hover:text-[#f43777]">
+              Find a Store
+            </a>
+            <span>•</span>
+            <a href="#track-orders" onClick={() => setMobileOpen(false)} className="hover:text-[#f43777]">
+              Track Orders
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      {/* =====================================================================
+          FIXED MOBILE BOTTOM APP BAR (< lg)
+          - Thumb-friendly quick access to Home, Categories, Menu, Deals, Cart
+          ===================================================================== */}
+      <nav
+        aria-label="Mobile Bottom Navigation"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 h-[62px] bg-white/95 backdrop-blur-md border-t border-[#e8e8ec] shadow-[0_-6px_24px_rgba(0,0,0,0.08)] grid grid-cols-5 items-center px-1 select-none"
+      >
+        <a
+          href="/"
+          className="flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#f43777] transition-colors"
+        >
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
+          </svg>
+          <span className="text-[10.5px] font-bold">Home</span>
+        </a>
+
+        <button
+          type="button"
+          onClick={() => {
+            setMobileTab("categories");
+            setMobileOpen(true);
+          }}
+          className="flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#f43777] transition-colors cursor-pointer"
+        >
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          </svg>
+          <span className="text-[10.5px] font-bold">Categories</span>
+        </button>
+
+        {/* Center Highlighted Pink Pill Button: Mega Menu */}
+        <button
+          type="button"
+          onClick={() => {
+            setMobileTab("menu");
+            setMobileOpen(true);
+          }}
+          className="flex flex-col items-center justify-center -mt-4 cursor-pointer group"
+        >
+          <span className="w-[44px] h-[44px] rounded-full bg-[#f43777] text-white shadow-[0_6px_18px_rgba(244,55,119,0.4)] flex items-center justify-center group-active:scale-95 transition-transform">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </span>
+          <span className="text-[10px] font-bold text-[#f43777] mt-0.5">Menu</span>
+        </button>
+
+        <a
+          href="#sale-off"
+          className="relative flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#f43777] transition-colors"
+        >
+          <span className="absolute top-0.5 right-3.5 w-2 h-2 rounded-full bg-[#f43777] animate-pulse" />
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+          </svg>
+          <span className="text-[10.5px] font-bold">Deals</span>
+        </a>
+
+        <button
+          type="button"
+          onClick={() => window.dispatchEvent(new CustomEvent("nexova:open-cart"))}
+          className="relative flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#f43777] transition-colors cursor-pointer"
+        >
+          <span className="absolute top-0 right-3 w-[16px] h-[16px] rounded-full bg-[#f43777] text-white text-[9px] font-bold flex items-center justify-center">
+            0
+          </span>
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <path d="M16 10a4 4 0 0 1-8 0" />
+          </svg>
+          <span className="text-[10.5px] font-bold">Cart</span>
+        </button>
+      </nav>
     </>
   );
 }

@@ -191,9 +191,9 @@ export default function LatestNewsSection() {
               type="button"
               onClick={handlePrev}
               aria-label="Previous article"
-              className="hidden md:flex absolute -left-4 top-1/2 -translate-y-1/2 z-20 w-[38px] h-[38px] rounded-full bg-[#f5f5f5] hover:bg-[#f43777] hover:scale-110 active:scale-95 text-[#222222] hover:text-white shadow-sm items-center justify-center transition-all duration-300 cursor-pointer"
+              className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] hover:bg-[#f43777] hover:scale-110 active:scale-95 text-[#222222] hover:text-white shadow-sm items-center justify-center transition-all duration-300 cursor-pointer"
             >
-              <svg width="15" height="15" viewBox="0 0 48 48" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor">
                 <polygon points="30.586,6.586 13.171,24 30.586,41.414 33.414,38.586 18.829,24 33.414,9.414" />
               </svg>
             </button>
@@ -286,9 +286,9 @@ export default function LatestNewsSection() {
               type="button"
               onClick={handleNext}
               aria-label="Next article"
-              className="hidden md:flex absolute -right-4 top-1/2 -translate-y-1/2 z-20 w-[38px] h-[38px] rounded-full bg-[#f5f5f5] hover:bg-[#f43777] hover:scale-110 active:scale-95 text-[#222222] hover:text-white shadow-sm items-center justify-center transition-all duration-300 cursor-pointer"
+              className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] hover:bg-[#f43777] hover:scale-110 active:scale-95 text-[#222222] hover:text-white shadow-sm items-center justify-center transition-all duration-300 cursor-pointer"
             >
-              <svg width="15" height="15" viewBox="0 0 48 48" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor">
                 <polygon points="14.586,9.414 29.171,24 14.586,38.586 17.414,41.414 34.829,24 17.414,6.586" />
               </svg>
             </button>

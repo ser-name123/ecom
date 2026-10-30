@@ -263,7 +263,7 @@ export default function Footer() {
           </div>
 
           {/* Right 3 Menu Columns (6 cols) */}
-          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-[30px]">
+          <div className="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-[22px] sm:gap-[30px]">
             {/* Store Location */}
             <div>
               <h3 className="text-[18px] font-semibold text-white leading-[24px] mb-[22px]">
@@ -535,7 +535,7 @@ export default function Footer() {
           </svg>
         </div>
 
-        <p className="text-[14px] font-normal text-[#aaaaaa] leading-[20px] text-center">
+        <p className="text-[13px] sm:text-[14px] font-normal text-[#aaaaaa] leading-[20px] text-center pb-[64px] lg:pb-0">
           Copyright © 2026 Designed by Vinova. All Rights Reserved
         </p>
       </div>
@@ -545,7 +545,7 @@ export default function Footer() {
         type="button"
         onClick={scrollToTop}
         aria-label="Scroll to top"
-        className={`fixed bottom-6 right-6 z-40 w-[44px] h-[44px] rounded-full bg-white shadow-[0_4px_18px_rgba(0,0,0,0.18)] flex items-center justify-center overflow-hidden transition-all duration-300 cursor-pointer ${
+        className={`fixed bottom-[74px] lg:bottom-6 right-4 lg:right-6 z-40 w-[42px] h-[42px] lg:w-[44px] lg:h-[44px] rounded-full bg-white shadow-[0_4px_18px_rgba(0,0,0,0.18)] flex items-center justify-center overflow-hidden transition-all duration-300 cursor-pointer ${
           showBackTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
       >
