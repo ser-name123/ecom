@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import MegaMenu from "@/components/layout/MegaMenu";
 import CartDrawer from "@/components/layout/CartDrawer";
+import { useStore } from "@/lib/StoreContext";
 
 const SEARCH_CATEGORIES = [
   "All Categories",
@@ -30,18 +33,20 @@ const POPULAR_SEARCHES = [
   "Game",
   "Electronics",
   "Mobile & Tablet",
-  "Glow",
+  "Smartwatch",
 ];
 
 const NAV_ITEMS = [
   { id: "Home", label: "Home", href: "/" },
-  { id: "Shop", label: "Shop", href: "#shop" },
-  { id: "Product", label: "Product", href: "#product" },
-  { id: "Pages", label: "Pages", href: "#pages" },
-  { id: "Blogs", label: "Blogs", href: "#blogs" },
+  { id: "Shop", label: "Shop", href: "/shop" },
+  { id: "Product", label: "Product", href: "/product" },
+  { id: "Pages", label: "Pages", href: "/about" },
+  { id: "Blogs", label: "Blogs", href: "/blogs" },
 ];
 
 export default function Header() {
+  const router = useRouter();
+  const { cartCount, wishlistCount } = useStore();
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
@@ -101,15 +106,15 @@ export default function Header() {
           <div className="max-w-[1720px] mx-auto px-3 sm:px-4 md:px-8 h-[30px] md:h-[34px] flex md:grid md:grid-cols-12 items-center justify-between">
             {/* Left Links (Desktop) */}
             <div className="hidden lg:flex lg:col-span-4 items-center gap-6 text-white/90 text-[13px] font-normal">
-              <a href="#help-center" className="hover:text-[#f43777] transition-colors duration-200">
+              <Link href="/faq" className="hover:text-[#38bdf8] transition-colors duration-200">
                 Help Center
-              </a>
-              <a href="#find-store" className="hover:text-[#f43777] transition-colors duration-200">
+              </Link>
+              <Link href="/about" className="hover:text-[#38bdf8] transition-colors duration-200">
                 Find a Store
-              </a>
-              <a href="#track-orders" className="hover:text-[#f43777] transition-colors duration-200">
-                Track Oders
-              </a>
+              </Link>
+              <Link href="/track-order" className="hover:text-[#38bdf8] transition-colors duration-200">
+                Track Orders
+              </Link>
             </div>
 
             {/* Center Promo Message (Visible on All Screens) */}
@@ -117,7 +122,7 @@ export default function Header() {
               <span
                 className="font-semibold uppercase leading-none animate-pulse-glow shrink-0"
                 style={{
-                  backgroundColor: "#f0457a",
+                  background: "linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)",
                   fontSize: "10px",
                   color: "#ffffff",
                   padding: "3.5px 8px",
@@ -133,15 +138,15 @@ export default function Header() {
 
             {/* Right Links */}
             <div className="md:col-span-4 flex items-center justify-end gap-4 lg:gap-6 text-white/90 text-[11.5px] md:text-[13px] font-normal shrink-0">
-              <a href="#sale-off" className="text-[#ff6097] md:text-white/90 font-semibold md:font-normal hover:text-[#f43777] transition-colors duration-200">
+              <Link href="/shop" className="text-[#38bdf8] md:text-white/90 font-semibold md:font-normal hover:text-[#38bdf8] transition-colors duration-200">
                 Daily Deals
-              </a>
-              <a href="#gift-cards" className="hidden sm:inline hover:text-[#f43777] transition-colors duration-200">
-                Gift Cards
-              </a>
-              <a href="#contact-us" className="hidden md:inline hover:text-[#f43777] transition-colors duration-200">
+              </Link>
+              <Link href="/categories" className="hidden sm:inline hover:text-[#38bdf8] transition-colors duration-200">
+                Categories
+              </Link>
+              <Link href="/contact" className="hidden md:inline hover:text-[#38bdf8] transition-colors duration-200">
                 Contact Us
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -156,7 +161,7 @@ export default function Header() {
                 type="button"
                 onClick={() => openMobileDrawer("menu")}
                 aria-label="Open Navigation Menu"
-                className="lg:hidden w-[36px] h-[36px] rounded-full bg-white/10 hover:bg-[#f43777] text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer"
+                className="lg:hidden w-[36px] h-[36px] rounded-full bg-white/10 hover:bg-[#4f46e5] text-white flex items-center justify-center shrink-0 transition-colors cursor-pointer"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
                   <line x1="3" y1="6" x2="21" y2="6" />
@@ -170,7 +175,7 @@ export default function Header() {
                 type="button"
                 onClick={() => openMobileDrawer("categories")}
                 aria-label="Shop by Categories"
-                className="lg:hidden w-[36px] h-[36px] rounded-full bg-[#f43777] hover:bg-[#e02d6b] text-white flex items-center justify-center shrink-0 shadow-[0_3px_12px_rgba(244,55,119,0.4)] transition-colors cursor-pointer"
+                className="lg:hidden w-[36px] h-[36px] rounded-full bg-[#4f46e5] hover:bg-[#4338ca] text-white flex items-center justify-center shrink-0 shadow-[0_3px_12px_rgba(79,70,229,0.4)] transition-colors cursor-pointer"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -194,7 +199,11 @@ export default function Header() {
             {/* Center Column (6 cols): Pill Search Bar */}
             <div className="hidden md:flex md:col-span-6 items-center justify-center relative">
               <form
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  setSearchFocused(false);
+                  router.push(`/shop?q=${encodeURIComponent(searchQuery)}`);
+                }}
                 className="w-full max-w-[760px] relative"
               >
                 <div className="w-full h-[42px] bg-white rounded-full flex items-center pl-5 pr-1 shadow-[0_4px_20px_rgba(0,0,0,0.12)]">
@@ -203,7 +212,7 @@ export default function Header() {
                     <button
                       type="button"
                       onClick={() => setCategoryOpen(!categoryOpen)}
-                      className="flex items-center gap-2 text-[14px] font-medium text-[#000000] hover:text-[#f43777] transition-colors cursor-pointer"
+                      className="flex items-center gap-2 text-[14px] font-medium text-[#000000] hover:text-[#4f46e5] transition-colors cursor-pointer"
                     >
                       <span className="max-w-[115px] truncate">{selectedCategory}</span>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -222,9 +231,8 @@ export default function Header() {
                               setSelectedCategory(cat);
                               setCategoryOpen(false);
                             }}
-                            className={`w-full text-left px-4 py-2 text-[13px] hover:bg-[#f7f7f7] hover:text-[#f43777] transition-colors cursor-pointer ${
-                              selectedCategory === cat ? "text-[#f43777] font-semibold" : "text-[#333333] font-normal"
-                            }`}
+                            className={`w-full text-left px-4 py-2 text-[13px] hover:bg-[#f7f7f7] hover:text-[#4f46e5] transition-colors cursor-pointer ${selectedCategory === cat ? "text-[#4f46e5] font-semibold" : "text-[#333333] font-normal"
+                              }`}
                           >
                             {cat}
                           </button>
@@ -250,17 +258,17 @@ export default function Header() {
                   <button
                     type="button"
                     aria-label="Voice Search"
-                    className="w-[34px] h-[34px] flex items-center justify-center text-[#333333] hover:text-[#f43777] transition-colors mr-1 shrink-0 cursor-pointer"
+                    className="w-[34px] h-[34px] flex items-center justify-center text-[#333333] hover:text-[#4f46e5] transition-colors mr-1 shrink-0 cursor-pointer"
                   >
                     <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 15c1.66 0 3-1.31 3-2.97v-7.02c0-1.66-1.34-3.01-3-3.01s-3 1.34-3 3.01v7.02c0 1.66 1.34 2.97 3 2.97zm6.08-3h-1.7c0 3.01-2.54 5.1-5.38 5.1s-5.38-2.09-5.38-5.1h-1.7c0 3.41 2.72 6.23 6.08 6.72v3.28h2v-3.28c3.36-.49 6.08-3.31 6.08-6.72z" />
                     </svg>
                   </button>
 
-                  {/* Pink Pill Search Submit Button */}
+                  {/* Indigo Pill Search Submit Button */}
                   <button
                     type="submit"
-                    className="btn-shine h-[38px] px-6 rounded-full bg-[#f43777] hover:bg-[#db316b] text-white text-[12px] font-semibold uppercase tracking-wide flex items-center gap-2 transition-colors shrink-0 cursor-pointer"
+                    className="btn-shine h-[38px] px-6 rounded-full bg-[#4f46e5] hover:bg-[#4338ca] text-white text-[12px] font-semibold uppercase tracking-wide flex items-center gap-2 transition-colors shrink-0 cursor-pointer"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                       <circle cx="11" cy="11" r="7" />
@@ -285,7 +293,7 @@ export default function Header() {
                             setSearchQuery(tag);
                             setSearchFocused(false);
                           }}
-                          className="px-3.5 py-1.5 rounded-full bg-[#f5f5f5] hover:bg-[#f43777] text-[#333333] hover:text-white text-[13px] font-medium transition-colors cursor-pointer"
+                          className="px-3.5 py-1.5 rounded-full bg-[#f5f5f5] hover:bg-[#4f46e5] text-[#333333] hover:text-white text-[13px] font-medium transition-colors cursor-pointer"
                         >
                           {tag}
                         </button>
@@ -299,30 +307,30 @@ export default function Header() {
             {/* Right Column: User Icon + Wishlist Icon + Cart Pill Button */}
             <div className="col-span-5 sm:col-span-6 md:col-span-3 flex items-center justify-end gap-2.5 sm:gap-4 md:gap-5">
               {/* Account Icon */}
-              <button
-                type="button"
-                title="Account"
-                className="text-white hover:text-[#f43777] transition-colors cursor-pointer p-1"
+              <Link
+                href="/account"
+                title="My Account"
+                className="text-white hover:text-[#38bdf8] transition-colors cursor-pointer p-1"
               >
                 <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
-              </button>
+              </Link>
 
-              {/* Wishlist Icon with Top-Right Pink Badge */}
-              <a
-                href="#wishlist"
+              {/* Wishlist Icon with Top-Right Indigo Badge */}
+              <Link
+                href="/wishlist"
                 title="Wishlist"
-                className="relative text-white hover:text-[#f43777] transition-colors p-1"
+                className="relative text-white hover:text-[#38bdf8] transition-colors p-1"
               >
                 <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
-                <span className="absolute -top-0.5 -right-1 w-[17px] h-[17px] rounded-full bg-[#f43777] text-white text-[9.5px] font-bold flex items-center justify-center leading-none">
-                  0
+                <span className="absolute -top-0.5 -right-1 w-[17px] h-[17px] rounded-full bg-[#4f46e5] text-white text-[9.5px] font-bold flex items-center justify-center leading-none">
+                  {wishlistCount}
                 </span>
-              </a>
+              </Link>
 
               {/* Cart Pill Button */}
               <button
@@ -340,8 +348,8 @@ export default function Header() {
                     Cart
                   </span>
                 </div>
-                <span className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] rounded-full bg-[#f43777] text-white text-[10.5px] sm:text-[11px] font-bold flex items-center justify-center">
-                  0
+                <span className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] rounded-full bg-[#4f46e5] text-white text-[10.5px] sm:text-[11px] font-bold flex items-center justify-center">
+                  {cartCount}
                 </span>
               </button>
             </div>
@@ -372,7 +380,7 @@ export default function Header() {
                 <button
                   type="submit"
                   aria-label="Search"
-                  className="btn-shine h-[32px] px-3.5 rounded-full bg-[#f43777] text-white text-[11px] font-bold uppercase tracking-wide flex items-center gap-1 shrink-0"
+                  className="btn-shine h-[32px] px-3.5 rounded-full bg-[#4f46e5] text-white text-[11px] font-bold uppercase tracking-wide flex items-center gap-1 shrink-0"
                 >
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4">
                     <circle cx="11" cy="11" r="7" />
@@ -392,7 +400,7 @@ export default function Header() {
                     <button
                       type="button"
                       onClick={() => setSearchFocused(false)}
-                      className="text-[11px] text-[#f43777] font-semibold"
+                      className="text-[11px] text-[#4f46e5] font-semibold"
                     >
                       Close
                     </button>
@@ -406,7 +414,7 @@ export default function Header() {
                           setSearchQuery(tag);
                           setSearchFocused(false);
                         }}
-                        className="px-3 py-1 rounded-full bg-[#f5f5f5] hover:bg-[#f43777] text-[#333333] hover:text-white text-[12px] font-medium transition-colors"
+                        className="px-3 py-1 rounded-full bg-[#f5f5f5] hover:bg-[#4f46e5] text-[#333333] hover:text-white text-[12px] font-medium transition-colors"
                       >
                         {tag}
                       </button>
@@ -422,7 +430,7 @@ export default function Header() {
             <button
               type="button"
               onClick={() => openMobileDrawer("categories")}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f43777] text-white text-[11.5px] font-bold whitespace-nowrap shrink-0 shadow-xs cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#4f46e5] text-white text-[11.5px] font-bold whitespace-nowrap shrink-0 shadow-xs cursor-pointer"
             >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -432,44 +440,43 @@ export default function Header() {
               </svg>
               <span>All Categories</span>
             </button>
-            <a
-              href="#bundle"
+            <Link
+              href="/shop"
               className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 text-white text-[11.5px] font-semibold whitespace-nowrap shrink-0"
             >
-              <span className="text-[#ff6097] font-bold">⚡ Save 30%</span>
-              <span>Bundle</span>
-            </a>
-            <a
-              href="#sale-off"
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/10 text-[#ff6097] text-[11.5px] font-bold whitespace-nowrap shrink-0"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#f43777] animate-pulse" />
-              <span>Special Offer!</span>
-            </a>
-            <a
-              href="#new-arrivals"
+              <span className="text-[#38bdf8] font-bold">⚡ Shop All</span>
+              <span>Catalog</span>
+            </Link>
+            <Link
+              href="/categories"
               className="inline-flex items-center px-3 py-1 rounded-full bg-white/8 hover:bg-white/15 text-white/90 text-[11.5px] font-medium whitespace-nowrap shrink-0"
             >
-              New Arrivals
-            </a>
-            <a
-              href="#featured"
+              Departments
+            </Link>
+            <Link
+              href="/track-order"
               className="inline-flex items-center px-3 py-1 rounded-full bg-white/8 hover:bg-white/15 text-white/90 text-[11.5px] font-medium whitespace-nowrap shrink-0"
             >
-              Featured
-            </a>
-            <a
-              href="#collections"
-              className="inline-flex items-center px-3 py-1 rounded-full bg-white/8 hover:bg-white/15 text-white/90 text-[11.5px] font-medium whitespace-nowrap shrink-0"
-            >
-              Collections
-            </a>
-            <a
-              href="#all-blogs"
+              Track Order
+            </Link>
+            <Link
+              href="/blogs"
               className="inline-flex items-center px-3 py-1 rounded-full bg-white/8 hover:bg-white/15 text-white/90 text-[11.5px] font-medium whitespace-nowrap shrink-0"
             >
               Blogs
-            </a>
+            </Link>
+            <Link
+              href="/about"
+              className="inline-flex items-center px-3 py-1 rounded-full bg-white/8 hover:bg-white/15 text-white/90 text-[11.5px] font-medium whitespace-nowrap shrink-0"
+            >
+              About Us
+            </Link>
+            <Link
+              href="/contact"
+              className="inline-flex items-center px-3 py-1 rounded-full bg-white/8 hover:bg-white/15 text-white/90 text-[11.5px] font-medium whitespace-nowrap shrink-0"
+            >
+              Contact
+            </Link>
           </div>
         </div>
 
@@ -486,16 +493,16 @@ export default function Header() {
             >
               <a
                 href="#bundle"
-                className="group inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-[#f43777]/50 transition-all duration-300"
+                className="group inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-[#4f46e5]/50 transition-all duration-300"
               >
-                <span className="w-[22px] h-[22px] rounded-full bg-[#f43777] text-white flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(244,55,119,0.5)]">
+                <span className="w-[22px] h-[22px] rounded-full bg-[#4f46e5] text-white flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(79,70,229,0.5)]">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                   </svg>
                 </span>
                 <span className="text-[12.5px] text-white/90 font-normal whitespace-nowrap">
                   Bundle Deal:{" "}
-                  <strong className="text-[#ff6097] group-hover:text-white font-semibold transition-colors">
+                  <strong className="text-[#38bdf8] group-hover:text-white font-semibold transition-colors">
                     Buy 3 Save 30%
                   </strong>
                 </span>
@@ -514,9 +521,8 @@ export default function Header() {
                   >
                     <a
                       href={navItem.href}
-                      className={`nav-link-underline flex items-center gap-1.5 transition-colors ${
-                        isOpen ? "text-[#f43777]" : "text-white hover:text-[#f43777]"
-                      }`}
+                      className={`nav-link-underline flex items-center gap-1.5 transition-colors ${isOpen ? "text-[#38bdf8]" : "text-white hover:text-[#38bdf8]"
+                        }`}
                     >
                       <span>{navItem.label}</span>
                       <svg
@@ -524,9 +530,8 @@ export default function Header() {
                         height="13"
                         viewBox="0 0 48 48"
                         fill="currentColor"
-                        className={`transition-transform duration-300 ${
-                          isOpen ? "rotate-180 text-[#f43777]" : ""
-                        }`}
+                        className={`transition-transform duration-300 ${isOpen ? "rotate-180 text-[#38bdf8]" : ""
+                          }`}
                       >
                         <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
                       </svg>
@@ -541,19 +546,18 @@ export default function Header() {
                 onMouseEnter={() => setActiveDropdown("SpecialOffer")}
               >
                 <a
-                  href="#special-offer"
-                  className="nav-link-underline flex items-center gap-1.5 text-[#f43777] hover:text-[#ff6097] transition-colors font-semibold"
+                  href="/shop?sale=true"
+                  className="nav-link-underline flex items-center gap-1.5 text-[#38bdf8] hover:text-[#7dd3fc] transition-colors font-semibold"
                 >
-                  <span className="inline-block w-2 h-2 rounded-full bg-[#f43777] animate-pulse-glow" />
+                  <span className="inline-block w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse-glow" />
                   <span>Special Offer!</span>
                   <svg
                     width="12"
                     height="12"
                     viewBox="0 0 48 48"
                     fill="currentColor"
-                    className={`transition-transform duration-300 ${
-                      activeDropdown === "SpecialOffer" ? "rotate-180" : ""
-                    }`}
+                    className={`transition-transform duration-300 ${activeDropdown === "SpecialOffer" ? "rotate-180" : ""
+                      }`}
                   >
                     <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
                   </svg>
@@ -568,16 +572,16 @@ export default function Header() {
             >
               <a
                 href="tel:1888456789"
-                className="group inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-[#f43777]/50 transition-all duration-300"
+                className="group inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-[#4f46e5]/50 transition-all duration-300"
               >
-                <span className="w-[22px] h-[22px] rounded-full bg-white/10 group-hover:bg-[#f43777] text-[#f43777] group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
+                <span className="w-[22px] h-[22px] rounded-full bg-white/10 group-hover:bg-[#4f46e5] text-[#38bdf8] group-hover:text-white flex items-center justify-center shrink-0 transition-colors">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                 </span>
                 <span className="text-[12.5px] text-white/90 font-normal whitespace-nowrap">
                   24/7 Support:{" "}
-                  <strong className="text-[#ff6097] group-hover:text-white font-semibold transition-colors">
+                  <strong className="text-[#38bdf8] group-hover:text-white font-semibold transition-colors">
                     1-888-456-789
                   </strong>
                 </span>
@@ -593,11 +597,10 @@ export default function Header() {
       {/* 4. Sticky Compact Header on Scroll (Works on Mobile, Tablet & Desktop) */}
       <div
         onMouseLeave={() => setStickyDropdown(null)}
-        className={`fixed top-0 left-0 lg:left-[60px] right-0 z-40 transition-all duration-300 ${
-          isSticky
+        className={`fixed top-0 left-0 lg:left-[60px] right-0 z-40 transition-all duration-300 ${isSticky
             ? "translate-y-0 opacity-100 shadow-[0_8px_30px_rgba(0,0,0,0.28)]"
             : "-translate-y-full opacity-0 pointer-events-none"
-        }`}
+          }`}
         style={{
           background: "linear-gradient(0deg, rgba(12, 11, 34, 0.98), rgba(34, 32, 81, 0.98) 100%)",
         }}
@@ -609,7 +612,7 @@ export default function Header() {
               type="button"
               onClick={() => openMobileDrawer("menu")}
               aria-label="Open Menu"
-              className="lg:hidden w-[34px] h-[34px] rounded-full bg-white/10 hover:bg-[#f43777] text-white flex items-center justify-center shrink-0 cursor-pointer"
+              className="lg:hidden w-[34px] h-[34px] rounded-full bg-white/10 hover:bg-[#4f46e5] text-white flex items-center justify-center shrink-0 cursor-pointer"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <line x1="3" y1="6" x2="21" y2="6" />
@@ -621,7 +624,7 @@ export default function Header() {
               type="button"
               onClick={() => openMobileDrawer("categories")}
               aria-label="Categories"
-              className="lg:hidden w-[34px] h-[34px] rounded-full bg-[#f43777] text-white flex items-center justify-center shrink-0 cursor-pointer"
+              className="lg:hidden w-[34px] h-[34px] rounded-full bg-[#4f46e5] text-white flex items-center justify-center shrink-0 cursor-pointer"
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -650,9 +653,8 @@ export default function Header() {
                 >
                   <a
                     href={navItem.href}
-                    className={`nav-link-underline flex items-center gap-1 transition-colors ${
-                      isOpen ? "text-[#f43777]" : "text-white hover:text-[#f43777]"
-                    }`}
+                    className={`nav-link-underline flex items-center gap-1 transition-colors ${isOpen ? "text-[#38bdf8]" : "text-white hover:text-[#38bdf8]"
+                      }`}
                   >
                     <span>{navItem.label}</span>
                     <svg
@@ -660,9 +662,8 @@ export default function Header() {
                       height="12"
                       viewBox="0 0 48 48"
                       fill="currentColor"
-                      className={`transition-transform duration-300 ${
-                        isOpen ? "rotate-180 text-[#f43777]" : ""
-                      }`}
+                      className={`transition-transform duration-300 ${isOpen ? "rotate-180 text-[#38bdf8]" : ""
+                        }`}
                     >
                       <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
                     </svg>
@@ -675,33 +676,33 @@ export default function Header() {
               onMouseEnter={() => setStickyDropdown("SpecialOffer")}
             >
               <a
-                href="#special-offer"
-                className="nav-link-underline flex items-center gap-1.5 text-[#f43777] font-semibold"
+                href="/shop?sale=true"
+                className="nav-link-underline flex items-center gap-1.5 text-[#38bdf8] font-semibold"
               >
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#f43777] animate-pulse-glow" />
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#38bdf8] animate-pulse-glow" />
                 <span>Special Offer!</span>
               </a>
             </div>
           </nav>
 
           <div className="col-span-5 md:col-span-9 lg:col-span-3 flex items-center justify-end gap-3 sm:gap-5">
-            <button
-              type="button"
-              className="text-white hover:text-[#f43777] transition-colors cursor-pointer"
+            <Link
+              href="/account"
+              className="text-white hover:text-[#38bdf8] transition-colors cursor-pointer"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
               </svg>
-            </button>
-            <a href="#wishlist" className="relative text-white hover:text-[#f43777] transition-colors">
+            </Link>
+            <Link href="/wishlist" className="relative text-white hover:text-[#38bdf8] transition-colors">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9">
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
-              <span className="absolute -top-1.5 -right-2 w-4 h-4 rounded-full bg-[#f43777] text-white text-[9px] font-bold flex items-center justify-center">
-                0
+              <span className="absolute -top-1.5 -right-2 w-4 h-4 rounded-full bg-[#4f46e5] text-white text-[9px] font-bold flex items-center justify-center">
+                {wishlistCount}
               </span>
-            </a>
+            </Link>
             <button
               type="button"
               onClick={() => setCartDrawerOpen(true)}
@@ -713,8 +714,8 @@ export default function Header() {
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
               <span className="hidden sm:inline">Cart</span>
-              <span className="w-[19px] h-[19px] sm:w-[20px] sm:h-[20px] rounded-full bg-[#f43777] text-white text-[10px] font-bold flex items-center justify-center">
-                0
+              <span className="w-[19px] h-[19px] sm:w-[20px] sm:h-[20px] rounded-full bg-[#4f46e5] text-white text-[10px] font-bold flex items-center justify-center">
+                {cartCount}
               </span>
             </button>
           </div>

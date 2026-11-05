@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
+import { resolveStoreProduct } from "@/lib/storeData";
 
 interface CollectionData {
   id: string;
@@ -67,7 +69,7 @@ export default function ShopByCollectionSection() {
           <div className="lg:col-span-6 py-3 lg:py-6 lg:pl-[55px] xl:pl-[75px]">
             <ScrollReveal animation="fade-right">
               {/* Pink Eyebrow Label */}
-              <div className="text-[14px] font-semibold text-[#f43777] mb-3.5">
+              <div className="text-[14px] font-semibold text-[#4f46e5] mb-3.5">
                 Shop by Collection
               </div>
 
@@ -117,15 +119,16 @@ export default function ShopByCollectionSection() {
               <div key={activeIdx} className="flex items-center gap-[10px] mb-5">
                 {current.thumbnails.map((thumb, idx) => {
                   const isThumbActive = activeThumbIdx === idx;
+                  const thumbProd = resolveStoreProduct({ image: thumb });
                   return (
-                    <a
+                    <Link
                       key={idx}
-                      href={`#${current.id}-${idx}`}
+                      href={`/product/${thumbProd.slug}`}
                       onMouseEnter={() => setActiveThumbIdx(idx)}
                       style={{ animationDelay: `${idx * 65}ms` }}
                       className={`w-[64px] h-[64px] sm:w-[72px] sm:h-[72px] rounded-[12px] bg-white p-2 flex items-center justify-center transition-all duration-300 border animate-fade-up ${
                         isThumbActive
-                          ? "border-[#f43777] shadow-md -translate-y-1"
+                          ? "border-[#4f46e5] shadow-md -translate-y-1"
                           : "border-transparent shadow-[0_4px_12px_rgba(0,0,0,0.04)] hover:border-[#eaeaea] hover:-translate-y-0.5"
                       }`}
                     >
@@ -134,7 +137,7 @@ export default function ShopByCollectionSection() {
                         alt={`${current.name} item ${idx + 1}`}
                         className="w-full h-full object-contain transition-transform duration-300 hover:scale-108"
                       />
-                    </a>
+                    </Link>
                   );
                 })}
               </div>
@@ -148,12 +151,12 @@ export default function ShopByCollectionSection() {
               </p>
 
               {/* Dark Rounded Pill Button */}
-              <a
-                href={`#${current.id}`}
-                className="btn-shine inline-flex items-center justify-center bg-[#000000] hover:bg-[#f43777] hover:-translate-y-0.5 active:scale-95 text-white text-[11.5px] font-semibold uppercase tracking-wider px-7 py-3 rounded-full shadow-md transition-all duration-300"
+              <Link
+                href="/categories"
+                className="btn-shine inline-flex items-center justify-center bg-[#141233] hover:bg-[#4f46e5] hover:-translate-y-0.5 active:scale-95 text-white text-[11.5px] font-semibold uppercase tracking-wider px-7 py-3 rounded-full shadow-md transition-all duration-300"
               >
                 SHOP COLLECTION
-              </a>
+              </Link>
             </ScrollReveal>
           </div>
 

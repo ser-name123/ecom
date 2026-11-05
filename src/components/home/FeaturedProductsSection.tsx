@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import CarouselTrack from "@/components/ui/CarouselTrack";
+import { useStore } from "@/lib/StoreContext";
+import { resolveStoreProduct } from "@/lib/storeData";
 
 interface FeaturedProduct {
   id: string;
@@ -209,6 +212,10 @@ const PRODUCTS_BY_TAB: Record<TabCategory, FeaturedProduct[]> = {
 
 export default function FeaturedProductsSection() {
   const [activeTab, setActiveTab] = useState<TabCategory>("Mobile & Tablet");
+  const { addToCart, toggleWishlist } = useStore();
+
+  const findStoreProduct = (product: { title: string; image: string }) =>
+    resolveStoreProduct({ title: product.title, image: product.image });
 
   const items = PRODUCTS_BY_TAB[activeTab];
 
@@ -232,12 +239,12 @@ export default function FeaturedProductsSection() {
                     onClick={() => setActiveTab(tab)}
                     className={`flex items-center gap-2 text-[15px] md:text-[16px] font-medium transition-all duration-300 cursor-pointer ${
                       isActive
-                        ? "text-[#f43777]"
-                        : "text-[#222222] hover:text-[#f43777]"
+                        ? "text-[#4f46e5]"
+                        : "text-[#222222] hover:text-[#4f46e5]"
                     }`}
                   >
                     <span
-                      className={`rounded-full bg-[#f43777] transition-all duration-300 ${isActive ? "w-1.5 h-1.5 opacity-100 scale-100" : "w-0 h-0 opacity-0 scale-0"
+                      className={`rounded-full bg-[#4f46e5] transition-all duration-300 ${isActive ? "w-1.5 h-1.5 opacity-100 scale-100" : "w-0 h-0 opacity-0 scale-0"
                         }`}
                     />
                     <span>{tab}</span>
@@ -269,12 +276,12 @@ export default function FeaturedProductsSection() {
                   <p className="text-[12px] md:text-[13px] text-white uppercase tracking-wide mb-3.5">
                     Starting at $479
                   </p>
-                  <a
-                    href="#galaxy-s30"
-                    className="btn-shine inline-flex items-center justify-center bg-white text-[#1c1c1c] hover:bg-[#f43777] hover:text-white hover:-translate-y-0.5 active:scale-95 text-[11.5px] font-semibold uppercase tracking-wider px-6 py-2.5 rounded-full shadow-md transition-all duration-300"
+                  <Link
+                    href="/product/galaxy-s30-ultra-5g-titanium-256gb"
+                    className="btn-shine inline-flex items-center justify-center bg-white text-[#1c1c1c] hover:bg-[#4f46e5] hover:text-white hover:-translate-y-0.5 active:scale-95 text-[11.5px] font-semibold uppercase tracking-wider px-6 py-2.5 rounded-full shadow-md transition-all duration-300"
                   >
                     Shop Now
-                  </a>
+                  </Link>
                 </div>
               </div>
             </ScrollReveal>
@@ -290,15 +297,17 @@ export default function FeaturedProductsSection() {
                 gap={12}
                 autoPlayMs={4600}
                 arrowPositionClass="top-[40%] -translate-y-1/2"
-                renderItem={(product) => (
+                renderItem={(product) => {
+                  const storeProd = findStoreProduct(product);
+                  return (
                   <div className="group bg-white rounded-[14px] sm:rounded-[18px] p-2 sm:p-3 border border-[#f0f0f0] sm:border-transparent hover:border-[#eaeaea] card-hover-lift flex flex-col justify-between h-full">
                     {/* Top Image & Badges */}
                     <div className="relative w-full h-[140px] sm:h-[180px] p-1.5 sm:p-2 rounded-[10px] sm:rounded-[12px] overflow-hidden flex items-center justify-center mb-2 sm:mb-3">
                       {/* Top-Left Badges */}
                       {(product.discountBadge || product.preorderBadge) && (
-                        <div className="absolute top-2.5 left-2.5 z-10 flex flex-col items-start gap-1.5">
+                        <div className="absolute top-2.5 left-2.5 z-10 flex flex-col items-start gap-1.5 pointer-events-none">
                           {product.discountBadge && (
-                            <span className="bg-[#f43777] text-white text-[10px] font-semibold uppercase px-3 py-1.5 badge-leaf leading-none">
+                            <span className="bg-[#4f46e5] text-white text-[10px] font-semibold uppercase px-3 py-1.5 badge-leaf leading-none">
                               {product.discountBadge}
                             </span>
                           )}
@@ -313,53 +322,71 @@ export default function FeaturedProductsSection() {
                       {/* Top-Right Hover Action Icons (Staggered Cascade) */}
                       <div className="absolute top-2.5 right-2.5 z-20 flex flex-col gap-2">
                         <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleWishlist(storeProd);
+                          }}
                           aria-label="Add to Wishlist"
-                          className="w-[34px] h-[34px] rounded-full bg-white shadow-md border border-[#eaeaea] flex items-center justify-center text-[#222222] hover:bg-[#f43777] hover:text-white hover:border-[#f43777] opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 cursor-pointer"
+                          className="w-[34px] h-[34px] rounded-full bg-white shadow-md border border-[#eaeaea] flex items-center justify-center text-[#222222] hover:bg-[#4f46e5] hover:text-white hover:border-[#4f46e5] opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 cursor-pointer"
                         >
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                           </svg>
                         </button>
-                        <button
-                          aria-label="Quick View"
-                          className="w-[34px] h-[34px] rounded-full bg-white shadow-md border border-[#eaeaea] flex items-center justify-center text-[#222222] hover:bg-[#f43777] hover:text-white hover:border-[#f43777] opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 delay-75 cursor-pointer"
+                        <Link
+                          href={`/product/${storeProd.slug}`}
+                          aria-label="View Product Details"
+                          className="w-[34px] h-[34px] rounded-full bg-white shadow-md border border-[#eaeaea] flex items-center justify-center text-[#222222] hover:bg-[#4f46e5] hover:text-white hover:border-[#4f46e5] opacity-0 translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 delay-75 cursor-pointer"
                         >
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <circle cx="11" cy="11" r="8" />
                             <line x1="21" y1="21" x2="16.65" y2="16.65" />
                           </svg>
-                        </button>
+                        </Link>
                       </div>
 
-                      {/* Primary Image */}
-                      <img
-                        src={product.image}
-                        alt={product.title}
+                      {/* Clickable Product Images -> Go to Product Details */}
+                      <Link
+                        href={`/product/${storeProd.slug}`}
                         draggable={false}
-                        className="w-full h-full object-contain transition-opacity duration-500 group-hover:opacity-0"
-                      />
-                      {/* Secondary Hover Image */}
-                      <img
-                        src={product.secondImage}
-                        alt={product.title}
-                        draggable={false}
-                        className="absolute inset-0 w-full h-full p-2 object-contain opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-103"
-                      />
+                        className="w-full h-full flex items-center justify-center relative"
+                      >
+                        <img
+                          src={product.image}
+                          alt={product.title}
+                          draggable={false}
+                          className="w-full h-full object-contain transition-opacity duration-500 group-hover:opacity-0"
+                        />
+                        <img
+                          src={product.secondImage}
+                          alt={product.title}
+                          draggable={false}
+                          className="absolute inset-0 w-full h-full p-2 object-contain opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:scale-103"
+                        />
+                      </Link>
 
-                      {/* Bottom Hover Quick Add Button */}
+                      {/* Bottom Hover Quick Add Button -> Adds to Cart */}
                       <div className="absolute bottom-3 left-3 right-3 z-20 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                        <button className="btn-shine w-full py-2.5 rounded-full bg-[#1c1c1c] hover:bg-[#f43777] active:scale-95 text-white text-[12px] font-semibold uppercase tracking-wider shadow-md transition-all cursor-pointer">
-                          Quick Add
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            addToCart(storeProd);
+                          }}
+                          className="btn-shine w-full py-2.5 rounded-full bg-[#141233] hover:bg-[#4f46e5] active:scale-95 text-white text-[12px] font-semibold uppercase tracking-wider shadow-md transition-all cursor-pointer"
+                        >
+                          Add to Cart
                         </button>
                       </div>
                     </div>
 
                     {/* Product Info */}
                     <div className="flex flex-col flex-1 px-1">
-                      <h3 className="text-[14px] font-semibold text-[#222222] group-hover:text-[#f43777] transition-colors leading-[20px] line-clamp-2 mb-2.5 min-h-[40px]">
-                        <a href={`#${product.id}`} draggable={false}>
+                      <h3 className="text-[14px] font-semibold text-[#222222] group-hover:text-[#4f46e5] transition-colors leading-[20px] line-clamp-2 mb-2.5 min-h-[40px]">
+                        <Link href={`/product/${storeProd.slug}`} draggable={false}>
                           {product.title}
-                        </a>
+                        </Link>
                       </h3>
 
                       {/* 5 Gray Stars */}
@@ -375,7 +402,7 @@ export default function FeaturedProductsSection() {
                       <div className="mt-auto flex items-center gap-2 pt-1">
                         {product.oldPrice ? (
                           <>
-                            <span className="text-[16px] font-semibold text-[#f43777]">
+                            <span className="text-[16px] font-semibold text-[#4f46e5]">
                               ${product.price.toFixed(2)}
                             </span>
                             <span className="text-[14px] text-[#999999] line-through font-normal">
@@ -390,7 +417,8 @@ export default function FeaturedProductsSection() {
                       </div>
                     </div>
                   </div>
-                )}
+                  );
+                }}
               />
             </div>
           </div>

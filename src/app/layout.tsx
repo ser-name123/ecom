@@ -3,6 +3,7 @@ import { Nunito_Sans } from "next/font/google";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { StoreProvider } from "@/lib/StoreContext";
 import "./globals.css";
 
 const nunitoSans = Nunito_Sans({
@@ -26,24 +27,26 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${nunitoSans.variable} h-full antialiased`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${nunitoSans.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <div className="min-h-screen flex bg-white text-gray-900 font-sans">
-          {/* Global Left Vertical Category Sidebar */}
-          <Sidebar />
+        <StoreProvider>
+          <div className="min-h-screen flex bg-white text-gray-900 font-sans">
+            {/* Global Left Vertical Category Sidebar */}
+            <Sidebar />
 
-          {/* Main Content Column (Header + Page Content + Footer) */}
-          <div className="flex-1 flex flex-col min-w-0">
-            {/* Global Top Header & Mega Menu Navigation */}
-            <Header />
+            {/* Main Content Column (Header + Page Content + Footer) */}
+            <div className="flex-1 flex flex-col min-w-0">
+              {/* Global Top Header & Mega Menu Navigation */}
+              <Header />
 
-            {/* Dynamic Page Content */}
-            <main className="flex-1 bg-white">{children}</main>
+              {/* Dynamic Page Content */}
+              <main className="flex-1 bg-white">{children}</main>
 
-            {/* Global Multi-Band Footer */}
-            <Footer />
+              {/* Global Multi-Band Footer */}
+              <Footer />
+            </div>
           </div>
-        </div>
+        </StoreProvider>
       </body>
     </html>
   );

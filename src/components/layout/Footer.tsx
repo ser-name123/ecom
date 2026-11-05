@@ -1,33 +1,34 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const STORE_LOCATIONS = [
-  "Los Angeles - USA",
-  "New York - USA",
-  "California - USA",
-  "Bangkok - Thailand",
-  "Paris - France",
-  "London - England",
+  { label: "Los Angeles - USA", href: "/about" },
+  { label: "New York - USA", href: "/about" },
+  { label: "California - USA", href: "/about" },
+  { label: "Bangkok - Thailand", href: "/about" },
+  { label: "Paris - France", href: "/about" },
+  { label: "London - England", href: "/about" },
 ];
 
 const ABOUT_US_LINKS = [
-  "Visit Our Store",
-  "Contact Us",
-  "Our Story",
-  "Delivery Information",
-  "Account",
-  "About Us",
+  { label: "Visit Our Store", href: "/about" },
+  { label: "Contact Us", href: "/contact" },
+  { label: "Shop All Products", href: "/shop" },
+  { label: "Product Categories", href: "/categories" },
+  { label: "My Account / Login", href: "/account" },
+  { label: "About Us", href: "/about" },
 ];
 
 const GET_HELP_LINKS = [
-  "Privacy Policy",
-  "Returns & Exchanges",
-  "Shipping Info",
-  "FAQ’s",
-  "Help Center",
-  "Terms & Conditions",
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Return & Refund Policy", href: "/return-policy" },
+  { label: "Shipping & Delivery Policy", href: "/shipping-policy" },
+  { label: "FAQs & Help Center", href: "/faq" },
+  { label: "Order Tracking", href: "/track-order" },
+  { label: "Terms & Conditions", href: "/terms-conditions" },
 ];
 
 export default function Footer() {
@@ -70,7 +71,7 @@ export default function Footer() {
         <div className="max-w-[1440px] mx-auto px-4 md:px-6 pt-[50px] pb-[40px]">
           {/* Top Heading */}
           <div className="text-center mb-[30px]">
-            <div className="text-[14px] font-semibold uppercase text-[#f43777] leading-[20px] mb-[5px]">
+            <div className="text-[14px] font-semibold uppercase text-[#38bdf8] leading-[20px] mb-[5px]">
               HELP CENTER
             </div>
             <h2 className="text-[28px] md:text-[30px] font-semibold text-white leading-[40px]">
@@ -82,7 +83,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-[20px] mb-[40px]">
             {/* Card 1: Location */}
             <div className="rounded-[40px] border border-[#ffffff1a] p-[8px] flex items-center gap-[20px] hover:border-white/30 hover:-translate-y-1 transition-all duration-300 group">
-              <div className="w-[54px] h-[54px] rounded-full bg-[#ffffff0d] group-hover:bg-[#f43777] flex items-center justify-center text-white shrink-0 transition-colors duration-300">
+              <div className="w-[54px] h-[54px] rounded-full bg-[#ffffff0d] group-hover:bg-[#4f46e5] flex items-center justify-center text-white shrink-0 transition-colors duration-300">
                 <svg className="icon-flip-hover" width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M12 14C13.6569 14 15 12.6569 15 11C15 9.34315 13.6569 8 12 8C10.3431 8 9 9.34315 9 11C9 12.6569 10.3431 14 12 14Z"
@@ -112,7 +113,7 @@ export default function Footer() {
 
             {/* Card 2: Hotline */}
             <div className="rounded-[40px] border border-[#ffffff1a] p-[8px] flex items-center gap-[20px] hover:border-white/30 hover:-translate-y-1 transition-all duration-300 group">
-              <div className="w-[54px] h-[54px] rounded-full bg-[#ffffff0d] group-hover:bg-[#f43777] flex items-center justify-center text-white shrink-0 transition-colors duration-300">
+              <div className="w-[54px] h-[54px] rounded-full bg-[#ffffff0d] group-hover:bg-[#4f46e5] flex items-center justify-center text-white shrink-0 transition-colors duration-300">
                 <svg className="icon-flip-hover" width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M20.9995 19.1864V16.4767C21.0105 16.0337 20.858 15.6021 20.5709 15.264C19.7615 14.3106 16.9855 13.7008 15.8851 13.935C15.0274 14.1176 14.4272 14.9788 13.8405 15.5644C11.5747 14.2785 9.69864 12.4062 8.41026 10.1448C8.99696 9.55929 9.85994 8.96036 10.0429 8.10428C10.2772 7.00777 9.66819 4.24949 8.72138 3.43684C8.38835 3.151 7.96253 2.99577 7.52331 3.00009H4.80817C3.77364 3.00106 2.91294 3.92895 3.00713 4.96919C3.00006 13.935 10.0001 21 19.0265 20.9929C20.0723 21.0873 21.0037 20.2223 20.9995 19.1864Z"
@@ -135,7 +136,7 @@ export default function Footer() {
 
             {/* Card 3: Email */}
             <div className="rounded-[40px] border border-[#ffffff1a] p-[8px] flex items-center gap-[20px] hover:border-white/30 hover:-translate-y-1 transition-all duration-300 group">
-              <div className="w-[54px] h-[54px] rounded-full bg-[#ffffff0d] group-hover:bg-[#f43777] flex items-center justify-center text-white shrink-0 transition-colors duration-300">
+              <div className="w-[54px] h-[54px] rounded-full bg-[#ffffff0d] group-hover:bg-[#4f46e5] flex items-center justify-center text-white shrink-0 transition-colors duration-300">
                 <svg className="icon-flip-hover" width="20" height="20" viewBox="0 0 24 24" fill="none">
                   <path
                     d="M3.29289 5.29289C3.47386 5.11193 3.72386 5 4 5H20C20.2761 5 20.5261 5.11193 20.7071 5.29289M3.29289 5.29289C3.11193 5.47386 3 5.72386 3 6V18C3 18.5523 3.44772 19 4 19H20C20.5523 19 21 18.5523 21 18V6C21 5.72386 20.8881 5.47386 20.7071 5.29289M3.29289 5.29289L10.5858 12.5857C11.3668 13.3668 12.6332 13.3668 13.4142 12.5857L20.7071 5.29289"
@@ -184,7 +185,7 @@ export default function Footer() {
                 <div className="text-[14px] font-normal text-white leading-[20px] mb-[14px]">
                   Got questions? Call us 24/7!
                 </div>
-                <div className="text-[22px] sm:text-[24px] font-semibold text-[#f43777] leading-[32px]">
+                <div className="text-[22px] sm:text-[24px] font-semibold text-[#38bdf8] leading-[32px]">
                   1 888.456.789 - 1 888.333.666
                 </div>
               </div>
@@ -192,14 +193,14 @@ export default function Footer() {
 
             <div className="text-[16px] font-normal leading-[21px] text-[#aaaaaa] mb-[30px]">
               Address:{" "}
-              <a href="#address" className="text-white hover:text-[#f43777] transition-colors">
+              <Link href="/contact" className="text-white hover:text-[#38bdf8] transition-colors">
                 5611 Wellington Road, Suite 115, Gainesville, VA 20155
-              </a>
+              </Link>
             </div>
 
             <div className="text-[16px] font-normal leading-[21px] text-[#aaaaaa] mb-[25px]">
               Email:{" "}
-              <a href="mailto:techoze@domain.com" className="text-white hover:text-[#f43777] transition-colors">
+              <a href="mailto:techoze@domain.com" className="text-white hover:text-[#38bdf8] transition-colors">
                 techoze@domain.com
               </a>
             </div>
@@ -254,7 +255,7 @@ export default function Footer() {
                   key={soc.name}
                   href={`#${soc.name.toLowerCase()}`}
                   aria-label={soc.name}
-                  className="w-[46px] h-[46px] rounded-full border border-white/15 hover:border-[#f43777] hover:bg-[#f43777] flex items-center justify-center text-white transition-all duration-200"
+                  className="w-[46px] h-[46px] rounded-full border border-white/15 hover:border-[#4f46e5] hover:bg-[#4f46e5] flex items-center justify-center text-white transition-all duration-200"
                 >
                   {soc.svg}
                 </a>
@@ -271,10 +272,10 @@ export default function Footer() {
               </h3>
               <ul className="space-y-[14px] text-[14px] font-normal text-[#aaaaaa] leading-[20px]">
                 {STORE_LOCATIONS.map((loc) => (
-                  <li key={loc}>
-                    <a href="#location" className="hover:text-[#f43777] transition-colors">
-                      {loc}
-                    </a>
+                  <li key={loc.label}>
+                    <Link href={loc.href} className="hover:text-[#38bdf8] transition-colors">
+                      {loc.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -283,14 +284,14 @@ export default function Footer() {
             {/* About Us */}
             <div>
               <h3 className="text-[18px] font-semibold text-white leading-[24px] mb-[22px]">
-                About Us
+                About & Store
               </h3>
               <ul className="space-y-[14px] text-[14px] font-normal text-[#aaaaaa] leading-[20px]">
                 {ABOUT_US_LINKS.map((item) => (
-                  <li key={item}>
-                    <a href="#about" className="hover:text-[#f43777] transition-colors">
-                      {item}
-                    </a>
+                  <li key={item.label}>
+                    <Link href={item.href} className="hover:text-[#38bdf8] transition-colors">
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -299,14 +300,14 @@ export default function Footer() {
             {/* Get Help */}
             <div>
               <h3 className="text-[18px] font-semibold text-white leading-[24px] mb-[22px]">
-                Get Help
+                Customer Policies
               </h3>
               <ul className="space-y-[14px] text-[14px] font-normal text-[#aaaaaa] leading-[20px]">
                 {GET_HELP_LINKS.map((item) => (
-                  <li key={item}>
-                    <a href="#help" className="hover:text-[#f43777] transition-colors">
-                      {item}
-                    </a>
+                  <li key={item.label}>
+                    <Link href={item.href} className="hover:text-[#38bdf8] transition-colors">
+                      {item.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -336,7 +337,7 @@ export default function Footer() {
             />
             <button
               type="submit"
-              className="btn-shine w-[120px] h-[40px] rounded-[25px] bg-[#f43777] hover:bg-black active:scale-95 text-white text-[13px] font-semibold uppercase tracking-wide shrink-0 transition-all duration-200 cursor-pointer"
+              className="btn-shine w-[120px] h-[40px] rounded-[25px] bg-[#4f46e5] hover:bg-[#141233] active:scale-95 text-white text-[13px] font-semibold uppercase tracking-wide shrink-0 transition-all duration-200 cursor-pointer"
             >
               {subscribed ? "SUBSCRIBED" : "SUBSCRIBE"}
             </button>
@@ -540,18 +541,18 @@ export default function Footer() {
         </p>
       </div>
 
-      {/* Floating Scroll-To-Top Button with Pink Liquid Scroll Progress Fill & Double Upward Chevron */}
+      {/* Floating Scroll-To-Top Button with Indigo/Navy Liquid Scroll Progress Fill & Double Upward Chevron */}
       <button
         type="button"
         onClick={scrollToTop}
         aria-label="Scroll to top"
-        className={`fixed bottom-[74px] lg:bottom-6 right-4 lg:right-6 z-40 w-[42px] h-[42px] lg:w-[44px] lg:h-[44px] rounded-full bg-white shadow-[0_4px_18px_rgba(0,0,0,0.18)] flex items-center justify-center overflow-hidden transition-all duration-300 cursor-pointer ${
+        className={`fixed bottom-[74px] lg:bottom-6 right-4 lg:right-6 z-40 w-[42px] h-[42px] lg:w-[44px] lg:h-[44px] rounded-full bg-white border border-[#eaeaea] shadow-[0_4px_18px_rgba(0,0,0,0.18)] flex items-center justify-center overflow-hidden transition-all duration-300 cursor-pointer ${
           showBackTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
       >
-        {/* Rising Pink Progress Fill */}
+        {/* Rising Navy-Indigo Progress Fill */}
         <span
-          className="absolute bottom-0 left-0 right-0 bg-[#f43777] transition-all duration-150"
+          className="absolute bottom-0 left-0 right-0 bg-[#141233] transition-all duration-150"
           style={{ height: `${scrollPercent}%` }}
         />
         {/* Double Upward Chevron Icon (Matches Screenshot 10 bottom-right button) */}

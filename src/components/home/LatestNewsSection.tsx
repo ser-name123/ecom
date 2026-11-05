@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 interface BlogPost {
@@ -167,12 +168,12 @@ export default function LatestNewsSection() {
             <h2 className="text-[22px] md:text-[26px] font-semibold text-[#1c1c1c] tracking-tight">
               Latest News
             </h2>
-            <a
-              href="#all-blogs"
-              className="text-[14px] font-medium text-[#000000] hover:text-[#f43777] underline underline-offset-4 decoration-[1px] transition-colors"
+            <Link
+              href="/blogs"
+              className="text-[14px] font-medium text-[#000000] hover:text-[#4f46e5] underline underline-offset-4 decoration-[1px] transition-colors"
             >
               View all
-            </a>
+            </Link>
           </div>
         </ScrollReveal>
 
@@ -191,7 +192,7 @@ export default function LatestNewsSection() {
               type="button"
               onClick={handlePrev}
               aria-label="Previous article"
-              className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] hover:bg-[#f43777] hover:scale-110 active:scale-95 text-[#222222] hover:text-white shadow-sm items-center justify-center transition-all duration-300 cursor-pointer"
+              className="flex absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] hover:bg-[#4f46e5] hover:scale-110 active:scale-95 text-[#222222] hover:text-white shadow-sm items-center justify-center transition-all duration-300 cursor-pointer"
             >
               <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor">
                 <polygon points="30.586,6.586 13.171,24 30.586,41.414 33.414,38.586 18.829,24 33.414,9.414" />
@@ -253,10 +254,10 @@ export default function LatestNewsSection() {
                         </div>
 
                         {/* Title */}
-                        <h3 className="text-[18px] md:text-[20px] font-semibold text-[#000000] hover:text-[#f43777] transition-colors leading-[26px] mb-2 line-clamp-2">
-                          <a href={`#${post.id}`} draggable={false}>
+                        <h3 className="text-[18px] md:text-[20px] font-semibold text-[#000000] hover:text-[#4f46e5] transition-colors leading-[26px] mb-2 line-clamp-2">
+                          <Link href={`/blogs/${post.id}`} draggable={false}>
                             {post.title}
-                          </a>
+                          </Link>
                         </h3>
 
                         {/* Excerpt */}
@@ -266,13 +267,13 @@ export default function LatestNewsSection() {
 
                         {/* Read More Pill Button */}
                         <div>
-                          <a
-                            href={`#${post.id}`}
+                          <Link
+                            href={`/blogs/${post.id}`}
                             draggable={false}
-                            className="btn-shine inline-flex items-center justify-center bg-[#f5f5f5] hover:bg-[#f43777] hover:-translate-y-0.5 active:scale-95 text-[#000000] hover:text-white text-[12px] font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300"
+                            className="btn-shine inline-flex items-center justify-center bg-[#f5f5f5] hover:bg-[#4f46e5] hover:-translate-y-0.5 active:scale-95 text-[#000000] hover:text-white text-[12px] font-semibold uppercase tracking-wider px-5 py-2.5 rounded-full transition-all duration-300"
                           >
                             READ MORE
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </article>
@@ -286,7 +287,7 @@ export default function LatestNewsSection() {
               type="button"
               onClick={handleNext}
               aria-label="Next article"
-              className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] hover:bg-[#f43777] hover:scale-110 active:scale-95 text-[#222222] hover:text-white shadow-sm items-center justify-center transition-all duration-300 cursor-pointer"
+              className="flex absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] hover:bg-[#4f46e5] hover:scale-110 active:scale-95 text-[#222222] hover:text-white shadow-sm items-center justify-center transition-all duration-300 cursor-pointer"
             >
               <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor">
                 <polygon points="14.586,9.414 29.171,24 14.586,38.586 17.414,41.414 34.829,24 17.414,6.586" />

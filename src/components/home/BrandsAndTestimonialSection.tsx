@@ -119,7 +119,7 @@ export default function BrandsAndTestimonialSection() {
               </h2>
               <a
                 href="#all-brands"
-                className="text-[14px] font-medium text-[#000000] hover:text-[#f43777] underline underline-offset-4 decoration-[1px] transition-colors"
+                className="text-[14px] font-medium text-[#000000] hover:text-[#4f46e5] underline underline-offset-4 decoration-[1px] transition-colors"
               >
                 View all
               </a>
@@ -184,7 +184,7 @@ export default function BrandsAndTestimonialSection() {
                       onClick={() => setActiveTestimonial(idx)}
                       className={`w-[48px] h-[48px] rounded-[8px] overflow-hidden transition-all duration-300 cursor-pointer ${
                         activeTestimonial === idx
-                          ? "opacity-100 scale-108 ring-2 ring-[#f43777]"
+                          ? "opacity-100 scale-108 ring-2 ring-[#4f46e5]"
                           : "opacity-45 hover:opacity-85 hover:scale-105"
                       }`}
                     >
@@ -207,7 +207,7 @@ export default function BrandsAndTestimonialSection() {
                       onClick={() => setActiveTestimonial(idx)}
                       className={`w-[48px] h-[48px] rounded-[8px] overflow-hidden transition-all duration-300 cursor-pointer ${
                         activeTestimonial === idx
-                          ? "opacity-100 scale-108 ring-2 ring-[#f43777]"
+                          ? "opacity-100 scale-108 ring-2 ring-[#4f46e5]"
                           : "opacity-45 hover:opacity-85 hover:scale-105"
                       }`}
                     >
@@ -230,7 +230,7 @@ export default function BrandsAndTestimonialSection() {
                       onClick={() => setActiveTestimonial(idx)}
                       className={`w-[48px] h-[48px] rounded-[8px] overflow-hidden transition-all duration-300 cursor-pointer ${
                         activeTestimonial === idx
-                          ? "opacity-100 scale-108 ring-2 ring-[#f43777]"
+                          ? "opacity-100 scale-108 ring-2 ring-[#4f46e5]"
                           : "opacity-45 hover:opacity-85 hover:scale-105"
                       }`}
                     >
@@ -259,7 +259,7 @@ export default function BrandsAndTestimonialSection() {
                         {review.quote}
                       </blockquote>
 
-                      <div className="text-[15px] md:text-[16px] font-semibold text-[#f43777] mb-5">
+                      <div className="text-[15px] md:text-[16px] font-semibold text-[#4f46e5] mb-5">
                         {review.name}
                       </div>
                     </div>
@@ -275,7 +275,7 @@ export default function BrandsAndTestimonialSection() {
                       handlePrevTestimonial();
                     }}
                     aria-label="Previous testimonial"
-                    className="w-[36px] h-[36px] rounded-full bg-white/10 hover:bg-[#f43777] hover:scale-110 active:scale-95 text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
+                    className="w-[36px] h-[36px] rounded-full bg-white/10 hover:bg-[#4f46e5] hover:scale-110 active:scale-95 text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
                   >
                     <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor">
                       <polygon points="30.586,6.586 13.171,24 30.586,41.414 33.414,38.586 18.829,24 33.414,9.414" />
@@ -288,7 +288,7 @@ export default function BrandsAndTestimonialSection() {
                       handleNextTestimonial();
                     }}
                     aria-label="Next testimonial"
-                    className="w-[36px] h-[36px] rounded-full bg-white/10 hover:bg-[#f43777] hover:scale-110 active:scale-95 text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
+                    className="w-[36px] h-[36px] rounded-full bg-white/10 hover:bg-[#4f46e5] hover:scale-110 active:scale-95 text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
                   >
                     <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor">
                       <polygon points="14.586,9.414 29.171,24 14.586,38.586 17.414,41.414 34.829,24 17.414,6.586" />

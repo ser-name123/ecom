@@ -46,7 +46,7 @@ export default function TrustBar() {
                   />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-[12.5px] sm:text-[15px] font-semibold text-[#000000] group-hover:text-[#f43777] transition-colors duration-300 leading-tight sm:leading-[20px] mb-0.5 truncate">
+                  <h3 className="text-[12.5px] sm:text-[15px] font-semibold text-[#000000] group-hover:text-[#4f46e5] transition-colors duration-300 leading-tight sm:leading-[20px] mb-0.5 truncate">
                     {item.title}
                   </h3>
                   <p className="text-[11px] sm:text-[13px] text-[#535353] font-normal leading-tight sm:leading-[18px] line-clamp-2">

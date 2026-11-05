@@ -1,6 +1,9 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import { useStore } from "@/lib/StoreContext";
+import { resolveStoreProduct } from "@/lib/storeData";
 
 interface SubLink {
   label: string;
@@ -529,13 +532,14 @@ const SIDEBAR_ITEMS: SidebarCategory[] = [
 ];
 
 const BADGE_STYLES: Record<string, string> = {
-  HOT: "bg-[#f43777] text-white",
+  HOT: "bg-[#4f46e5] text-white",
   NEW: "bg-[#686cff] text-white",
   SALE: "bg-[#10b981] text-white",
   PRO: "bg-[#141233] text-white",
 };
 
 export default function Sidebar() {
+  const { addToCart } = useStore();
   const [expanded, setExpanded] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<SidebarCategory | null>(null);
   const [drawerReady, setDrawerReady] = useState(false);
@@ -614,9 +618,8 @@ export default function Sidebar() {
           setExpanded(false);
           setHoveredItem(null);
         }}
-        className={`fixed inset-0 bg-black/45 backdrop-blur-[1px] z-40 transition-opacity duration-400 hidden lg:block ${
-          expanded ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`fixed inset-0 bg-black/45 backdrop-blur-[1px] z-40 transition-opacity duration-400 hidden lg:block ${expanded ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
       />
 
       {/* Spacer to keep main page layout shifted by 60px on desktop */}
@@ -632,9 +635,8 @@ export default function Sidebar() {
         style={{
           transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
         }}
-        className={`hidden lg:flex flex-col fixed left-0 top-0 h-screen bg-white border-r border-[#eaeaea] select-none z-50 transition-[width,box-shadow] duration-400 ${
-          expanded ? "w-[250px] shadow-[12px_0_36px_rgba(0,0,0,0.14)]" : "w-[60px]"
-        }`}
+        className={`hidden lg:flex flex-col fixed left-0 top-0 h-screen bg-white border-r border-[#eaeaea] select-none z-50 transition-[width,box-shadow] duration-400 ${expanded ? "w-[250px] shadow-[12px_0_36px_rgba(0,0,0,0.14)]" : "w-[60px]"
+          }`}
       >
         {/* Top Pink Circle -> Smoothly Morphs into Full-Width "Shop by Categories" Pill */}
         <div
@@ -648,9 +650,8 @@ export default function Sidebar() {
             style={{
               transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
             }}
-            className={`h-[42px] rounded-full bg-[#f43777] hover:bg-[#e02d6b] text-white flex items-center transition-all duration-400 cursor-pointer overflow-hidden shadow-[0_4px_14px_rgba(244,55,119,0.3)] ${
-              expanded ? "w-full pl-[13px] pr-4" : "w-[42px] pl-[13px]"
-            }`}
+            className={`h-[42px] rounded-full bg-[#141233] hover:bg-[#252159] text-white flex items-center transition-all duration-400 cursor-pointer overflow-hidden shadow-[0_4px_14px_rgba(20,18,51,0.28)] ${expanded ? "w-full pl-[13px] pr-4" : "w-[42px] pl-[13px]"
+              }`}
           >
             {/* 3-Line Menu Icon locked at exact left offset so it never jumps */}
             <svg
@@ -674,11 +675,10 @@ export default function Sidebar() {
                 transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
                 transitionDelay: expanded ? "60ms" : "0ms",
               }}
-              className={`ml-[14px] text-[14px] font-semibold whitespace-nowrap transition-all duration-300 ${
-                expanded
+              className={`ml-[14px] text-[14px] font-semibold whitespace-nowrap transition-all duration-300 ${expanded
                   ? "opacity-100 translate-x-0"
                   : "opacity-0 -translate-x-3 pointer-events-none"
-              }`}
+                }`}
             >
               Shop by Categories
             </span>
@@ -695,16 +695,15 @@ export default function Sidebar() {
                 key={item.id}
                 className={!isLastIconItem ? "border-b border-[#efefef] mx-[10px]" : "mx-[10px]"}
               >
-                <a
-                  href={`#${item.id}`}
+                <Link
+                  href={`/categories/${item.id}`}
                   onMouseEnter={() => {
                     if (expanded) setHoveredItem(item);
                   }}
-                  className={`group/item w-full h-[52px] pl-[9px] pr-[8px] rounded-[10px] flex items-center justify-between transition-all duration-200 relative shrink-0 ${
-                    isHovered
-                      ? "text-[#f43777] bg-[#fff3f7]"
-                      : "text-[#222222] hover:text-[#f43777] hover:bg-[#fafafa]"
-                  }`}
+                  className={`group/item w-full h-[52px] pl-[9px] pr-[8px] rounded-[10px] flex items-center justify-between transition-all duration-200 relative shrink-0 ${isHovered
+                      ? "text-[#4f46e5] bg-[#eef2ff]"
+                      : "text-[#222222] hover:text-[#4f46e5] hover:bg-[#fafafa]"
+                    }`}
                 >
                   <div className="flex items-center min-w-0">
                     {/* Icon locked at exact left position */}
@@ -722,11 +721,10 @@ export default function Sidebar() {
                         transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
                         transitionDelay: expanded ? `${70 + idx * 25}ms` : "0ms",
                       }}
-                      className={`ml-[18px] text-[14px] font-medium whitespace-nowrap transition-all duration-300 group-hover/item:translate-x-1 ${
-                        expanded
+                      className={`ml-[18px] text-[14px] font-medium whitespace-nowrap transition-all duration-300 group-hover/item:translate-x-1 ${expanded
                           ? "opacity-100 translate-x-0"
                           : "opacity-0 -translate-x-3 pointer-events-none"
-                      }`}
+                        }`}
                     >
                       {item.label}
                     </span>
@@ -743,33 +741,30 @@ export default function Sidebar() {
                         transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
                         transitionDelay: expanded ? `${85 + idx * 25}ms` : "0ms",
                       }}
-                      className={`shrink-0 transition-all duration-300 ${
-                        isHovered ? "translate-x-1 text-[#f43777]" : "group-hover/item:translate-x-0.5"
-                      } ${
-                        expanded
+                      className={`shrink-0 transition-all duration-300 ${isHovered ? "translate-x-1 text-[#4f46e5]" : "group-hover/item:translate-x-0.5"
+                        } ${expanded
                           ? "opacity-75 translate-x-0"
                           : "opacity-0 -translate-x-2 pointer-events-none"
-                      }`}
+                        }`}
                     >
                       <polygon points="14.586,9.414 29.171,24 14.586,38.586 17.414,41.414 34.829,24 17.414,6.586" />
                     </svg>
                   )}
-                </a>
+                </Link>
               </div>
             );
           })}
 
           {/* Bottom "A.." (Collapsed) -> "All Categories" Underlined (Expanded) */}
           <div className="mx-[10px] mt-1">
-            <a
-              href="#all-categories"
+            <Link
+              href="/categories"
               onMouseEnter={() => setHoveredItem(null)}
-              className="w-full h-[48px] pl-[9px] pr-[8px] flex items-center text-[#222222] hover:text-[#f43777] transition-colors shrink-0 relative"
+              className="w-full h-[48px] pl-[9px] pr-[8px] flex items-center text-[#222222] hover:text-[#4f46e5] transition-colors shrink-0 relative"
             >
               <span
-                className={`text-[13px] font-medium whitespace-nowrap transition-all duration-200 absolute left-[11px] ${
-                  expanded ? "opacity-0 scale-90 pointer-events-none" : "opacity-100 scale-100"
-                }`}
+                className={`text-[13px] font-medium whitespace-nowrap transition-all duration-200 absolute left-[11px] ${expanded ? "opacity-0 scale-90 pointer-events-none" : "opacity-100 scale-100"
+                  }`}
               >
                 A..
               </span>
@@ -779,15 +774,14 @@ export default function Sidebar() {
                   transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
                   transitionDelay: expanded ? "300ms" : "0ms",
                 }}
-                className={`text-[13.5px] font-medium underline underline-offset-4 decoration-[#222222]/60 hover:decoration-[#f43777] whitespace-nowrap transition-all duration-300 ${
-                  expanded
+                className={`text-[13.5px] font-medium underline underline-offset-4 decoration-[#222222]/60 hover:decoration-[#4f46e5] whitespace-nowrap transition-all duration-300 ${expanded
                     ? "opacity-100 translate-x-0"
                     : "opacity-0 -translate-x-3 pointer-events-none"
-                }`}
+                  }`}
               >
                 All Categories
               </span>
-            </a>
+            </Link>
           </div>
         </nav>
 
@@ -798,11 +792,10 @@ export default function Sidebar() {
           style={{
             transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
           }}
-          className={`fixed left-[250px] top-0 h-screen w-[820px] xl:w-[880px] bg-white shadow-[24px_0_60px_rgba(12,11,34,0.16)] border-l border-[#efefef] z-50 overflow-y-auto custom-scrollbar transition-all duration-350 ${
-            showFlyout
+          className={`fixed left-[250px] top-0 h-screen w-[820px] xl:w-[880px] bg-white shadow-[24px_0_60px_rgba(12,11,34,0.16)] border-l border-[#efefef] z-50 overflow-y-auto custom-scrollbar transition-all duration-350 ${showFlyout
               ? "opacity-100 translate-x-0 pointer-events-auto"
               : "opacity-0 -translate-x-4 pointer-events-none"
-          }`}
+            }`}
         >
           {hoveredItem && (
             <div
@@ -813,7 +806,7 @@ export default function Sidebar() {
               <div>
                 <div className="flex items-center justify-between pb-5 mb-6 border-b border-[#efefef]">
                   <div className="flex items-center gap-3.5">
-                    <div className="w-[44px] h-[44px] rounded-[12px] bg-[#fff2f7] border border-[#f43777]/20 flex items-center justify-center shrink-0">
+                    <div className="w-[44px] h-[44px] rounded-[12px] bg-[#eef2ff] border border-[#4f46e5]/20 flex items-center justify-center shrink-0">
                       <img
                         src={hoveredItem.icon}
                         alt={hoveredItem.label}
@@ -831,8 +824,8 @@ export default function Sidebar() {
                   </div>
 
                   <a
-                    href={`#${hoveredItem.id}`}
-                    className="btn-shine inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#141233] hover:bg-[#f43777] text-white text-[11.5px] font-semibold uppercase tracking-wider transition-colors shrink-0"
+                    href={`/categories/${hoveredItem.id}`}
+                    className="btn-shine inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[11.5px] font-semibold uppercase tracking-wider transition-colors shrink-0"
                   >
                     <span>Explore All</span>
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -853,23 +846,22 @@ export default function Sidebar() {
                       >
                         <h4 className="text-[14.5px] font-bold text-[#141233] mb-3 pb-1.5 border-b border-[#f3f3f3] flex items-center justify-between">
                           <span>{grp.heading}</span>
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#f43777]" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#4f46e5]" />
                         </h4>
                         <ul className="space-y-2.5">
                           {grp.links.map((lnk) => (
                             <li key={lnk.label}>
                               <a
-                                href={`#${hoveredItem.id}`}
-                                className="group/lnk flex items-center justify-between text-[13.5px] font-normal text-[#444444] hover:text-[#f43777] transition-all duration-200"
+                                href={`/categories/${hoveredItem.id}`}
+                                className="group/lnk flex items-center justify-between text-[13.5px] font-normal text-[#444444] hover:text-[#4f46e5] transition-all duration-200"
                               >
                                 <span className="group-hover/lnk:translate-x-1.5 transition-transform duration-200">
                                   {lnk.label}
                                 </span>
                                 {lnk.badge && (
                                   <span
-                                    className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-[4px] leading-none shrink-0 ${
-                                      BADGE_STYLES[lnk.badge]
-                                    }`}
+                                    className={`text-[9px] font-bold uppercase px-1.5 py-0.5 rounded-[4px] leading-none shrink-0 ${BADGE_STYLES[lnk.badge]
+                                      }`}
                                   >
                                     {lnk.badge}
                                   </span>
@@ -885,46 +877,66 @@ export default function Sidebar() {
                   {/* Right 5 Cols: Featured Category Deal Card + Optional Promo Art */}
                   <div className="col-span-5 flex flex-col gap-4">
                     {/* Featured Best-Seller Card */}
-                    <div className="rounded-[18px] border border-[#eaeaea] bg-[#fafafa] p-4 relative group/prod hover:border-[#f43777] hover:bg-white hover:shadow-[0_14px_32px_rgba(244,55,119,0.1)] transition-all duration-300">
-                      <span className="absolute top-3 left-3 z-10 bg-[#f43777] text-white text-[10px] font-bold uppercase px-2.5 py-1 badge-leaf">
-                        {hoveredItem.featuredProduct.discount}
-                      </span>
-                      <span className="absolute top-3 right-3 z-10 bg-[#141233] text-white text-[9px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full">
-                        TOP PICK
-                      </span>
-
-                      <div className="w-full h-[170px] rounded-[12px] bg-white p-3 flex items-center justify-center mb-3.5 overflow-hidden">
-                        <img
-                          src={hoveredItem.featuredProduct.image}
-                          alt={hoveredItem.featuredProduct.title}
-                          className="w-full h-full object-contain group-hover/prod:scale-108 transition-transform duration-500"
-                        />
-                      </div>
-
-                      <div className="text-[10px] font-semibold uppercase tracking-wider text-[#999999] mb-1">
-                        {hoveredItem.featuredProduct.category}
-                      </div>
-                      <h5 className="text-[14px] font-bold text-[#141233] group-hover/prod:text-[#f43777] transition-colors line-clamp-1 mb-2">
-                        {hoveredItem.featuredProduct.title}
-                      </h5>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-[17px] font-extrabold text-[#f43777]">
-                            ${hoveredItem.featuredProduct.price.toFixed(2)}
+                    {(() => {
+                      const resolvedProd = resolveStoreProduct(hoveredItem.featuredProduct);
+                      return (
+                        <div className="rounded-[18px] border border-[#eaeaea] bg-[#fafafa] p-4 relative group/prod hover:border-[#4f46e5] hover:bg-white hover:shadow-[0_14px_32px_rgba(79,70,229,0.1)] transition-all duration-300">
+                          <span className="absolute top-3 left-3 z-10 bg-[#4f46e5] text-white text-[10px] font-bold uppercase px-2.5 py-1 badge-leaf">
+                            {hoveredItem.featuredProduct.discount}
                           </span>
-                          <span className="text-[13px] text-[#999999] line-through">
-                            ${hoveredItem.featuredProduct.oldPrice.toFixed(2)}
+                          <span className="absolute top-3 right-3 z-10 bg-[#141233] text-white text-[9px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                            TOP PICK
                           </span>
+
+                          <Link
+                            href={`/product/${resolvedProd.slug}`}
+                            onClick={() => {
+                              setExpanded(false);
+                              setHoveredItem(null);
+                            }}
+                            className="w-full h-[170px] rounded-[12px] bg-white p-3 flex items-center justify-center mb-3.5 overflow-hidden"
+                          >
+                            <img
+                              src={hoveredItem.featuredProduct.image}
+                              alt={hoveredItem.featuredProduct.title}
+                              className="w-full h-full object-contain group-hover/prod:scale-108 transition-transform duration-500"
+                            />
+                          </Link>
+
+                          <div className="text-[10px] font-semibold uppercase tracking-wider text-[#999999] mb-1">
+                            {hoveredItem.featuredProduct.category}
+                          </div>
+                          <Link
+                            href={`/product/${resolvedProd.slug}`}
+                            onClick={() => {
+                              setExpanded(false);
+                              setHoveredItem(null);
+                            }}
+                            className="block text-[14px] font-bold text-[#141233] group-hover/prod:text-[#4f46e5] transition-colors line-clamp-1 mb-2"
+                          >
+                            {hoveredItem.featuredProduct.title}
+                          </Link>
+
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-baseline gap-2">
+                              <span className="text-[17px] font-extrabold text-[#4f46e5]">
+                                ${hoveredItem.featuredProduct.price.toFixed(2)}
+                              </span>
+                              <span className="text-[13px] text-[#999999] line-through">
+                                ${hoveredItem.featuredProduct.oldPrice.toFixed(2)}
+                              </span>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => addToCart(resolvedProd, 1)}
+                              className="btn-shine px-3.5 py-1.5 rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[11px] font-semibold uppercase transition-colors cursor-pointer"
+                            >
+                              + Add Cart
+                            </button>
+                          </div>
                         </div>
-                        <a
-                          href={`#${hoveredItem.id}`}
-                          className="btn-shine px-3.5 py-1.5 rounded-full bg-[#141233] hover:bg-[#f43777] text-white text-[11px] font-semibold uppercase transition-colors"
-                        >
-                          Shop Now
-                        </a>
-                      </div>
-                    </div>
+                      );
+                    })()}
 
                     {/* Secondary Promo Banner or VIP Perks Card */}
                     {hoveredItem.banner ? (
@@ -943,7 +955,7 @@ export default function Sidebar() {
                         className="rounded-[16px] p-4 text-white relative overflow-hidden"
                         style={{
                           background:
-                            "linear-gradient(135deg, #141233 0%, #2a2468 60%, #f43777 100%)",
+                            "linear-gradient(135deg, #141233 0%, #2a2468 60%, #4f46e5 100%)",
                         }}
                       >
                         <span className="inline-block bg-white/15 backdrop-blur-xs text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1.5">
@@ -957,7 +969,7 @@ export default function Sidebar() {
                         </p>
                         <a
                           href="#bundle"
-                          className="inline-flex items-center gap-1 text-[11.5px] font-bold text-[#ff85ad] hover:text-white transition-colors"
+                          className="inline-flex items-center gap-1 text-[11.5px] font-bold text-[#38bdf8] hover:text-white transition-colors"
                         >
                           <span>Build Your Bundle</span>
                           <span>→</span>
@@ -978,13 +990,13 @@ export default function Sidebar() {
                     <a
                       key={brand}
                       href={`#brand-${brand.toLowerCase()}`}
-                      className="px-3 py-1 rounded-full bg-[#f5f5f7] hover:bg-[#f43777] text-[#333333] hover:text-white text-[12px] font-medium transition-all duration-200"
+                      className="px-3 py-1 rounded-full bg-[#f5f5f7] hover:bg-[#4f46e5] text-[#333333] hover:text-white text-[12px] font-medium transition-all duration-200"
                     >
                       {brand}
                     </a>
                   ))}
                 </div>
-                <span className="text-[11.5px] text-[#f43777] font-semibold">
+                <span className="text-[11.5px] text-[#4f46e5] font-semibold">
                   Free Express Shipping $500+
                 </span>
               </div>
@@ -1000,9 +1012,8 @@ export default function Sidebar() {
           ===================================================================== */}
       <div
         onClick={() => setMobileOpen(false)}
-        className={`lg:hidden fixed inset-0 bg-black/55 backdrop-blur-[2px] z-50 transition-opacity duration-300 ${
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+        className={`lg:hidden fixed inset-0 bg-black/55 backdrop-blur-[2px] z-50 transition-opacity duration-300 ${mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          }`}
       />
 
       <aside
@@ -1010,9 +1021,8 @@ export default function Sidebar() {
         style={{
           transitionTimingFunction: "cubic-bezier(0.22, 1, 0.36, 1)",
         }}
-        className={`lg:hidden fixed top-0 left-0 bottom-0 w-[88vw] max-w-[380px] bg-white z-50 flex flex-col shadow-[20px_0_50px_rgba(0,0,0,0.28)] transition-transform duration-350 select-none ${
-          mobileOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`lg:hidden fixed top-0 left-0 bottom-0 w-[88vw] max-w-[380px] bg-white z-50 flex flex-col shadow-[20px_0_50px_rgba(0,0,0,0.28)] transition-transform duration-350 select-none ${mobileOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         {/* 1. Drawer Dark Gradient Header (Logo + Close + Quick Filter) */}
         <div
@@ -1037,7 +1047,7 @@ export default function Sidebar() {
               type="button"
               onClick={() => setMobileOpen(false)}
               aria-label="Close menu"
-              className="w-[34px] h-[34px] rounded-full bg-white/10 hover:bg-[#f43777] text-white flex items-center justify-center transition-colors cursor-pointer"
+              className="w-[34px] h-[34px] rounded-full bg-white/10 hover:bg-[#4f46e5] text-white flex items-center justify-center transition-colors cursor-pointer"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -1051,11 +1061,10 @@ export default function Sidebar() {
             <button
               type="button"
               onClick={() => setMobileTab("categories")}
-              className={`py-2 px-3 rounded-[9px] text-[12.5px] font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                mobileTab === "categories"
-                  ? "bg-[#f43777] text-white shadow-sm"
+              className={`py-2 px-3 rounded-[9px] text-[12.5px] font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${mobileTab === "categories"
+                  ? "bg-[#4f46e5] text-white shadow-sm"
                   : "text-white/80 hover:text-white"
-              }`}
+                }`}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -1069,11 +1078,10 @@ export default function Sidebar() {
             <button
               type="button"
               onClick={() => setMobileTab("menu")}
-              className={`py-2 px-3 rounded-[9px] text-[12.5px] font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${
-                mobileTab === "menu"
-                  ? "bg-[#f43777] text-white shadow-sm"
+              className={`py-2 px-3 rounded-[9px] text-[12.5px] font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer ${mobileTab === "menu"
+                  ? "bg-[#4f46e5] text-white shadow-sm"
                   : "text-white/80 hover:text-white"
-              }`}
+                }`}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                 <line x1="3" y1="6" x2="21" y2="6" />
@@ -1096,7 +1104,7 @@ export default function Sidebar() {
                   value={mobileFilter}
                   onChange={(e) => setMobileFilter(e.target.value)}
                   placeholder="Filter categories, brands or gear..."
-                  className="w-full h-[38px] pl-9 pr-8 rounded-[10px] bg-[#f5f5f7] border border-[#e8e8ec] text-[13px] text-[#222222] placeholder-[#888888] focus:outline-none focus:border-[#f43777] focus:bg-white transition-colors"
+                  className="w-full h-[38px] pl-9 pr-8 rounded-[10px] bg-[#f5f5f7] border border-[#e8e8ec] text-[13px] text-[#222222] placeholder-[#888888] focus:outline-none focus:border-[#4f46e5] focus:bg-white transition-colors"
                 />
                 <svg
                   width="14"
@@ -1127,11 +1135,10 @@ export default function Sidebar() {
                 return (
                   <div
                     key={cat.id}
-                    className={`rounded-[14px] border transition-all duration-200 overflow-hidden ${
-                      isOpen
-                        ? "border-[#f43777]/40 bg-[#fff9fb] shadow-[0_6px_20px_rgba(244,55,119,0.08)]"
+                    className={`rounded-[14px] border transition-all duration-200 overflow-hidden ${isOpen
+                        ? "border-[#4f46e5]/40 bg-[#f8faff] shadow-[0_6px_20px_rgba(79,70,229,0.08)]"
                         : "border-[#efefef] bg-white"
-                    }`}
+                      }`}
                   >
                     {/* Category Header Row */}
                     <button
@@ -1141,9 +1148,8 @@ export default function Sidebar() {
                     >
                       <div className="flex items-center gap-3 min-w-0">
                         <div
-                          className={`w-[36px] h-[36px] rounded-[10px] flex items-center justify-center shrink-0 transition-colors ${
-                            isOpen ? "bg-[#f43777]/15" : "bg-[#f6f6f8]"
-                          }`}
+                          className={`w-[36px] h-[36px] rounded-[10px] flex items-center justify-center shrink-0 transition-colors ${isOpen ? "bg-[#4f46e5]/15" : "bg-[#f6f6f8]"
+                            }`}
                         >
                           <img
                             src={cat.icon}
@@ -1153,9 +1159,8 @@ export default function Sidebar() {
                         </div>
                         <div className="min-w-0">
                           <div
-                            className={`text-[14px] font-bold leading-tight truncate ${
-                              isOpen ? "text-[#f43777]" : "text-[#141233]"
-                            }`}
+                            className={`text-[14px] font-bold leading-tight truncate ${isOpen ? "text-[#4f46e5]" : "text-[#141233]"
+                              }`}
                           >
                             {cat.label}
                           </div>
@@ -1166,11 +1171,10 @@ export default function Sidebar() {
                       </div>
 
                       <span
-                        className={`w-[26px] h-[26px] rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
-                          isOpen
-                            ? "bg-[#f43777] text-white rotate-180"
+                        className={`w-[26px] h-[26px] rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen
+                            ? "bg-[#4f46e5] text-white rotate-180"
                             : "bg-[#f5f5f7] text-[#555555]"
-                        }`}
+                          }`}
                       >
                         <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
                           <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
@@ -1180,7 +1184,7 @@ export default function Sidebar() {
 
                     {/* Expanded Subcategory Groups + Featured Deal Card + Brand Chips */}
                     {isOpen && (
-                      <div className="px-3.5 pb-3.5 pt-1 border-t border-[#f43777]/15 space-y-3.5 bg-white">
+                      <div className="px-3.5 pb-3.5 pt-1 border-t border-[#4f46e5]/15 space-y-3.5 bg-white">
                         {/* Subcategory Groups */}
                         <div className="grid grid-cols-1 gap-3 pt-2">
                           {cat.subGroups.map((grp) => (
@@ -1190,7 +1194,7 @@ export default function Sidebar() {
                             >
                               <div className="text-[12px] font-bold text-[#141233] mb-2 flex items-center justify-between">
                                 <span>{grp.heading}</span>
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#f43777]" />
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#4f46e5]" />
                               </div>
                               <ul className="space-y-1.5">
                                 {grp.links.map((lnk) => (
@@ -1198,14 +1202,13 @@ export default function Sidebar() {
                                     <a
                                       href={`#${cat.id}`}
                                       onClick={() => setMobileOpen(false)}
-                                      className="flex items-center justify-between text-[12.5px] text-[#444444] hover:text-[#f43777] py-0.5 transition-colors"
+                                      className="flex items-center justify-between text-[12.5px] text-[#444444] hover:text-[#4f46e5] py-0.5 transition-colors"
                                     >
                                       <span>{lnk.label}</span>
                                       {lnk.badge && (
                                         <span
-                                          className={`text-[8.5px] font-bold uppercase px-1.5 py-0.5 rounded-[4px] leading-none ${
-                                            BADGE_STYLES[lnk.badge]
-                                          }`}
+                                          className={`text-[8.5px] font-bold uppercase px-1.5 py-0.5 rounded-[4px] leading-none ${BADGE_STYLES[lnk.badge]
+                                            }`}
                                         >
                                           {lnk.badge}
                                         </span>
@@ -1219,40 +1222,58 @@ export default function Sidebar() {
                         </div>
 
                         {/* Compact Featured Deal Card inside Mobile Accordion */}
-                        <a
-                          href={`#${cat.id}`}
-                          onClick={() => setMobileOpen(false)}
-                          className="flex items-center gap-3 p-2.5 rounded-[12px] border border-[#eaeaea] bg-[#fdfdfd] hover:border-[#f43777] transition-all"
-                        >
-                          <div className="w-[62px] h-[62px] rounded-[10px] bg-white p-1.5 border border-[#f0f0f0] flex items-center justify-center shrink-0">
-                            <img
-                              src={cat.featuredProduct.image}
-                              alt={cat.featuredProduct.title}
-                              className="w-full h-full object-contain"
-                            />
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center gap-1.5 mb-0.5">
-                              <span className="bg-[#f43777] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px] leading-none">
-                                {cat.featuredProduct.discount}
-                              </span>
-                              <span className="text-[9.5px] font-bold uppercase text-[#888888]">
-                                TOP PICK
-                              </span>
+                        {(() => {
+                          const resolvedProd = resolveStoreProduct(cat.featuredProduct);
+                          return (
+                            <div className="flex items-center gap-3 p-2.5 rounded-[12px] border border-[#eaeaea] bg-[#fdfdfd] hover:border-[#4f46e5] transition-all">
+                              <Link
+                                href={`/product/${resolvedProd.slug}`}
+                                onClick={() => setMobileOpen(false)}
+                                className="w-[62px] h-[62px] rounded-[10px] bg-white p-1.5 border border-[#f0f0f0] flex items-center justify-center shrink-0"
+                              >
+                                <img
+                                  src={cat.featuredProduct.image}
+                                  alt={cat.featuredProduct.title}
+                                  className="w-full h-full object-contain"
+                                />
+                              </Link>
+                              <div className="min-w-0 flex-1">
+                                <div className="flex items-center gap-1.5 mb-0.5">
+                                  <span className="bg-[#4f46e5] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px] leading-none">
+                                    {cat.featuredProduct.discount}
+                                  </span>
+                                  <span className="text-[9.5px] font-bold uppercase text-[#888888]">
+                                    TOP PICK
+                                  </span>
+                                </div>
+                                <Link
+                                  href={`/product/${resolvedProd.slug}`}
+                                  onClick={() => setMobileOpen(false)}
+                                  className="block text-[12.5px] font-bold text-[#141233] hover:text-[#4f46e5] truncate"
+                                >
+                                  {cat.featuredProduct.title}
+                                </Link>
+                                <div className="flex items-center justify-between gap-2 mt-1">
+                                  <div className="flex items-baseline gap-1.5">
+                                    <span className="text-[13.5px] font-extrabold text-[#4f46e5]">
+                                      ${cat.featuredProduct.price.toFixed(2)}
+                                    </span>
+                                    <span className="text-[11px] text-[#999999] line-through">
+                                      ${cat.featuredProduct.oldPrice.toFixed(2)}
+                                    </span>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    onClick={() => addToCart(resolvedProd, 1)}
+                                    className="px-2.5 py-1 rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[10px] font-bold uppercase cursor-pointer"
+                                  >
+                                    + Cart
+                                  </button>
+                                </div>
+                              </div>
                             </div>
-                            <div className="text-[12.5px] font-bold text-[#141233] truncate">
-                              {cat.featuredProduct.title}
-                            </div>
-                            <div className="flex items-baseline gap-1.5 mt-0.5">
-                              <span className="text-[13.5px] font-extrabold text-[#f43777]">
-                                ${cat.featuredProduct.price.toFixed(2)}
-                              </span>
-                              <span className="text-[11px] text-[#999999] line-through">
-                                ${cat.featuredProduct.oldPrice.toFixed(2)}
-                              </span>
-                            </div>
-                          </div>
-                        </a>
+                          );
+                        })()}
 
                         {/* Popular Brands Row */}
                         <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
@@ -1261,7 +1282,7 @@ export default function Sidebar() {
                               key={b}
                               href={`#brand-${b.toLowerCase()}`}
                               onClick={() => setMobileOpen(false)}
-                              className="px-2.5 py-1 rounded-full bg-[#f4f4f6] hover:bg-[#f43777] text-[#333333] hover:text-white text-[11px] font-medium transition-colors"
+                              className="px-2.5 py-1 rounded-full bg-[#f4f4f6] hover:bg-[#4f46e5] text-[#333333] hover:text-white text-[11px] font-medium transition-colors"
                             >
                               {b}
                             </a>
@@ -1285,11 +1306,10 @@ export default function Sidebar() {
                 >
                   <span className="text-[14px] font-bold text-[#141233]">Home Sections</span>
                   <span
-                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${
-                      openMenuId === "Home"
-                        ? "bg-[#f43777] text-white rotate-180"
+                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${openMenuId === "Home"
+                        ? "bg-[#4f46e5] text-white rotate-180"
                         : "bg-[#f5f5f7] text-[#555555]"
-                    }`}
+                      }`}
                   >
                     <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
                       <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
@@ -1310,9 +1330,9 @@ export default function Sidebar() {
                         key={c.title}
                         href={c.href}
                         onClick={() => setMobileOpen(false)}
-                        className="rounded-[10px] border border-[#eaeaea] hover:border-[#f43777] p-2 bg-[#fafafa] flex flex-col items-center text-center relative"
+                        className="rounded-[10px] border border-[#eaeaea] hover:border-[#4f46e5] p-2 bg-[#fafafa] flex flex-col items-center text-center relative"
                       >
-                        <span className="absolute top-1.5 left-1.5 bg-[#f43777] text-white text-[8px] font-bold px-1.5 py-0.5 rounded-[4px]">
+                        <span className="absolute top-1.5 left-1.5 bg-[#4f46e5] text-white text-[8px] font-bold px-1.5 py-0.5 rounded-[4px]">
                           {c.badge}
                         </span>
                         <div className="w-full h-[58px] bg-white rounded-[8px] p-1.5 flex items-center justify-center mb-1.5">
@@ -1334,11 +1354,10 @@ export default function Sidebar() {
                 >
                   <span className="text-[14px] font-bold text-[#141233]">Shop & Catalog</span>
                   <span
-                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${
-                      openMenuId === "Shop"
-                        ? "bg-[#f43777] text-white rotate-180"
+                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${openMenuId === "Shop"
+                        ? "bg-[#4f46e5] text-white rotate-180"
                         : "bg-[#f5f5f7] text-[#555555]"
-                    }`}
+                      }`}
                   >
                     <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
                       <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
@@ -1359,11 +1378,11 @@ export default function Sidebar() {
                         key={l.label}
                         href="#shop"
                         onClick={() => setMobileOpen(false)}
-                        className="flex items-center justify-between text-[13px] text-[#444444] hover:text-[#f43777] py-1"
+                        className="flex items-center justify-between text-[13px] text-[#444444] hover:text-[#4f46e5] py-1"
                       >
                         <span>{l.label}</span>
                         {l.badge && (
-                          <span className="bg-[#f43777] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
+                          <span className="bg-[#4f46e5] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
                             {l.badge}
                           </span>
                         )}
@@ -1382,11 +1401,10 @@ export default function Sidebar() {
                 >
                   <span className="text-[14px] font-bold text-[#141233]">Product Features</span>
                   <span
-                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${
-                      openMenuId === "Product"
-                        ? "bg-[#f43777] text-white rotate-180"
+                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${openMenuId === "Product"
+                        ? "bg-[#4f46e5] text-white rotate-180"
                         : "bg-[#f5f5f7] text-[#555555]"
-                    }`}
+                      }`}
                   >
                     <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
                       <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
@@ -1406,7 +1424,7 @@ export default function Sidebar() {
                         key={l.label}
                         href="#product"
                         onClick={() => setMobileOpen(false)}
-                        className="flex items-center justify-between text-[13px] text-[#444444] hover:text-[#f43777] py-1"
+                        className="flex items-center justify-between text-[13px] text-[#444444] hover:text-[#4f46e5] py-1"
                       >
                         <span>{l.label}</span>
                         {l.badge && (
@@ -1429,11 +1447,10 @@ export default function Sidebar() {
                 >
                   <span className="text-[14px] font-bold text-[#141233]">Pages & Tech Blog</span>
                   <span
-                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${
-                      openMenuId === "Pages"
-                        ? "bg-[#f43777] text-white rotate-180"
+                    className={`w-[24px] h-[24px] rounded-full flex items-center justify-center transition-all ${openMenuId === "Pages"
+                        ? "bg-[#4f46e5] text-white rotate-180"
                         : "bg-[#f5f5f7] text-[#555555]"
-                    }`}
+                      }`}
                   >
                     <svg width="11" height="11" viewBox="0 0 48 48" fill="currentColor">
                       <polygon points="24,29.172 9.414,14.586 6.586,17.414 24,34.828 41.414,17.414 38.586,14.586" />
@@ -1443,18 +1460,27 @@ export default function Sidebar() {
                 {openMenuId === "Pages" && (
                   <div className="px-3.5 pb-3.5 pt-2 border-t border-[#f3f3f3] grid grid-cols-2 gap-2">
                     {[
-                      { label: "About Us", href: "#about" },
-                      { label: "Contact Us", href: "#contact" },
-                      { label: "FAQs & Help", href: "#faq" },
-                      { label: "Store Locator", href: "#locations" },
-                      { label: "Order Tracking", href: "#tracking" },
-                      { label: "Tech Journal", href: "#all-blogs" },
+                      { label: "About Us", href: "/about" },
+                      { label: "Contact Us", href: "/contact" },
+                      { label: "Shop All", href: "/shop" },
+                      { label: "Categories", href: "/categories" },
+                      { label: "Shopping Cart", href: "/cart" },
+                      { label: "Checkout", href: "/checkout" },
+                      { label: "My Account", href: "/account" },
+                      { label: "Wishlist", href: "/wishlist" },
+                      { label: "Order Tracking", href: "/track-order" },
+                      { label: "Blogs", href: "/blogs" },
+                      { label: "FAQs", href: "/faq" },
+                      { label: "Shipping Policy", href: "/shipping-policy" },
+                      { label: "Return Policy", href: "/return-policy" },
+                      { label: "Privacy Policy", href: "/privacy-policy" },
+                      { label: "Terms & Conditions", href: "/terms-conditions" },
                     ].map((p) => (
                       <a
                         key={p.label}
                         href={p.href}
                         onClick={() => setMobileOpen(false)}
-                        className="px-3 py-2 rounded-[8px] bg-[#f7f7f9] hover:bg-[#f43777] text-[#222222] hover:text-white text-[12.5px] font-semibold transition-colors"
+                        className="px-3 py-2 rounded-[8px] bg-[#f7f7f9] hover:bg-[#4f46e5] text-[#222222] hover:text-white text-[12px] font-semibold transition-colors"
                       >
                         {p.label}
                       </a>
@@ -1467,7 +1493,7 @@ export default function Sidebar() {
               <div
                 className="rounded-[16px] p-4 text-white"
                 style={{
-                  background: "linear-gradient(135deg, #141233 0%, #2a2468 55%, #f43777 100%)",
+                  background: "linear-gradient(135deg, #141233 0%, #2a2468 55%, #4f46e5 100%)",
                 }}
               >
                 <span className="inline-block bg-white/15 text-[9.5px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full mb-1.5">
@@ -1490,7 +1516,7 @@ export default function Sidebar() {
                   <a
                     href="#sale-off"
                     onClick={() => setMobileOpen(false)}
-                    className="flex-1 py-2 rounded-full bg-[#f43777] text-white text-center text-[11.5px] font-bold uppercase tracking-wide"
+                    className="flex-1 py-2 rounded-full bg-[#4f46e5] text-white text-center text-[11.5px] font-bold uppercase tracking-wide"
                   >
                     Flash Deals
                   </a>
@@ -1505,9 +1531,9 @@ export default function Sidebar() {
           <div className="flex items-center justify-between mb-2">
             <a
               href="tel:1888456789"
-              className="flex items-center gap-2 text-[12.5px] font-bold text-[#141233] hover:text-[#f43777]"
+              className="flex items-center gap-2 text-[12.5px] font-bold text-[#141233] hover:text-[#4f46e5]"
             >
-              <span className="w-[26px] h-[26px] rounded-full bg-[#f43777]/15 text-[#f43777] flex items-center justify-center">
+              <span className="w-[26px] h-[26px] rounded-full bg-[#4f46e5]/15 text-[#4f46e5] flex items-center justify-center">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
@@ -1519,15 +1545,15 @@ export default function Sidebar() {
             </span>
           </div>
           <div className="flex items-center justify-between text-[11.5px] text-[#666666] pt-1.5 border-t border-[#eaeaea]">
-            <a href="#help-center" onClick={() => setMobileOpen(false)} className="hover:text-[#f43777]">
+            <a href="/faq" onClick={() => setMobileOpen(false)} className="hover:text-[#4f46e5]">
               Help Center
             </a>
             <span>•</span>
-            <a href="#find-store" onClick={() => setMobileOpen(false)} className="hover:text-[#f43777]">
+            <a href="/about" onClick={() => setMobileOpen(false)} className="hover:text-[#4f46e5]">
               Find a Store
             </a>
             <span>•</span>
-            <a href="#track-orders" onClick={() => setMobileOpen(false)} className="hover:text-[#f43777]">
+            <a href="/track-order" onClick={() => setMobileOpen(false)} className="hover:text-[#4f46e5]">
               Track Orders
             </a>
           </div>
@@ -1544,7 +1570,7 @@ export default function Sidebar() {
       >
         <a
           href="/"
-          className="flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#f43777] transition-colors"
+          className="flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#4f46e5] transition-colors"
         >
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -1553,13 +1579,9 @@ export default function Sidebar() {
           <span className="text-[10.5px] font-bold">Home</span>
         </a>
 
-        <button
-          type="button"
-          onClick={() => {
-            setMobileTab("categories");
-            setMobileOpen(true);
-          }}
-          className="flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#f43777] transition-colors cursor-pointer"
+        <a
+          href="/categories"
+          className="flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#4f46e5] transition-colors cursor-pointer"
         >
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -1568,9 +1590,9 @@ export default function Sidebar() {
             <rect x="14" y="14" width="7" height="7" rx="1.5" />
           </svg>
           <span className="text-[10.5px] font-bold">Categories</span>
-        </button>
+        </a>
 
-        {/* Center Highlighted Pink Pill Button: Mega Menu */}
+        {/* Center Highlighted Indigo Pill Button: Mega Menu */}
         <button
           type="button"
           onClick={() => {
@@ -1579,42 +1601,38 @@ export default function Sidebar() {
           }}
           className="flex flex-col items-center justify-center -mt-4 cursor-pointer group"
         >
-          <span className="w-[44px] h-[44px] rounded-full bg-[#f43777] text-white shadow-[0_6px_18px_rgba(244,55,119,0.4)] flex items-center justify-center group-active:scale-95 transition-transform">
+          <span className="w-[44px] h-[44px] rounded-full bg-[#141233] text-white shadow-[0_6px_18px_rgba(20,18,51,0.35)] flex items-center justify-center group-active:scale-95 transition-transform">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
               <line x1="3" y1="6" x2="21" y2="6" />
               <line x1="3" y1="12" x2="21" y2="12" />
               <line x1="3" y1="18" x2="21" y2="18" />
             </svg>
           </span>
-          <span className="text-[10px] font-bold text-[#f43777] mt-0.5">Menu</span>
+          <span className="text-[10px] font-bold text-[#141233] mt-0.5">Menu</span>
         </button>
 
         <a
-          href="#sale-off"
-          className="relative flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#f43777] transition-colors"
+          href="/shop"
+          className="relative flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#4f46e5] transition-colors"
         >
-          <span className="absolute top-0.5 right-3.5 w-2 h-2 rounded-full bg-[#f43777] animate-pulse" />
+          <span className="absolute top-0.5 right-3.5 w-2 h-2 rounded-full bg-[#4f46e5] animate-pulse" />
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
           </svg>
-          <span className="text-[10.5px] font-bold">Deals</span>
+          <span className="text-[10.5px] font-bold">Shop</span>
         </a>
 
-        <button
-          type="button"
-          onClick={() => window.dispatchEvent(new CustomEvent("nexova:open-cart"))}
-          className="relative flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#f43777] transition-colors cursor-pointer"
+        <a
+          href="/cart"
+          className="relative flex flex-col items-center justify-center gap-1 py-1 text-[#141233] hover:text-[#4f46e5] transition-colors cursor-pointer"
         >
-          <span className="absolute top-0 right-3 w-[16px] h-[16px] rounded-full bg-[#f43777] text-white text-[9px] font-bold flex items-center justify-center">
-            0
-          </span>
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
             <line x1="3" y1="6" x2="21" y2="6" />
             <path d="M16 10a4 4 0 0 1-8 0" />
           </svg>
           <span className="text-[10.5px] font-bold">Cart</span>
-        </button>
+        </a>
       </nav>
     </>
   );

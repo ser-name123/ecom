@@ -201,7 +201,7 @@ export default function CarouselTrack<T>({
           type="button"
           onClick={handlePrev}
           aria-label="Previous slide"
-          className={`flex absolute -left-2 sm:-left-4 md:-left-5 ${arrowPositionClass} z-20 w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] shadow-sm sm:shadow-none hover:bg-[#f43777] hover:scale-110 active:scale-95 text-[#222222] hover:text-white items-center justify-center transition-all duration-300 cursor-pointer`}
+          className={`flex absolute -left-2 sm:-left-4 md:-left-5 ${arrowPositionClass} z-20 w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] shadow-sm sm:shadow-none hover:bg-[#4f46e5] hover:scale-110 active:scale-95 text-[#222222] hover:text-white items-center justify-center transition-all duration-300 cursor-pointer`}
         >
           <svg width="13" height="13" viewBox="0 0 48 48" fill="currentColor">
             <polygon points="30.586,6.586 13.171,24 30.586,41.414 33.414,38.586 18.829,24 33.414,9.414" />
@@ -261,7 +261,7 @@ export default function CarouselTrack<T>({
           type="button"
           onClick={handleNext}
           aria-label="Next slide"
-          className={`flex absolute -right-2 sm:-right-4 md:-right-5 ${arrowPositionClass} z-20 w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] shadow-sm sm:shadow-none hover:bg-[#f43777] hover:scale-110 active:scale-95 text-[#222222] hover:text-white items-center justify-center transition-all duration-300 cursor-pointer`}
+          className={`flex absolute -right-2 sm:-right-4 md:-right-5 ${arrowPositionClass} z-20 w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] rounded-full bg-white/95 sm:bg-[#f5f5f5] shadow-sm sm:shadow-none hover:bg-[#4f46e5] hover:scale-110 active:scale-95 text-[#222222] hover:text-white items-center justify-center transition-all duration-300 cursor-pointer`}
         >
           <svg width="13" height="13" viewBox="0 0 48 48" fill="currentColor">
             <polygon points="14.586,9.414 29.171,24 14.586,38.586 17.414,41.414 34.829,24 17.414,6.586" />
@@ -280,7 +280,7 @@ export default function CarouselTrack<T>({
               aria-label={`Go to item ${idx + 1}`}
               className={`rounded-full transition-all duration-300 cursor-pointer ${
                 idx === activeLogicalIndex
-                  ? "w-7 h-[6px] bg-[#f43777]"
+                  ? "w-7 h-[6px] bg-[#4f46e5]"
                   : "w-[6px] h-[6px] bg-[#d4d4d4] hover:bg-[#999999]"
               }`}
             />

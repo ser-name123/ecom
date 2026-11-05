@@ -24,8 +24,8 @@ export default function PopularTagsSection() {
           {marqueeTags.map((tag, idx) => (
             <a
               key={`${tag}-${idx}`}
-              href={`#tag-${tag.toLowerCase().replace(/\s+/g, "-")}`}
-              className="bg-white hover:bg-[#f43777] text-[#000000] hover:text-white hover:-translate-y-0.5 text-[14px] font-normal px-[19px] py-[9px] rounded-[20px] shadow-[0_5px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_18px_rgba(244,55,119,0.22)] transition-all duration-300 whitespace-nowrap"
+              href={`/shop?q=${encodeURIComponent(tag)}`}
+              className="bg-white hover:bg-[#4f46e5] text-[#000000] hover:text-white hover:-translate-y-0.5 text-[14px] font-normal px-[19px] py-[9px] rounded-[20px] shadow-[0_5px_10px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_18px_rgba(79,70,229,0.22)] transition-all duration-300 whitespace-nowrap"
             >
               {tag}
             </a>

@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 48" fill="none">
   <defs>
     <linearGradient id="logoIconBg" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#f43777" />
-      <stop offset="55%" stop-color="#d92663" />
-      <stop offset="100%" stop-color="#686cff" />
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#6366f1" />
     </linearGradient>
     <linearGradient id="logoTextGrad" x1="125" y1="8" x2="235" y2="40" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#ff548e" />
-      <stop offset="50%" stop-color="#f43777" />
-      <stop offset="100%" stop-color="#7c80ff" />
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="50%" stop-color="#60a5fa" />
+      <stop offset="100%" stop-color="#818cf8" />
     </linearGradient>
   </defs>
 
@@ -45,6 +45,5 @@
   </text>
 
   <!-- Glowing Tech Dot -->
-  <circle cx="204" cy="29" r="3.5" fill="#f43777" />
+  <circle cx="176" cy="29" r="3.5" fill="#38bdf8" />
 </svg>
-

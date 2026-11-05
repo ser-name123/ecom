@@ -1,12 +1,16 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { useStore } from "@/lib/StoreContext";
+import { resolveStoreProduct } from "@/lib/storeData";
 
 interface MegaMenuProps {
   activeDropdown: string | null;
 }
 
 export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
+  const { addToCart } = useStore();
   if (!activeDropdown) return null;
 
   return (
@@ -18,7 +22,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
         <div className="absolute left-1/2 -translate-x-1/2 top-full w-[95vw] max-w-[1360px] bg-white text-[#1c1c1c] rounded-[20px] shadow-[0_28px_65px_rgba(12,11,34,0.22)] border border-[#eaeaea] p-7 z-50 animate-fade-up">
           <div className="flex items-center justify-between pb-4 mb-5 border-b border-[#efefef]">
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#f43777]">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#4f46e5]">
                 EXPLORE STORE SECTIONS
               </span>
               <h4 className="text-[18px] font-bold text-[#141233]">
@@ -27,7 +31,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
             </div>
             <a
               href="/#new-arrivals"
-              className="btn-shine px-4 py-2 rounded-full bg-[#141233] hover:bg-[#f43777] text-white text-[11.5px] font-semibold uppercase tracking-wider transition-colors"
+              className="btn-shine px-4 py-2 rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[11.5px] font-semibold uppercase tracking-wider transition-colors"
             >
               Explore All Sections →
             </a>
@@ -47,7 +51,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                 title: "Flash Sale Off",
                 sub: "Up to 50% Deal",
                 badge: "HOT",
-                badgeColor: "bg-[#f43777]",
+                badgeColor: "bg-[#4f46e5]",
                 img: "/assets/watch-2.jpg",
                 href: "/#sale-off",
               },
@@ -71,7 +75,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                 title: "Collections",
                 sub: "Editorial Lookbook",
                 badge: "TREND",
-                badgeColor: "bg-[#f43777]",
+                badgeColor: "bg-[#4f46e5]",
                 img: "/assets/collection-1.jpg",
                 href: "/#collections",
               },
@@ -87,7 +91,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
               <a
                 key={card.title}
                 href={card.href}
-                className="group rounded-[14px] border border-[#eaeaea] hover:border-[#f43777] bg-[#fafafa] hover:bg-white p-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(244,55,119,0.1)] relative"
+                className="group rounded-[14px] border border-[#eaeaea] hover:border-[#4f46e5] bg-[#fafafa] hover:bg-white p-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(79,70,229,0.12)] relative"
               >
                 <span
                   className={`absolute top-2.5 left-2.5 z-10 ${card.badgeColor} text-white text-[9px] font-bold uppercase px-2 py-0.5 badge-leaf`}
@@ -101,7 +105,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                     className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500"
                   />
                 </div>
-                <div className="text-[13.5px] font-bold text-[#141233] group-hover:text-[#f43777] transition-colors">
+                <div className="text-[13.5px] font-bold text-[#141233] group-hover:text-[#4f46e5] transition-colors">
                   {card.title}
                 </div>
                 <div className="text-[11.5px] text-[#777777]">{card.sub}</div>
@@ -118,20 +122,20 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
         <div className="absolute left-1/2 -translate-x-1/2 top-full w-[95vw] max-w-[1360px] bg-white text-[#1c1c1c] rounded-[20px] shadow-[0_28px_65px_rgba(12,11,34,0.22)] border border-[#eaeaea] p-8 z-50 grid grid-cols-12 gap-7 animate-fade-up">
           {/* Left 3 Cols: Highlighted Collection Pills with Icons & Counts */}
           <div className="col-span-3 space-y-2.5 border-r border-[#f0f0f0] pr-6">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-[#f43777] mb-2">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-[#4f46e5] mb-2">
               TOP DEPARTMENTS
             </div>
             {[
-              { name: "Laptop & Tablet", icon: "/assets/laptop.svg", count: "42" },
-              { name: "Computer & PC", icon: "/assets/computer.svg", count: "38" },
-              { name: "Smartphones 5G", icon: "/assets/smartphone.svg", count: "29" },
-              { name: "Smartwatches", icon: "/assets/watch.svg", count: "19" },
-              { name: "Pro Headphones", icon: "/assets/headphone.svg", count: "34" },
+              { name: "Laptop & Tablet", icon: "/assets/laptop.svg", count: "42", slug: "laptop" },
+              { name: "Computer & PC", icon: "/assets/computer.svg", count: "38", slug: "computer" },
+              { name: "Smartphones 5G", icon: "/assets/smartphone.svg", count: "29", slug: "mobile" },
+              { name: "Smartwatches", icon: "/assets/watch.svg", count: "19", slug: "smartwatch" },
+              { name: "Pro Headphones", icon: "/assets/headphone.svg", count: "34", slug: "headphone" },
             ].map((c) => (
               <a
                 key={c.name}
-                href="#collection"
-                className="group/cat flex items-center justify-between px-3.5 py-2.5 rounded-[12px] bg-[#f7f7f7] hover:bg-[#f43777] text-[#1c1c1c] hover:text-white text-[13.5px] font-semibold transition-all duration-200"
+                href={`/categories/${c.slug}`}
+                className="group/cat flex items-center justify-between px-3.5 py-2.5 rounded-[12px] bg-[#f7f7f7] hover:bg-[#4f46e5] text-[#1c1c1c] hover:text-white text-[13.5px] font-semibold transition-all duration-200"
               >
                 <div className="flex items-center gap-2.5">
                   <img
@@ -166,11 +170,11 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   <li key={l.label}>
                     <a
                       href="#shop"
-                      className="flex items-center justify-between hover:text-[#f43777] hover:translate-x-1 transition-all duration-200"
+                      className="flex items-center justify-between hover:text-[#4f46e5] hover:translate-x-1 transition-all duration-200"
                     >
                       <span>{l.label}</span>
                       {l.badge && (
-                        <span className="bg-[#f43777] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
+                        <span className="bg-[#4f46e5] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
                           {l.badge}
                         </span>
                       )}
@@ -196,7 +200,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   <li key={l.label}>
                     <a
                       href="#shop"
-                      className="flex items-center justify-between hover:text-[#f43777] hover:translate-x-1 transition-all duration-200"
+                      className="flex items-center justify-between hover:text-[#4f46e5] hover:translate-x-1 transition-all duration-200"
                     >
                       <span>{l.label}</span>
                       {l.badge && (
@@ -226,7 +230,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   <li key={l.label}>
                     <a
                       href="#shop"
-                      className="flex items-center justify-between hover:text-[#f43777] hover:translate-x-1 transition-all duration-200"
+                      className="flex items-center justify-between hover:text-[#4f46e5] hover:translate-x-1 transition-all duration-200"
                     >
                       <span>{l.label}</span>
                       {l.badge && (
@@ -259,7 +263,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                 className="absolute right-0 top-0 h-full w-auto max-w-none object-contain object-right group-hover:-translate-x-1 transition-transform duration-500"
               />
               <div className="relative z-10 max-w-[65%]">
-                <span className="inline-block bg-[#f43777] text-white text-[10px] font-bold uppercase px-2.5 py-0.5 badge-leaf mb-2">
+                <span className="inline-block bg-[#4f46e5] text-white text-[10px] font-bold uppercase px-2.5 py-0.5 badge-leaf mb-2">
                   UP TO 50% OFF
                 </span>
                 <h5 className="text-[20px] font-extrabold leading-tight mb-1.5">
@@ -272,7 +276,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                 </p>
                 <a
                   href="#headphones"
-                  className="btn-shine inline-flex px-4 py-2 rounded-full bg-[#141233] hover:bg-[#f43777] text-white text-[11px] font-bold uppercase tracking-wider transition-colors"
+                  className="btn-shine inline-flex px-4 py-2 rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[11px] font-bold uppercase tracking-wider transition-colors"
                 >
                   Shop Now
                 </a>
@@ -305,11 +309,11 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   <li key={l.label}>
                     <a
                       href="#product"
-                      className="flex items-center justify-between hover:text-[#f43777] hover:translate-x-1 transition-all duration-200"
+                      className="flex items-center justify-between hover:text-[#4f46e5] hover:translate-x-1 transition-all duration-200"
                     >
                       <span>{l.label}</span>
                       {l.badge && (
-                        <span className="bg-[#f43777] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
+                        <span className="bg-[#4f46e5] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
                           {l.badge}
                         </span>
                       )}
@@ -336,7 +340,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   <li key={l.label}>
                     <a
                       href="#product"
-                      className="flex items-center justify-between hover:text-[#f43777] hover:translate-x-1 transition-all duration-200"
+                      className="flex items-center justify-between hover:text-[#4f46e5] hover:translate-x-1 transition-all duration-200"
                     >
                       <span>{l.label}</span>
                       {l.badge && (
@@ -367,7 +371,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   <li key={l.label}>
                     <a
                       href="#product"
-                      className="flex items-center justify-between hover:text-[#f43777] hover:translate-x-1 transition-all duration-200"
+                      className="flex items-center justify-between hover:text-[#4f46e5] hover:translate-x-1 transition-all duration-200"
                     >
                       <span>{l.label}</span>
                       {l.badge && (
@@ -386,34 +390,44 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
           <div className="col-span-3 border-l border-[#f0f0f0] pl-6">
             <div className="flex items-center justify-between mb-3">
               <h4 className="text-[15px] font-bold text-[#141233]">Featured Deal</h4>
-              <span className="bg-[#f43777] text-white text-[10px] font-bold px-2 py-0.5 badge-leaf">
+              <span className="bg-[#4f46e5] text-white text-[10px] font-bold px-2 py-0.5 badge-leaf">
                 -17%
               </span>
             </div>
-            <a
-              href="#featured"
-              className="block group rounded-[16px] border border-[#eaeaea] hover:border-[#f43777] bg-[#fafafa] hover:bg-white p-3.5 hover:shadow-[0_14px_30px_rgba(244,55,119,0.1)] transition-all"
-            >
-              <div className="aspect-square w-full overflow-hidden rounded-[12px] bg-white p-3 mb-3 flex items-center justify-center">
-                <img
-                  src="/assets/computer-4.jpg"
-                  alt="Angular Tempered Glass PC Case"
-                  className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500"
-                />
-              </div>
-              <div className="text-[13.5px] font-bold text-[#141233] group-hover:text-[#f43777] line-clamp-1 mb-1.5">
-                Angular Tempered Glass PC Case
-              </div>
+            <div className="group rounded-[16px] border border-[#eaeaea] hover:border-[#4f46e5] bg-[#fafafa] hover:bg-white p-3.5 hover:shadow-[0_14px_30px_rgba(79,70,229,0.12)] transition-all">
+              <Link
+                href="/product/angular-tempered-glass-gaming-pc-rtx"
+                className="block"
+              >
+                <div className="aspect-square w-full overflow-hidden rounded-[12px] bg-white p-3 mb-3 flex items-center justify-center">
+                  <img
+                    src="/assets/computer-4.jpg"
+                    alt="Angular Tempered Glass PC Case"
+                    className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500"
+                  />
+                </div>
+                <div className="text-[13.5px] font-bold text-[#141233] group-hover:text-[#4f46e5] line-clamp-1 mb-1.5">
+                  Angular Tempered Glass PC Case
+                </div>
+              </Link>
               <div className="flex items-center justify-between">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-[16px] font-extrabold text-[#f43777]">$91.00</span>
-                  <span className="text-[12.5px] text-[#999999] line-through">$110.00</span>
+                  <span className="text-[16px] font-extrabold text-[#4f46e5]">$291.00</span>
+                  <span className="text-[12.5px] text-[#999999] line-through">$350.00</span>
                 </div>
-                <span className="text-[11px] font-bold uppercase text-white bg-[#141233] group-hover:bg-[#f43777] px-3 py-1 rounded-full transition-colors">
-                  Buy
-                </span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    addToCart(
+                      resolveStoreProduct({ slug: "angular-tempered-glass-gaming-pc-rtx" })
+                    )
+                  }
+                  className="text-[11px] font-bold uppercase text-white bg-[#141233] hover:bg-[#4f46e5] px-3 py-1 rounded-full transition-colors cursor-pointer"
+                >
+                  Add Cart
+                </button>
               </div>
-            </a>
+            </div>
           </div>
         </div>
       )}
@@ -424,14 +438,14 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
       {activeDropdown === "Pages" && (
         <div className="absolute left-1/2 -translate-x-1/2 top-full w-[95vw] max-w-[1360px] bg-white text-[#1c1c1c] rounded-[20px] shadow-[0_28px_65px_rgba(12,11,34,0.22)] border border-[#eaeaea] p-8 z-50 grid grid-cols-12 gap-8 animate-fade-up">
           <div className="col-span-3 space-y-2.5 border-r border-[#f0f0f0] pr-6">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-[#f43777] mb-2">
+            <div className="text-[11px] font-bold uppercase tracking-wider text-[#4f46e5] mb-2">
               QUICK CATEGORIES
             </div>
             {["4K Cameras", "Video Games", "Smart Electronics", "Mechanical Keyboards", "Pro Laptops"].map((c) => (
               <a
                 key={c}
                 href="#collection"
-                className="flex items-center justify-between px-4 py-2.5 rounded-[10px] bg-[#f7f7f7] hover:bg-[#f43777] text-[#1c1c1c] hover:text-white text-[13.5px] font-semibold transition-all"
+                className="flex items-center justify-between px-4 py-2.5 rounded-[10px] bg-[#f7f7f7] hover:bg-[#4f46e5] text-[#1c1c1c] hover:text-white text-[13.5px] font-semibold transition-all"
               >
                 <span>{c}</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -448,16 +462,18 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
               </h4>
               <ul className="space-y-3 text-[13.5px] font-normal text-[#555555]">
                 {[
-                  { label: "About Nexova Story", badge: "NEW" },
-                  { label: "Contact Support 24/7" },
-                  { label: "Interactive Store Direction" },
-                  { label: "Global Store Locations", badge: "6 CITIES" },
-                  { label: "Careers & Press Kit" },
+                  { label: "About Nexova Story", badge: "NEW", href: "/about" },
+                  { label: "Contact Support 24/7", href: "/contact" },
+                  { label: "Shop All Products", href: "/shop" },
+                  { label: "All 9 Categories", badge: "9 HUBS", href: "/categories" },
+                  { label: "Shopping Cart", href: "/cart" },
+                  { label: "Express Checkout", href: "/checkout" },
+                  { label: "My Account / Login", href: "/account" },
                 ].map((l) => (
                   <li key={l.label}>
                     <a
-                      href="#page"
-                      className="flex items-center justify-between hover:text-[#f43777] hover:translate-x-1 transition-all duration-200"
+                      href={l.href}
+                      className="flex items-center justify-between hover:text-[#4f46e5] hover:translate-x-1 transition-all duration-200"
                     >
                       <span>{l.label}</span>
                       {l.badge && (
@@ -473,24 +489,26 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
 
             <div>
               <h4 className="text-[15px] font-bold text-[#141233] mb-3.5 pb-2 border-b border-[#f3f3f3]">
-                Customer Care
+                Customer Care & Policies
               </h4>
               <ul className="space-y-3 text-[13.5px] font-normal text-[#555555]">
                 {[
-                  { label: "Help Center & FAQs", badge: "HOT" },
-                  { label: "My Saved Wishlist" },
-                  { label: "Track Express Order" },
-                  { label: "30-Day Money Guarantee" },
-                  { label: "Coming Soon Launchpad" },
+                  { label: "Help Center & FAQs", badge: "HOT", href: "/faq" },
+                  { label: "My Saved Wishlist", href: "/wishlist" },
+                  { label: "Track Express Order", href: "/track-order" },
+                  { label: "Shipping & Delivery Policy", href: "/shipping-policy" },
+                  { label: "Return & Refund Policy", href: "/return-policy" },
+                  { label: "Privacy Policy", href: "/privacy-policy" },
+                  { label: "Terms & Conditions", href: "/terms-conditions" },
                 ].map((l) => (
                   <li key={l.label}>
                     <a
-                      href="#page"
-                      className="flex items-center justify-between hover:text-[#f43777] hover:translate-x-1 transition-all duration-200"
+                      href={l.href}
+                      className="flex items-center justify-between hover:text-[#4f46e5] hover:translate-x-1 transition-all duration-200"
                     >
                       <span>{l.label}</span>
                       {l.badge && (
-                        <span className="bg-[#f43777] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
+                        <span className="bg-[#4f46e5] text-white text-[9px] font-bold px-1.5 py-0.5 rounded-[4px]">
                           {l.badge}
                         </span>
                       )}
@@ -537,7 +555,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
               <ul className="space-y-3 text-[13.5px] font-normal text-[#555555]">
                 {["Blog Editorial Grid", "Blog Classic List", "Blog 3-Column Masonry", "Blog Split Cards"].map((l) => (
                   <li key={l}>
-                    <a href="#all-blogs" className="hover:text-[#f43777] hover:translate-x-1 transition-all block">
+                    <a href="#all-blogs" className="hover:text-[#4f46e5] hover:translate-x-1 transition-all block">
                       {l}
                     </a>
                   </li>
@@ -552,7 +570,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
               <ul className="space-y-3 text-[13.5px] font-normal text-[#555555]">
                 {["Article Left Sidebar", "Article Right Sidebar", "Full-Width Longread", "Video Review Post"].map((l) => (
                   <li key={l}>
-                    <a href="#all-blogs" className="hover:text-[#f43777] hover:translate-x-1 transition-all block">
+                    <a href="#all-blogs" className="hover:text-[#4f46e5] hover:translate-x-1 transition-all block">
                       {l}
                     </a>
                   </li>
@@ -577,7 +595,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   <a
                     key={tag}
                     href="#all-blogs"
-                    className="px-2.5 py-1 rounded-full bg-[#f5f5f7] hover:bg-[#f43777] text-[#333333] hover:text-white text-[11.5px] font-medium transition-colors"
+                    className="px-2.5 py-1 rounded-full bg-[#f5f5f7] hover:bg-[#4f46e5] text-[#333333] hover:text-white text-[11.5px] font-medium transition-colors"
                   >
                     {tag}
                   </a>
@@ -589,7 +607,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
           <div className="col-span-5 border-l border-[#f0f0f0] pl-6 space-y-3.5">
             <div className="flex items-center justify-between">
               <h4 className="text-[15px] font-bold text-[#141233]">Latest Tech Stories</h4>
-              <a href="#all-blogs" className="text-[12px] font-semibold text-[#f43777] hover:underline">
+              <a href="#all-blogs" className="text-[12px] font-semibold text-[#4f46e5] hover:underline">
                 View all →
               </a>
             </div>
@@ -598,21 +616,24 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                 title: "Noise-Cancelling Headphones for Every Journey",
                 tag: "AUDIO REVIEW",
                 img: "/assets/blog-1_c9731c10-c6dd-4c32-bb0f-1600b7e315b0.jpg",
+                href: "/blogs/noise-cancelling-headphones-for-every-journey",
               },
               {
                 title: "Style Meets Sound: Chic White Headphones for City Rides",
                 tag: "LIFESTYLE",
                 img: "/assets/blog-2.jpg",
+                href: "/blogs/style-meets-sound-chic-white-headphones-city-rides",
               },
               {
                 title: "Smartwatches: Manage Your Life Right From Your Wrist",
                 tag: "WEARABLES",
                 img: "/assets/blog-3.jpg",
+                href: "/blogs/smartwatches-manage-your-life-from-your-wrist",
               },
             ].map((b) => (
               <a
                 key={b.title}
-                href="#all-blogs"
+                href={b.href}
                 className="flex items-center gap-3.5 group p-1.5 rounded-[12px] hover:bg-[#fafafa] transition-colors"
               >
                 <img
@@ -621,10 +642,10 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   className="w-[82px] h-[58px] rounded-[10px] object-cover shrink-0 group-hover:scale-105 transition-transform"
                 />
                 <div>
-                  <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#f43777]">
+                  <span className="text-[9.5px] font-bold uppercase tracking-wider text-[#4f46e5]">
                     {b.tag} • JULY 17, 2026
                   </span>
-                  <div className="text-[13px] font-bold text-[#141233] group-hover:text-[#f43777] line-clamp-1 leading-snug mt-0.5">
+                  <div className="text-[13px] font-bold text-[#141233] group-hover:text-[#4f46e5] line-clamp-1 leading-snug mt-0.5">
                     {b.title}
                   </div>
                 </div>
@@ -643,7 +664,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
           <div className="col-span-8">
             <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-[#efefef]">
               <div className="flex items-center gap-2.5">
-                <span className="bg-[#f43777] text-white text-[10px] font-bold uppercase px-2.5 py-1 badge-leaf">
+                <span className="bg-[#4f46e5] text-white text-[10px] font-bold uppercase px-2.5 py-1 badge-leaf">
                   LIMITED TIME
                 </span>
                 <h4 className="text-[17px] font-bold text-[#141233]">
@@ -652,7 +673,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
               </div>
               <a
                 href="#sale-off"
-                className="text-[12.5px] font-bold text-[#f43777] hover:underline"
+                className="text-[12.5px] font-bold text-[#4f46e5] hover:underline"
               >
                 View All Flash Deals →
               </a>
@@ -666,6 +687,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   oldPrice: 480.0,
                   discount: "-20%",
                   img: "/assets/watch-2.jpg",
+                  slug: "smartwatch-sport-edition-pro-gps",
                 },
                 {
                   title: "Waterproof Portable Speaker",
@@ -673,13 +695,15 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   oldPrice: 90.0,
                   discount: "-22%",
                   img: "/assets/audio-3.jpg",
+                  slug: "waterproof-360-spatial-portable-speaker",
                 },
                 {
                   title: "15-inch Slim Metal Laptop",
-                  price: 215.0,
-                  oldPrice: 250.0,
+                  price: 1199.0,
+                  oldPrice: 1399.0,
                   discount: "-14%",
                   img: "/assets/laptop-9.jpg",
+                  slug: "15-inch-slim-metal-ultrabook-pro",
                 },
                 {
                   title: "Wireless Over-Ear Headphones",
@@ -687,35 +711,46 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   oldPrice: 320.0,
                   discount: "-17%",
                   img: "/assets/audio-8.jpg",
+                  slug: "studio-anc-wireless-over-ear-headphones",
                 },
               ].map((deal) => (
-                <a
+                <div
                   key={deal.title}
-                  href="#sale-off"
-                  className="group rounded-[14px] border border-[#eaeaea] hover:border-[#f43777] bg-[#fafafa] hover:bg-white p-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(244,55,119,0.1)] relative"
+                  className="group rounded-[14px] border border-[#eaeaea] hover:border-[#4f46e5] bg-[#fafafa] hover:bg-white p-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(79,70,229,0.12)] relative flex flex-col justify-between"
                 >
-                  <span className="absolute top-2.5 left-2.5 z-10 bg-[#f43777] text-white text-[9.5px] font-bold px-2 py-0.5 badge-leaf">
-                    {deal.discount}
-                  </span>
-                  <div className="w-full h-[115px] rounded-[10px] bg-white p-2 flex items-center justify-center mb-2.5 overflow-hidden">
-                    <img
-                      src={deal.img}
-                      alt={deal.title}
-                      className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="text-[12.5px] font-bold text-[#141233] group-hover:text-[#f43777] line-clamp-1 mb-1">
-                    {deal.title}
-                  </div>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-[14.5px] font-extrabold text-[#f43777]">
-                      ${deal.price.toFixed(2)}
+                  <Link href={`/product/${deal.slug}`} className="block">
+                    <span className="absolute top-2.5 left-2.5 z-10 bg-[#4f46e5] text-white text-[9.5px] font-bold px-2 py-0.5 badge-leaf">
+                      {deal.discount}
                     </span>
-                    <span className="text-[11.5px] text-[#999999] line-through">
-                      ${deal.oldPrice.toFixed(2)}
-                    </span>
+                    <div className="w-full h-[110px] rounded-[10px] bg-white p-2 flex items-center justify-center mb-2 overflow-hidden">
+                      <img
+                        src={deal.img}
+                        alt={deal.title}
+                        className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="text-[12.5px] font-bold text-[#141233] group-hover:text-[#4f46e5] line-clamp-1 mb-1">
+                      {deal.title}
+                    </div>
+                  </Link>
+                  <div className="flex items-center justify-between gap-1 mt-1">
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-[13.5px] font-extrabold text-[#4f46e5]">
+                        ${deal.price.toFixed(0)}
+                      </span>
+                      <span className="text-[11px] text-[#999999] line-through">
+                        ${deal.oldPrice.toFixed(0)}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => addToCart(resolveStoreProduct({ slug: deal.slug }))}
+                      className="px-2.5 py-1 rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[10px] font-bold uppercase cursor-pointer transition-colors"
+                    >
+                      + Cart
+                    </button>
                   </div>
-                </a>
+                </div>
               ))}
             </div>
           </div>
@@ -726,7 +761,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
               className="h-full rounded-[18px] p-6 text-white flex flex-col justify-between relative overflow-hidden"
               style={{
                 background:
-                  "linear-gradient(135deg, #141233 0%, #251f5e 55%, #f43777 100%)",
+                  "linear-gradient(135deg, #141233 0%, #251f5e 55%, #4f46e5 100%)",
               }}
             >
               <div>
@@ -743,7 +778,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
 
               <a
                 href="#bundle"
-                className="btn-shine inline-flex items-center justify-center w-full py-3 rounded-full bg-white text-[#141233] hover:bg-[#f43777] hover:text-white text-[12px] font-bold uppercase tracking-wider transition-colors shadow-lg"
+                className="btn-shine inline-flex items-center justify-center w-full py-3 rounded-full bg-white text-[#141233] hover:bg-[#4f46e5] hover:text-white text-[12px] font-bold uppercase tracking-wider transition-colors shadow-lg"
               >
                 Build Your Bundle →
               </a>

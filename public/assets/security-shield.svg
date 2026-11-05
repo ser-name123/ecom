@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" fill="none">
+  <defs>
+    <linearGradient id="shieldBg" x1="0" y1="0" x2="800" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0c0b22"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="50%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#f43777"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="420" rx="24" fill="url(#shieldBg)"/>
+  <circle cx="400" cy="210" r="155" fill="#4f46e5" fill-opacity="0.15"/>
+  <circle cx="400" cy="210" r="115" stroke="#38bdf8" stroke-opacity="0.25" stroke-dasharray="6 6"/>
+  <path d="M400 75L510 120V205C510 282 462 344 400 368C338 344 290 282 290 205V120L400 75Z" fill="url(#shieldGrad)" fill-opacity="0.2" stroke="url(#shieldGrad)" stroke-width="3"/>
+  <path d="M372 212L392 232L434 188" stroke="#38bdf8" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="70" y="95" width="175" height="68" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.15"/>
+  <text x="90" y="125" fill="#38bdf8" font-family="sans-serif" font-size="12" font-weight="800">256-BIT SSL</text>
+  <text x="90" y="145" fill="#ffffff" font-family="sans-serif" font-size="11">Bank-Grade Encryption</text>
+  <rect x="555" y="95" width="175" height="68" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.15"/>
+  <text x="575" y="125" fill="#10b981" font-family="sans-serif" font-size="12" font-weight="800">30-DAY GUARANTEE</text>
+  <text x="575" y="145" fill="#ffffff" font-family="sans-serif" font-size="11">Instant Hassle-Free Refund</text>
+  <rect x="70" y="255" width="175" height="68" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.15"/>
+  <text x="90" y="285" fill="#f43777" font-family="sans-serif" font-size="12" font-weight="800">GDPR &amp; CCPA</text>
+  <text x="90" y="305" fill="#ffffff" font-family="sans-serif" font-size="11">Zero Third-Party Selling</text>
+  <rect x="555" y="255" width="175" height="68" rx="14" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-opacity="0.15"/>
+  <text x="575" y="285" fill="#a5b4fc" font-family="sans-serif" font-size="12" font-weight="800">GLOBAL EXPRESS</text>
+  <text x="575" y="305" fill="#ffffff" font-family="sans-serif" font-size="11">Insured Doorstep Delivery</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" fill="none">
+  <defs>
+    <linearGradient id="mapBg" x1="0" y1="0" x2="900" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0b0f29"/>
+      <stop offset="100%" stop-color="#1a1648"/>
+    </linearGradient>
+    <linearGradient id="routeLine" x1="120" y1="260" x2="760" y2="150" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="50%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#f43777"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="420" rx="24" fill="url(#mapBg)"/>
+  <!-- Subtle Radar Rings -->
+  <circle cx="450" cy="210" r="90" stroke="#38bdf8" stroke-opacity="0.12" stroke-dasharray="6 6"/>
+  <circle cx="450" cy="210" r="170" stroke="#38bdf8" stroke-opacity="0.08" stroke-dasharray="6 6"/>
+  <circle cx="450" cy="210" r="250" stroke="#38bdf8" stroke-opacity="0.05"/>
+  <!-- Stylized World Continents Dots/Blocks -->
+  <g fill="#ffffff" fill-opacity="0.07">
+    <rect x="90" y="110" width="170" height="110" rx="35"/>
+    <rect x="170" y="240" width="110" height="120" rx="30"/>
+    <rect x="380" y="95" width="150" height="100" rx="30"/>
+    <rect x="410" y="210" width="120" height="130" rx="35"/>
+    <rect x="570" y="100" width="220" height="140" rx="40"/>
+    <rect x="680" y="270" width="110" height="80" rx="25"/>
+  </g>
+  <!-- Flight / Courier Arcs -->
+  <path d="M160 175 Q 310 60 460 145 T 730 165" stroke="url(#routeLine)" stroke-width="3.5" stroke-dasharray="8 6" fill="none"/>
+  <path d="M160 175 Q 290 260 460 145" stroke="#06b6d4" stroke-opacity="0.45" stroke-width="2" fill="none"/>
+  <!-- Hub Nodes -->
+  <!-- Node 1: Los Angeles Hub -->
+  <circle cx="160" cy="175" r="16" fill="#06b6d4" fill-opacity="0.25"/>
+  <circle cx="160" cy="175" r="7" fill="#06b6d4"/>
+  <rect x="95" y="200" width="135" height="44" rx="10" fill="#141233" stroke="#06b6d4" stroke-opacity="0.5"/>
+  <text x="110" y="220" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="700">LOS ANGELES HUB</text>
+  <text x="110" y="235" fill="#38bdf8" font-family="sans-serif" font-size="10">Dispatched • 08:15 AM</text>
+  <!-- Node 2: London / Paris Hub -->
+  <circle cx="460" cy="145" r="20" fill="#6366f1" fill-opacity="0.3"/>
+  <circle cx="460" cy="145" r="9" fill="#38bdf8"/>
+  <rect x="385" y="172" width="155" height="46" rx="10" fill="#141233" stroke="#6366f1" stroke-opacity="0.6"/>
+  <text x="400" y="192" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="700">IN TRANSIT • EXPRESS</text>
+  <text x="400" y="207" fill="#a5b4fc" font-family="sans-serif" font-size="10">Air Freight Flight NX-402</text>
+  <!-- Node 3: Destination Hub -->
+  <circle cx="730" cy="165" r="18" fill="#f43777" fill-opacity="0.3"/>
+  <circle cx="730" cy="165" r="8" fill="#f43777"/>
+  <rect x="645" y="192" width="165" height="46" rx="10" fill="#141233" stroke="#f43777" stroke-opacity="0.6"/>
+  <text x="660" y="212" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="700">DESTINATION HUB</text>
+  <text x="660" y="227" fill="#ff73a3" font-family="sans-serif" font-size="10">Priority Local Courier</text>
+</svg>

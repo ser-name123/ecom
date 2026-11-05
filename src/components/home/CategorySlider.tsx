@@ -11,14 +11,14 @@ interface CategoryItem {
 }
 
 const CATEGORIES: CategoryItem[] = [
-  { id: "mobile-tablet", name: "Mobile & Tablet", image: "/assets/cate-1.jpg", href: "#mobile-tablet" },
-  { id: "camera", name: "Camera", image: "/assets/cate-2.jpg", href: "#camera" },
-  { id: "laptop", name: "Laptop", image: "/assets/cate-3.jpg", href: "#laptop" },
-  { id: "headphone", name: "Headphone", image: "/assets/cate-4.jpg", href: "#headphone" },
-  { id: "keyboard", name: "Keyboard", image: "/assets/cate-5.jpg", href: "#keyboard" },
-  { id: "game", name: "Game", image: "/assets/cate-6.jpg", href: "#game" },
-  { id: "electronics", name: "Electronics", image: "/assets/cate-7.jpg", href: "#electronics" },
-  { id: "computer", name: "Computer", image: "/assets/cate-8.jpg", href: "#computer" },
+  { id: "mobile-tablet", name: "Mobile & Tablet", image: "/assets/cate-1.jpg", href: "/categories/mobile" },
+  { id: "camera", name: "Camera", image: "/assets/cate-2.jpg", href: "/categories/camera" },
+  { id: "laptop", name: "Laptop", image: "/assets/cate-3.jpg", href: "/categories/laptop" },
+  { id: "headphone", name: "Headphone", image: "/assets/cate-4.jpg", href: "/categories/headphone" },
+  { id: "keyboard", name: "Keyboard", image: "/assets/cate-5.jpg", href: "/categories/keyboard" },
+  { id: "game", name: "Game", image: "/assets/cate-6.jpg", href: "/categories/game" },
+  { id: "electronics", name: "Electronics", image: "/assets/cate-7.jpg", href: "/categories/accessories" },
+  { id: "computer", name: "Computer", image: "/assets/cate-8.jpg", href: "/categories/computer" },
 ];
 
 export default function CategorySlider() {
@@ -46,7 +46,7 @@ export default function CategorySlider() {
                   className="max-h-[48px] sm:max-h-[58px] md:max-h-[64px] w-auto object-contain group-hover:scale-108 transition-transform duration-500 ease-out"
                 />
               </div>
-              <span className="mt-1 sm:mt-1.5 text-[11.5px] sm:text-[13px] font-semibold text-[#1c1c1c] group-hover:text-[#f43777] transition-colors duration-300 text-center leading-tight line-clamp-1">
+              <span className="mt-1 sm:mt-1.5 text-[11.5px] sm:text-[13px] font-semibold text-[#1c1c1c] group-hover:text-[#4f46e5] transition-colors duration-300 text-center leading-tight line-clamp-1">
                 {cat.name}
               </span>
             </a>

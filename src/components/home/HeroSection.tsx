@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 
 const HERO_SLIDES = [
   {
@@ -136,7 +137,7 @@ export default function HeroSection() {
                 handlePrev();
               }}
               aria-label="Previous slide"
-              className="absolute left-2 sm:left-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-20 w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] rounded-full border border-white/15 bg-black/15 backdrop-blur-[2px] hover:bg-[#f43777] hover:border-[#f43777] hover:scale-110 active:scale-95 text-white/85 hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
+              className="absolute left-2 sm:left-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-20 w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] rounded-full border border-white/15 bg-black/15 backdrop-blur-[2px] hover:bg-[#4f46e5] hover:border-[#4f46e5] hover:scale-110 active:scale-95 text-white/85 hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
             >
               <svg width="13" height="13" viewBox="0 0 48 48" fill="currentColor">
                 <polygon points="30.586,6.586 13.171,24 30.586,41.414 33.414,38.586 18.829,24 33.414,9.414" />
@@ -153,7 +154,7 @@ export default function HeroSection() {
             >
               {/* Leaf-Shaped Pink Badge with Pulse Glow */}
               <div className="mb-1.5 sm:mb-2.5 animate-fade-up">
-                <span className="inline-block bg-[#f43777] text-white text-[10px] sm:text-[12px] md:text-[13px] font-semibold uppercase px-2.5 sm:px-3.5 py-0.5 sm:py-1 badge-leaf animate-pulse-glow">
+                <span className="inline-block bg-[#4f46e5] text-white text-[10px] sm:text-[12px] md:text-[13px] font-semibold uppercase px-2.5 sm:px-3.5 py-0.5 sm:py-1 badge-leaf animate-pulse-glow">
                   {current.badge}
                 </span>
               </div>
@@ -174,12 +175,12 @@ export default function HeroSection() {
 
               {/* White Pill CTA Button */}
               <div className="animate-fade-up delay-225">
-                <a
-                  href="#shop"
-                  className="btn-shine inline-flex items-center justify-center bg-white text-[#1c1c1c] hover:bg-[#f43777] hover:text-white hover:-translate-y-0.5 active:scale-95 text-[10.5px] sm:text-[11.5px] font-semibold uppercase tracking-wider px-5 sm:px-7 py-2 sm:py-3 rounded-full shadow-lg transition-all duration-300"
+                <Link
+                  href="/shop"
+                  className="btn-shine inline-flex items-center justify-center bg-white text-[#1c1c1c] hover:bg-[#4f46e5] hover:text-white hover:-translate-y-0.5 active:scale-95 text-[10.5px] sm:text-[11.5px] font-semibold uppercase tracking-wider px-5 sm:px-7 py-2 sm:py-3 rounded-full shadow-lg transition-all duration-300"
                 >
                   {current.cta}
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -191,7 +192,7 @@ export default function HeroSection() {
                 handleNext();
               }}
               aria-label="Next slide"
-              className="absolute right-2 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-20 w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] rounded-full border border-white/15 bg-black/15 backdrop-blur-[2px] hover:bg-[#f43777] hover:border-[#f43777] hover:scale-110 active:scale-95 text-white/85 hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
+              className="absolute right-2 sm:right-3.5 top-[56%] sm:top-[58%] -translate-y-1/2 z-20 w-[30px] h-[30px] sm:w-[38px] sm:h-[38px] rounded-full border border-white/15 bg-black/15 backdrop-blur-[2px] hover:bg-[#4f46e5] hover:border-[#4f46e5] hover:scale-110 active:scale-95 text-white/85 hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer"
             >
               <svg width="13" height="13" viewBox="0 0 48 48" fill="currentColor">
                 <polygon points="14.586,9.414 29.171,24 14.586,38.586 17.414,41.414 34.829,24 17.414,6.586" />
@@ -252,12 +253,12 @@ export default function HeroSection() {
                 <p className="text-[11px] sm:text-[12px] font-normal text-white uppercase tracking-wide mb-2.5 sm:mb-3.5">
                   STARTING AT $100
                 </p>
-                <a
-                  href="#headphones"
-                  className="btn-shine inline-flex items-center justify-center bg-[#1c1c1c] hover:bg-[#f43777] hover:-translate-y-0.5 active:scale-95 text-white text-[10.5px] sm:text-[11px] font-semibold uppercase tracking-wider px-4 sm:px-5 py-1.5 sm:py-2 rounded-full transition-all duration-300"
+                <Link
+                  href="/categories/headphone"
+                  className="btn-shine inline-flex items-center justify-center bg-[#1c1c1c] hover:bg-[#4f46e5] hover:-translate-y-0.5 active:scale-95 text-white text-[10.5px] sm:text-[11px] font-semibold uppercase tracking-wider px-4 sm:px-5 py-1.5 sm:py-2 rounded-full transition-all duration-300"
                 >
                   SHOP NOW
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -289,12 +290,12 @@ export default function HeroSection() {
                 <p className="text-[11px] sm:text-[12px] font-normal text-white uppercase tracking-wide mb-2.5 sm:mb-3.5">
                   STARTING AT $200
                 </p>
-                <a
-                  href="#camera"
-                  className="btn-shine inline-flex items-center justify-center bg-[#1c1c1c] hover:bg-[#f43777] hover:-translate-y-0.5 active:scale-95 text-white text-[10.5px] sm:text-[11px] font-semibold uppercase tracking-wider px-4 sm:px-5 py-1.5 sm:py-2 rounded-full transition-all duration-300"
+                <Link
+                  href="/categories/camera"
+                  className="btn-shine inline-flex items-center justify-center bg-[#1c1c1c] hover:bg-[#4f46e5] hover:-translate-y-0.5 active:scale-95 text-white text-[10.5px] sm:text-[11px] font-semibold uppercase tracking-wider px-4 sm:px-5 py-1.5 sm:py-2 rounded-full transition-all duration-300"
                 >
                   SHOP NOW
-                </a>
+                </Link>
               </div>
             </div>
           </div>
