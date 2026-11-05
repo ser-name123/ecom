@@ -123,11 +123,10 @@ function ShopContent() {
           <button
             type="button"
             onClick={() => setSelectedCategory("all")}
-            className={`px-4 py-2 rounded-full text-[12.5px] font-bold whitespace-nowrap transition-all cursor-pointer ${
-              selectedCategory === "all"
+            className={`px-4 py-2 rounded-full text-[12.5px] font-bold whitespace-nowrap transition-all cursor-pointer ${selectedCategory === "all"
                 ? "bg-[#141233] text-white shadow-sm"
                 : "bg-white border border-[#e2e4ec] text-[#333333] hover:border-[#4f46e5]"
-            }`}
+              }`}
           >
             All Departments ({PRODUCTS.length})
           </button>
@@ -136,11 +135,10 @@ function ShopContent() {
               key={cat.id}
               type="button"
               onClick={() => setSelectedCategory(cat.id)}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12.5px] font-bold whitespace-nowrap transition-all cursor-pointer ${
-                selectedCategory === cat.id
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-[12.5px] font-bold whitespace-nowrap transition-all cursor-pointer ${selectedCategory === cat.id
                   ? "bg-[#4f46e5] text-white shadow-sm"
                   : "bg-white border border-[#e2e4ec] text-[#333333] hover:border-[#4f46e5]"
-              }`}
+                }`}
             >
               <img
                 src={cat.icon}
@@ -245,17 +243,15 @@ function ShopContent() {
                   key={r.label}
                   type="button"
                   onClick={() => setPriceIdx(idx)}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-colors cursor-pointer ${
-                    priceIdx === idx
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-[10px] text-[13px] font-semibold transition-colors cursor-pointer ${priceIdx === idx
                       ? "bg-[#eef2ff] text-[#4f46e5]"
                       : "text-[#555555] hover:bg-[#f7f7fa]"
-                  }`}
+                    }`}
                 >
                   <span>{r.label}</span>
                   <span
-                    className={`w-4 h-4 rounded-full border flex items-center justify-center ${
-                      priceIdx === idx ? "border-[#4f46e5] bg-[#4f46e5] text-white" : "border-[#cccccc]"
-                    }`}
+                    className={`w-4 h-4 rounded-full border flex items-center justify-center ${priceIdx === idx ? "border-[#4f46e5] bg-[#4f46e5] text-white" : "border-[#cccccc]"
+                      }`}
                   >
                     {priceIdx === idx && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
                   </span>
@@ -275,11 +271,10 @@ function ShopContent() {
                   key={b}
                   type="button"
                   onClick={() => setSelectedBrand(b)}
-                  className={`px-3 py-1.5 rounded-full text-[12px] font-bold transition-colors cursor-pointer ${
-                    selectedBrand === b
+                  className={`px-3 py-1.5 rounded-full text-[12px] font-bold transition-colors cursor-pointer ${selectedBrand === b
                       ? "bg-[#141233] text-white"
                       : "bg-[#f4f5f9] text-[#444444] hover:bg-[#e5e7f0]"
-                  }`}
+                    }`}
                 >
                   {b}
                 </button>
@@ -382,18 +377,16 @@ function ShopContent() {
                 <button
                   type="button"
                   onClick={() => setViewMode("grid")}
-                  className={`px-2.5 py-1.5 rounded-[8px] text-[12px] font-bold cursor-pointer ${
-                    viewMode === "grid" ? "bg-[#141233] text-white" : "text-[#666666]"
-                  }`}
+                  className={`px-2.5 py-1.5 rounded-[8px] text-[12px] font-bold cursor-pointer ${viewMode === "grid" ? "bg-[#141233] text-white" : "text-[#666666]"
+                    }`}
                 >
                   Grid
                 </button>
                 <button
                   type="button"
                   onClick={() => setViewMode("list")}
-                  className={`px-2.5 py-1.5 rounded-[8px] text-[12px] font-bold cursor-pointer ${
-                    viewMode === "list" ? "bg-[#141233] text-white" : "text-[#666666]"
-                  }`}
+                  className={`px-2.5 py-1.5 rounded-[8px] text-[12px] font-bold cursor-pointer ${viewMode === "list" ? "bg-[#141233] text-white" : "text-[#666666]"
+                    }`}
                 >
                   List
                 </button>
@@ -445,11 +438,10 @@ function ShopContent() {
                           type="button"
                           onClick={() => toggleWishlist(product.slug)}
                           aria-label="Toggle Wishlist"
-                          className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors cursor-pointer ${
-                            wished
+                          className={`w-8 h-8 rounded-full flex items-center justify-center transition-colors cursor-pointer ${wished
                               ? "bg-[#4f46e5] text-white"
                               : "bg-[#f4f5f8] text-[#444444] hover:bg-[#4f46e5] hover:text-white"
-                          }`}
+                            }`}
                         >
                           ♥
                         </button>
@@ -606,7 +598,7 @@ function ShopContent() {
             <button
               type="button"
               onClick={() => setQuickViewProduct(null)}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#f4f4f8] hover:bg-[#4f46e5] hover:text-white font-bold flex items-center justify-center cursor-pointer"
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#f4f4f8] hover:bg-[#f43777] hover:text-white font-bold flex items-center justify-center cursor-pointer"
             >
               ✕
             </button>
@@ -626,7 +618,7 @@ function ShopContent() {
                   {quickViewProduct.title}
                 </h3>
                 <div className="flex items-baseline gap-2.5 my-3">
-                  <span className="text-[24px] font-extrabold text-[#4f46e5]">
+                  <span className="text-[24px] font-extrabold text-[#f43777]">
                     ${quickViewProduct.price.toFixed(2)}
                   </span>
                   {quickViewProduct.oldPrice && (
