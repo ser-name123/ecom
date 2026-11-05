@@ -1714,3 +1714,187 @@ export function getBlogBySlug(slug: string): BlogPost {
   return BLOG_POSTS.find((b) => b.slug === slug) || BLOG_POSTS[0];
 }
 
+export interface BrandInfo {
+  id: string;
+  name: string;
+  logo: string;
+  tagline: string;
+  specialty: string;
+  productSlugs: string[];
+}
+
+export const OFFICIAL_BRANDS: BrandInfo[] = [
+  {
+    id: "brand-1",
+    name: "Digital",
+    logo: "/assets/brand-1.jpg",
+    tagline: "Smart Home Hub, GaN Power Systems & Ultra-Fast Desk Accessories",
+    specialty: "Smart Electronics & GaN Charging",
+    productSlugs: [
+      "3-in-1-magsafe-wireless-charging-dock-15w",
+      "rgb-vr-mixed-reality-headset-120hz-pancake",
+      "portable-smart-speaker-360-pro-waterproof",
+      "wireless-vertical-mouse-lift-series",
+    ],
+  },
+  {
+    id: "brand-2",
+    name: "Samsung",
+    logo: "/assets/brand-2.jpg",
+    tagline: "Galaxy S-Series Titanium Smartphones, Tab S9 Ultra & Neo QLED Displays",
+    specialty: "Flagship Mobile, Tablets & Displays",
+    productSlugs: [
+      "galaxy-s30-ultra-5g-titanium-256gb",
+      "ultra-thin-oled-tablet-pro-13-stylus",
+      "foldable-5g-dual-screen-flagship-phone",
+      "curved-49-oled-240hz-super-ultrawide-monitor",
+    ],
+  },
+  {
+    id: "brand-3",
+    name: "ThinkPad",
+    logo: "/assets/brand-3.jpg",
+    tagline: "Carbon-Fiber Executive Laptops, Creator Workstations & Tactile Keyboards",
+    specialty: "Enterprise Laptops & Workstations",
+    productSlugs: [
+      "15-inch-slim-laptop-metal-body-pro",
+      "creator-workstation-laptop-16-rtx-studio",
+      "hot-swappable-wireless-mechanical-keyboard-75",
+      "wireless-vertical-mouse-lift-series",
+    ],
+  },
+  {
+    id: "brand-4",
+    name: "Vivo",
+    logo: "/assets/brand-4.jpg",
+    tagline: "Zeiss Co-Engineered Flagship Camera Phones, Foldable 5G & True Wireless Audio",
+    specialty: "5G Camera Smartphones & Audio",
+    productSlugs: [
+      "galaxy-s30-ultra-5g-titanium-256gb",
+      "foldable-5g-dual-screen-flagship-phone",
+      "wireless-earbuds-pro-anc-magsafe",
+      "titanium-gps-amoled-smartwatch-ultra",
+    ],
+  },
+  {
+    id: "brand-5",
+    name: "Huawei",
+    logo: "/assets/brand-5.jpg",
+    tagline: "MateBook Pro Laptops, Sapphire Smartwatches & PaperMatte OLED Tablets",
+    specialty: "Smartwatches, Tablets & MateBooks",
+    productSlugs: [
+      "titanium-gps-amoled-smartwatch-ultra",
+      "ultra-thin-oled-tablet-pro-13-stylus",
+      "15-inch-slim-laptop-metal-body-pro",
+      "wireless-earbuds-pro-anc-magsafe",
+    ],
+  },
+  {
+    id: "brand-6",
+    name: "Sony",
+    logo: "/assets/brand-6.jpg",
+    tagline: "Master Series ANC Headphones, Alpha Cinema Cameras & DualSense Gaming",
+    specialty: "Hi-Res Audio, Cameras & Gaming",
+    productSlugs: [
+      "wireless-anc-studio-headphones-pro-x",
+      "studio-monitor-headphones-pro",
+      "4k-60fps-waterproof-action-camera-ultra",
+      "pro-wireless-hall-effect-esports-controller",
+      "racing-wheel-force-feedback-controller",
+      "mobile-clip-on-game-controller-pro",
+    ],
+  },
+  {
+    id: "brand-7",
+    name: "Dell",
+    logo: "/assets/brand-7.jpg",
+    tagline: "XPS InfinityEdge Laptops, Alienware Liquid-Cooled Rigs & UltraSharp Monitors",
+    specialty: "XPS Laptops, Desktops & Monitors",
+    productSlugs: [
+      "creator-workstation-laptop-16-rtx-studio",
+      "aegis-rtx-4090-liquid-cooled-gaming-desktop",
+      "curved-49-oled-240hz-super-ultrawide-monitor",
+      "15-inch-slim-laptop-metal-body-pro",
+    ],
+  },
+  {
+    id: "brand-8",
+    name: "Canon",
+    logo: "/assets/brand-8.jpg",
+    tagline: "EOS R-System 8K Full-Frame Mirrorless Cameras & RF L-Series Cinema Optics",
+    specialty: "8K Mirrorless Cameras & Lenses",
+    productSlugs: [
+      "mirrorless-8k-full-frame-cinema-camera",
+      "4k-60fps-waterproof-action-camera-ultra",
+      "action-camera-premium-lens-edition",
+      "creator-workstation-laptop-16-rtx-studio",
+    ],
+  },
+  {
+    id: "brand-9",
+    name: "HP",
+    logo: "/assets/brand-9.jpg",
+    tagline: "Spectre x360 OLED Convertibles, OMEN Gaming Rigs & HyperX Peripherals",
+    specialty: "Spectre Laptops & OMEN Gaming",
+    productSlugs: [
+      "15-inch-slim-laptop-metal-body-pro",
+      "aegis-rtx-4090-liquid-cooled-gaming-desktop",
+      "ultralight-8k-polling-wireless-gaming-mouse",
+      "hot-swappable-wireless-mechanical-keyboard-75",
+    ],
+  },
+  {
+    id: "brand-10",
+    name: "Sharp",
+    logo: "/assets/brand-10.jpg",
+    tagline: "AQUOS 240Hz OLED Displays, Dolby Atmos Soundbars & Smart Living Tech",
+    specialty: "OLED Displays & Acoustic Systems",
+    productSlugs: [
+      "curved-49-oled-240hz-super-ultrawide-monitor",
+      "portable-smart-speaker-360-pro-waterproof",
+      "studio-monitor-headphones-pro",
+      "3-in-1-magsafe-wireless-charging-dock-15w",
+    ],
+  },
+];
+
+export function getBrandInfo(brandName: string): BrandInfo | undefined {
+  const norm = brandName.trim().toLowerCase();
+  return OFFICIAL_BRANDS.find((b) => b.name.toLowerCase() === norm || b.id.toLowerCase() === norm);
+}
+
+export function getProductsByBrand(brandName: string): Product[] {
+  if (!brandName || brandName === "All Brands") return PRODUCTS;
+  const norm = brandName.trim().toLowerCase();
+
+  // Direct brand match first
+  const direct = PRODUCTS.filter((p) => p.brand.toLowerCase() === norm);
+
+  // Also check curated brand catalog mapping (for Digital, ThinkPad, Vivo, Huawei, HP, Sharp, etc.)
+  const brandInfo = getBrandInfo(brandName);
+  if (brandInfo) {
+    const mapped = brandInfo.productSlugs
+      .map((s) => PRODUCTS.find((p) => p.slug === s))
+      .filter((p): p is Product => Boolean(p));
+    const combined = [...direct];
+    for (const item of mapped) {
+      if (!combined.some((c) => c.id === item.id)) {
+        combined.push(item);
+      }
+    }
+    if (combined.length > 0) return combined;
+  }
+
+  if (direct.length > 0) return direct;
+
+  // Partial match fallback
+  const partial = PRODUCTS.filter(
+    (p) =>
+      p.brand.toLowerCase().includes(norm) ||
+      norm.includes(p.brand.toLowerCase()) ||
+      p.title.toLowerCase().includes(norm)
+  );
+  return partial.length > 0 ? partial : PRODUCTS.slice(0, 4);
+}
+
+

@@ -987,13 +987,17 @@ export default function Sidebar() {
                     Top Brands:
                   </span>
                   {hoveredItem.popularBrands.map((brand) => (
-                    <a
+                    <Link
                       key={brand}
-                      href={`#brand-${brand.toLowerCase()}`}
+                      href={`/shop?brand=${encodeURIComponent(brand)}`}
+                      onClick={() => {
+                        setExpanded(false);
+                        setHoveredItem(null);
+                      }}
                       className="px-3 py-1 rounded-full bg-[#f5f5f7] hover:bg-[#4f46e5] text-[#333333] hover:text-white text-[12px] font-medium transition-all duration-200"
                     >
                       {brand}
-                    </a>
+                    </Link>
                   ))}
                 </div>
                 <span className="text-[11.5px] text-[#4f46e5] font-semibold">
@@ -1278,14 +1282,14 @@ export default function Sidebar() {
                         {/* Popular Brands Row */}
                         <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
                           {cat.popularBrands.map((b) => (
-                            <a
+                            <Link
                               key={b}
-                              href={`#brand-${b.toLowerCase()}`}
+                              href={`/shop?brand=${encodeURIComponent(b)}`}
                               onClick={() => setMobileOpen(false)}
                               className="px-2.5 py-1 rounded-full bg-[#f4f4f6] hover:bg-[#4f46e5] text-[#333333] hover:text-white text-[11px] font-medium transition-colors"
                             >
                               {b}
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       </div>

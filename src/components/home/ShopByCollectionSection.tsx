@@ -152,7 +152,13 @@ export default function ShopByCollectionSection() {
 
               {/* Dark Rounded Pill Button */}
               <Link
-                href="/categories"
+                href={
+                  current.id === "headphones"
+                    ? "/categories/headphone"
+                    : current.id === "portable-speakers"
+                      ? "/categories/speaker"
+                      : "/categories/smartwatch"
+                }
                 className="btn-shine inline-flex items-center justify-center bg-[#141233] hover:bg-[#4f46e5] hover:-translate-y-0.5 active:scale-95 text-white text-[11.5px] font-semibold uppercase tracking-wider px-7 py-3 rounded-full shadow-md transition-all duration-300"
               >
                 SHOP COLLECTION

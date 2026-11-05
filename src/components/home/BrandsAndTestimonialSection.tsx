@@ -1,21 +1,11 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import CarouselTrack from "@/components/ui/CarouselTrack";
-
-const BRAND_LOGOS = [
-  { id: "brand-1", url: "/assets/brand-1.jpg" },
-  { id: "brand-2", url: "/assets/brand-2.jpg" },
-  { id: "brand-3", url: "/assets/brand-3.jpg" },
-  { id: "brand-4", url: "/assets/brand-4.jpg" },
-  { id: "brand-5", url: "/assets/brand-5.jpg" },
-  { id: "brand-6", url: "/assets/brand-6.jpg" },
-  { id: "brand-7", url: "/assets/brand-7.jpg" },
-  { id: "brand-8", url: "/assets/brand-8.jpg" },
-  { id: "brand-9", url: "/assets/brand-9.jpg" },
-  { id: "brand-10", url: "/assets/brand-10.jpg" },
-];
+import { OFFICIAL_BRANDS, getProductsByBrand, getBrandInfo } from "@/lib/storeData";
+import { useStore } from "@/lib/StoreContext";
 
 interface Testimonial {
   id: number;
@@ -70,9 +60,14 @@ const TESTIMONIALS: Testimonial[] = [
 ];
 
 export default function BrandsAndTestimonialSection() {
+  const { addToCart, toggleWishlist, isInWishlist } = useStore();
+  const [selectedBrandName, setSelectedBrandName] = useState<string | null>(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [isTestimonialPaused, setIsTestimonialPaused] = useState(false);
   const dragStartXRef = useRef<number | null>(null);
+
+  const activeBrandInfo = selectedBrandName ? getBrandInfo(selectedBrandName) : undefined;
+  const brandProducts = selectedBrandName ? getProductsByBrand(selectedBrandName).slice(0, 4) : [];
 
   useEffect(() => {
     if (isTestimonialPaused) return;
@@ -109,45 +104,201 @@ export default function BrandsAndTestimonialSection() {
   return (
     <section className="w-full bg-white pt-[44px] pb-[16px] overflow-x-hidden">
       <div className="max-w-[1440px] mx-auto px-4 md:px-6">
-        {/* PART 1: Shop by Brands (7-Column Infinite Sliding Track) */}
+        {/* PART 1: Shop by Brands (7-Column Infinite Sliding Track + Interactive Brand Products Showcase) */}
         <ScrollReveal animation="fade-up">
           <div className="mb-[48px]">
             {/* Header Row */}
             <div className="flex items-center justify-between mb-[20px]">
-              <h2 className="text-[22px] md:text-[26px] font-semibold text-[#222222] tracking-tight">
-                Shop by Brands
-              </h2>
-              <a
-                href="#all-brands"
+              <div className="flex items-center gap-3">
+                <h2 className="text-[22px] md:text-[26px] font-semibold text-[#222222] tracking-tight">
+                  Shop by Brands
+                </h2>
+                <span className="hidden sm:inline-block px-3 py-1 rounded-full bg-[#eef2ff] text-[#4f46e5] text-[11.5px] font-bold">
+                  Click any brand to explore products
+                </span>
+              </div>
+              <Link
+                href="/shop#brands"
                 className="text-[14px] font-medium text-[#000000] hover:text-[#4f46e5] underline underline-offset-4 decoration-[1px] transition-colors"
               >
                 View all
-              </a>
+              </Link>
             </div>
 
             {/* 7-Column Brand Cards Carousel */}
             <CarouselTrack
-              items={BRAND_LOGOS}
+              items={OFFICIAL_BRANDS}
               keyExtractor={(item) => item.id}
               visibleCount={{ xs: 2, sm: 4, md: 5, lg: 6, xl: 7 }}
               gap={14}
-              autoPlayMs={3500}
+              autoPlayMs={selectedBrandName ? 0 : 3500}
               arrowPositionClass="top-1/2 -translate-y-1/2"
-              renderItem={(brand) => (
-                <a
-                  href="#brand"
-                  draggable={false}
-                  className="bg-white rounded-[14px] border border-[#eaeaea] hover:border-transparent card-hover-lift p-2.5 flex items-center justify-center h-[88px] md:h-[96px] group overflow-hidden"
-                >
-                  <img
-                    src={brand.url}
-                    alt="Brand Logo"
+              renderItem={(brand) => {
+                const isSelected = selectedBrandName === brand.name;
+                return (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setSelectedBrandName((prev) => (prev === brand.name ? null : brand.name))
+                    }
                     draggable={false}
-                    className="max-h-[58px] w-auto object-contain group-hover:scale-108 transition-transform duration-500"
-                  />
-                </a>
-              )}
+                    className={`w-full bg-white rounded-[14px] border p-2.5 flex flex-col items-center justify-center h-[92px] md:h-[100px] group overflow-hidden relative transition-all duration-300 cursor-pointer ${
+                      isSelected
+                        ? "border-[#4f46e5] ring-2 ring-[#4f46e5]/25 shadow-[0_12px_28px_rgba(79,70,229,0.16)] -translate-y-1"
+                        : "border-[#eaeaea] hover:border-[#4f46e5]/60 card-hover-lift"
+                    }`}
+                  >
+                    <img
+                      src={brand.logo}
+                      alt={brand.name}
+                      draggable={false}
+                      className="max-h-[52px] w-auto object-contain group-hover:scale-108 transition-transform duration-500"
+                    />
+                    <span
+                      className={`mt-1 text-[10.5px] font-extrabold uppercase tracking-wider transition-colors ${
+                        isSelected
+                          ? "text-[#4f46e5]"
+                          : "text-[#888888] group-hover:text-[#4f46e5]"
+                      }`}
+                    >
+                      {brand.name}
+                    </span>
+                  </button>
+                );
+              }}
             />
+
+            {/* Interactive Brand Products Drawer (Opens when any brand is clicked) */}
+            {selectedBrandName && activeBrandInfo && (
+              <div className="mt-6 rounded-[22px] border border-[#4f46e5]/25 bg-[#f8f9fc] p-5 sm:p-7 shadow-[0_18px_45px_rgba(20,18,51,0.08)] animate-fade-up">
+                <div className="flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-[#e2e5f0]">
+                  <div className="flex items-center gap-4">
+                    <div className="w-[74px] h-[54px] rounded-[12px] bg-white border border-[#eaeaea] p-2 flex items-center justify-center shrink-0">
+                      <img
+                        src={activeBrandInfo.logo}
+                        alt={activeBrandInfo.name}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="px-2.5 py-0.5 rounded-full bg-[#4f46e5] text-white text-[10px] font-extrabold uppercase tracking-wider">
+                          OFFICIAL PARTNER
+                        </span>
+                        <span className="text-[11.5px] font-bold text-[#4f46e5]">
+                          {activeBrandInfo.specialty}
+                        </span>
+                      </div>
+                      <h3 className="text-[19px] sm:text-[22px] font-extrabold text-[#141233] mt-0.5">
+                        {activeBrandInfo.name} Flagship Collection
+                      </h3>
+                      <p className="text-[12.5px] text-[#666666] hidden sm:block">
+                        {activeBrandInfo.tagline}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2.5">
+                    <Link
+                      href={`/shop?brand=${encodeURIComponent(activeBrandInfo.name)}`}
+                      className="btn-shine inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[12px] font-bold uppercase tracking-wider transition-colors"
+                    >
+                      <span>View All {activeBrandInfo.name} in Shop</span>
+                      <span>→</span>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedBrandName(null)}
+                      aria-label="Close brand showcase"
+                      className="w-9 h-9 rounded-full bg-white border border-[#dcdce5] hover:border-[#4f46e5] text-[#141233] font-bold flex items-center justify-center cursor-pointer"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+
+                {/* 4 Brand Products Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                  {brandProducts.map((product) => {
+                    const wished = isInWishlist(product.slug);
+                    return (
+                      <div
+                        key={product.id}
+                        className="group rounded-[18px] border border-[#eaeaea] hover:border-[#4f46e5] bg-white p-4 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="bg-[#4f46e5] text-white text-[10px] font-bold px-2.5 py-0.5 badge-leaf">
+                              {product.discount || "OFFICIAL"}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => toggleWishlist(product.slug)}
+                              className={`w-7 h-7 rounded-full flex items-center justify-center text-[13px] cursor-pointer ${
+                                wished
+                                  ? "bg-[#4f46e5] text-white"
+                                  : "bg-[#f4f5f8] text-[#444444] hover:bg-[#4f46e5] hover:text-white"
+                              }`}
+                            >
+                              ♥
+                            </button>
+                          </div>
+
+                          <Link
+                            href={`/product/${product.slug}`}
+                            className="w-full h-[165px] rounded-[12px] bg-[#fafafa] p-3 flex items-center justify-center mb-3 overflow-hidden"
+                          >
+                            <img
+                              src={product.image}
+                              alt={product.title}
+                              className="w-full h-full object-contain group-hover:scale-108 transition-transform duration-500"
+                            />
+                          </Link>
+
+                          <div className="text-[10.5px] font-bold uppercase text-[#777777] mb-1">
+                            {activeBrandInfo.name} • <span className="text-[#f59e0b]">★ {product.rating}</span>
+                          </div>
+                          <Link
+                            href={`/product/${product.slug}`}
+                            className="text-[14px] font-extrabold text-[#141233] group-hover:text-[#4f46e5] line-clamp-2 leading-snug"
+                          >
+                            {product.title}
+                          </Link>
+                        </div>
+
+                        <div className="pt-3 mt-3 border-t border-[#f0f0f0]">
+                          <div className="flex items-baseline gap-2 mb-2.5">
+                            <span className="text-[17px] font-extrabold text-[#4f46e5]">
+                              ${product.price.toFixed(2)}
+                            </span>
+                            {product.oldPrice && (
+                              <span className="text-[12px] text-[#999999] line-through">
+                                ${product.oldPrice.toFixed(2)}
+                              </span>
+                            )}
+                          </div>
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              type="button"
+                              onClick={() => addToCart(product, 1)}
+                              className="btn-shine py-2 rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[11px] font-bold uppercase tracking-wider cursor-pointer"
+                            >
+                              + Add Cart
+                            </button>
+                            <Link
+                              href={`/product/${product.slug}`}
+                              className="py-2 rounded-full border border-[#dcdce5] hover:border-[#141233] text-[#141233] text-[11px] font-bold uppercase tracking-wider text-center"
+                            >
+                              Details →
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </ScrollReveal>
 

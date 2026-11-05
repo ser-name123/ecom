@@ -1,13 +1,38 @@
 "use client";
 
-import React, { useState, useMemo, Suspense } from "react";
+import React, { useState, useMemo, useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import PageHero from "@/components/ui/PageHero";
-import { PRODUCTS, CATEGORIES, Product } from "@/lib/storeData";
+import {
+  PRODUCTS,
+  CATEGORIES,
+  OFFICIAL_BRANDS,
+  getProductsByBrand,
+  getBrandInfo,
+  Product,
+} from "@/lib/storeData";
 import { useStore } from "@/lib/StoreContext";
 
-const BRANDS = ["All Brands", "Apple", "Samsung", "Sony", "Canon", "Dell", "Corsair", "Keychron", "Logitech", "JBL", "Meta"];
+const BRANDS = [
+  "All Brands",
+  "Samsung",
+  "Sony",
+  "Apple",
+  "Canon",
+  "Dell",
+  "ThinkPad",
+  "Vivo",
+  "Huawei",
+  "HP",
+  "Sharp",
+  "Digital",
+  "Corsair",
+  "Keychron",
+  "Logitech",
+  "JBL",
+  "Meta",
+];
 const PRICE_RANGES = [
   { label: "All Prices", min: 0, max: 99999 },
   { label: "Under $150", min: 0, max: 150 },
@@ -19,40 +44,54 @@ const PRICE_RANGES = [
 function ShopContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "all";
+  const initialBrand = searchParams.get("brand") || "All Brands";
   const initialQuery = searchParams.get("q") || "";
 
   const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory);
-  const [selectedBrand, setSelectedBrand] = useState<string>("All Brands");
+  const [selectedBrand, setSelectedBrand] = useState<string>(initialBrand);
   const [priceIdx, setPriceIdx] = useState<number>(0);
   const [sortBy, setSortBy] = useState<string>("featured");
   const [searchQuery, setSearchQuery] = useState<string>(initialQuery);
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
 
+  useEffect(() => {
+    const catParam = searchParams.get("category");
+    const brandParam = searchParams.get("brand");
+    const qParam = searchParams.get("q");
+    if (catParam) setSelectedCategory(catParam);
+    if (brandParam) setSelectedBrand(brandParam);
+    if (qParam !== null) setSearchQuery(qParam);
+  }, [searchParams]);
+
   const { addToCart, toggleWishlist, isInWishlist } = useStore();
+  const activeBrandInfo = selectedBrand !== "All Brands" ? getBrandInfo(selectedBrand) : undefined;
 
   const filteredProducts = useMemo(() => {
     const range = PRICE_RANGES[priceIdx];
-    return PRODUCTS.filter((p) => {
-      if (selectedCategory !== "all" && p.category !== selectedCategory) return false;
-      if (selectedBrand !== "All Brands" && p.brand !== selectedBrand) return false;
-      if (p.price < range.min || p.price > range.max) return false;
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        const match =
-          p.title.toLowerCase().includes(q) ||
-          p.subtitle.toLowerCase().includes(q) ||
-          p.brand.toLowerCase().includes(q) ||
-          p.categoryLabel.toLowerCase().includes(q);
-        if (!match) return false;
-      }
-      return true;
-    }).sort((a, b) => {
-      if (sortBy === "price-asc") return a.price - b.price;
-      if (sortBy === "price-desc") return b.price - a.price;
-      if (sortBy === "rating") return b.rating - a.rating;
-      return b.soldCount - a.soldCount;
-    });
+    const basePool =
+      selectedBrand === "All Brands" ? PRODUCTS : getProductsByBrand(selectedBrand);
+    return basePool
+      .filter((p) => {
+        if (selectedCategory !== "all" && p.category !== selectedCategory) return false;
+        if (p.price < range.min || p.price > range.max) return false;
+        if (searchQuery.trim()) {
+          const q = searchQuery.toLowerCase();
+          const match =
+            p.title.toLowerCase().includes(q) ||
+            p.subtitle.toLowerCase().includes(q) ||
+            p.brand.toLowerCase().includes(q) ||
+            p.categoryLabel.toLowerCase().includes(q);
+          if (!match) return false;
+        }
+        return true;
+      })
+      .sort((a, b) => {
+        if (sortBy === "price-asc") return a.price - b.price;
+        if (sortBy === "price-desc") return b.price - a.price;
+        if (sortBy === "rating") return b.rating - a.rating;
+        return b.soldCount - a.soldCount;
+      });
   }, [selectedCategory, selectedBrand, priceIdx, sortBy, searchQuery]);
 
   const resetFilters = () => {
@@ -111,6 +150,58 @@ function ShopContent() {
               <span>{cat.shortName}</span>
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Official Partner Brands Logo Bar */}
+      <div id="brands" className="border-b border-[#eceef5] bg-white">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-8 py-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-[12px] font-extrabold uppercase tracking-wider text-[#141233]">
+              Shop by Official Brand Partner
+            </span>
+            {selectedBrand !== "All Brands" && (
+              <button
+                type="button"
+                onClick={() => setSelectedBrand("All Brands")}
+                className="text-[12px] font-bold text-[#4f46e5] hover:underline cursor-pointer"
+              >
+                Show All Brands ✕
+              </button>
+            )}
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-2.5">
+            {OFFICIAL_BRANDS.map((b) => {
+              const isSelected = selectedBrand.toLowerCase() === b.name.toLowerCase();
+              return (
+                <button
+                  key={b.id}
+                  type="button"
+                  onClick={() =>
+                    setSelectedBrand(isSelected ? "All Brands" : b.name)
+                  }
+                  className={`h-[68px] rounded-[12px] border p-2 flex flex-col items-center justify-center transition-all cursor-pointer ${
+                    isSelected
+                      ? "border-[#4f46e5] bg-[#eef2ff] shadow-sm scale-[1.02]"
+                      : "border-[#eaeaea] bg-white hover:border-[#4f46e5]/50"
+                  }`}
+                >
+                  <img
+                    src={b.logo}
+                    alt={b.name}
+                    className="max-h-[34px] w-auto object-contain"
+                  />
+                  <span
+                    className={`mt-1 text-[10px] font-extrabold uppercase ${
+                      isSelected ? "text-[#4f46e5]" : "text-[#777777]"
+                    }`}
+                  >
+                    {b.name}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
 
@@ -223,6 +314,41 @@ function ShopContent() {
 
         {/* Right 9 Cols: Toolbar + Product Cards */}
         <div className="lg:col-span-9">
+          {/* Active Brand Spotlight Banner */}
+          {selectedBrand !== "All Brands" && (
+            <div className="mb-6 rounded-[20px] border border-[#4f46e5]/25 bg-[#f8f9fc] p-5 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                {activeBrandInfo && (
+                  <div className="w-[74px] h-[54px] rounded-[12px] bg-white border border-[#eaeaea] p-2 flex items-center justify-center shrink-0">
+                    <img
+                      src={activeBrandInfo.logo}
+                      alt={activeBrandInfo.name}
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                )}
+                <div>
+                  <span className="text-[10.5px] font-extrabold uppercase tracking-wider text-[#4f46e5]">
+                    OFFICIAL {selectedBrand.toUpperCase()} STOREFRONT
+                  </span>
+                  <h2 className="text-[20px] font-extrabold text-[#141233]">
+                    {selectedBrand} Flagship Products ({filteredProducts.length})
+                  </h2>
+                  {activeBrandInfo && (
+                    <p className="text-[12.5px] text-[#666666]">{activeBrandInfo.tagline}</p>
+                  )}
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setSelectedBrand("All Brands")}
+                className="px-4 py-2 rounded-full bg-white border border-[#dcdce5] hover:border-[#4f46e5] text-[12px] font-bold text-[#141233] cursor-pointer"
+              >
+                All Brands ✕
+              </button>
+            </div>
+          )}
+
           {/* Top Toolbar */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-5 mb-6 border-b border-[#eaeaea]">
             <div className="text-[14px] text-[#555555]">
