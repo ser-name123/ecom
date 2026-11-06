@@ -1549,7 +1549,7 @@ export const SAMPLE_ORDERS: Record<string, OrderTrackingRecord> = {
         step: "Order Confirmed & Verified",
         location: "Nexova Store",
         timestamp: "Nov 04, 2026 • 04:10 PM",
-        detail: "Order placed with Free Express Shipping ($500+ tier).",
+        detail: "Order placed with Free Express Shipping (AED 500+ tier).",
         completed: true,
       },
       {
@@ -1603,12 +1603,12 @@ export const FAQ_ITEMS = [
   {
     category: "Shipping & Delivery",
     q: "How do I qualify for Free Express Shipping?",
-    a: "All orders totaling $500 or more automatically qualify for complimentary Insured Express Air Shipping (1–2 business days in the US & Europe, 3–5 business days globally).",
+    a: "All orders totaling AED 500 or more automatically qualify for complimentary Insured Express Air Shipping (1–2 business days in the UAE & GCC, 3–5 business days globally).",
   },
   {
     category: "Shipping & Delivery",
     q: "Are high-value electronics insured during transit?",
-    a: "100% yes. Every Nexova shipment is packed in tamper-evident anti-static air-cell boxes and includes full replacement transit insurance up to $10,000 at zero extra cost to you.",
+    a: "100% yes. Every Nexova shipment is packed in tamper-evident anti-static air-cell boxes and includes full replacement transit insurance up to AED 10,000 at zero extra cost to you.",
   },
   {
     category: "Shipping & Delivery",

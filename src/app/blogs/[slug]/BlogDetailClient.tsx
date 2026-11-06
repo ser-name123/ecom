@@ -122,7 +122,7 @@ export default function BlogDetailClient({ slug }: { slug: string }) {
                     {prod.title}
                   </Link>
                   <div className="text-[14px] font-extrabold text-[#4f46e5] mt-0.5">
-                    ${prod.price.toFixed(2)}
+                    AED {prod.price.toFixed(2)}
                   </div>
                   <button
                     type="button"

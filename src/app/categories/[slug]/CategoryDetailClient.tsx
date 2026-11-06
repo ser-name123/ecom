@@ -108,11 +108,11 @@ export default function CategoryDetailClient({ slug }: { slug: string }) {
                 <div className="pt-4 mt-4 border-t border-[#f0f0f0]">
                   <div className="flex items-baseline gap-2 mb-3">
                     <span className="text-[18px] font-extrabold text-[#141233]">
-                      ${product.price.toFixed(2)}
+                      AED {product.price.toFixed(2)}
                     </span>
                     {product.oldPrice && (
                       <span className="text-[12.5px] text-[#999999] line-through">
-                        ${product.oldPrice.toFixed(2)}
+                        AED {product.oldPrice.toFixed(2)}
                       </span>
                     )}
                   </div>

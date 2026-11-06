@@ -52,7 +52,7 @@ export default function CartPage() {
         breadcrumbs={[{ label: "Shopping Cart" }]}
         rightStats={[
           { value: `${cartCount}`, label: "Items in Bag" },
-          { value: `$${total.toFixed(0)}`, label: "Estimated Total" },
+          { value: `AED ${total.toFixed(0)}`, label: "Estimated Total" },
           { value: "SSL", label: "256-Bit Secure" },
         ]}
       />
@@ -68,8 +68,8 @@ export default function CartPage() {
                 </span>
               ) : (
                 <span>
-                  Add <strong className="text-[#38bdf8]">${remaining.toFixed(2)}</strong> more to unlock{" "}
-                  <strong>FREE Insured Express Air Shipping ($500+ Tier)</strong>
+                  Add <strong className="text-[#38bdf8]">AED {remaining.toFixed(2)}</strong> more to unlock{" "}
+                  <strong>FREE Insured Express Air Shipping (AED 500+ Tier)</strong>
                 </span>
               )}
             </div>
@@ -208,10 +208,10 @@ export default function CartPage() {
                     </div>
                     <div className="text-right">
                       <div className="text-[18px] font-extrabold text-[#141233]">
-                        ${(item.product.price * item.quantity).toFixed(2)}
+                        AED {(item.product.price * item.quantity).toFixed(2)}
                       </div>
                       <div className="text-[11px] text-[#888888]">
-                        ${item.product.price.toFixed(2)} each
+                        AED {item.product.price.toFixed(2)} each
                       </div>
                     </div>
                   </div>
@@ -273,12 +273,12 @@ export default function CartPage() {
               <div className="space-y-2.5 text-[14px] pt-2 border-t border-[#e5e7f0]">
                 <div className="flex justify-between text-[#555555]">
                   <span>Subtotal ({cartCount} items)</span>
-                  <span className="font-bold text-[#141233]">${subtotal.toFixed(2)}</span>
+                  <span className="font-bold text-[#141233]">AED {subtotal.toFixed(2)}</span>
                 </div>
                 {discountPercent > 0 && (
                   <div className="flex justify-between text-[#10b981] font-bold">
                     <span>Discount ({couponCode} -{discountPercent}%)</span>
-                    <span>−${discountAmount.toFixed(2)}</span>
+                    <span>−AED {discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-[#555555]">
@@ -287,13 +287,13 @@ export default function CartPage() {
                     {shippingCost === 0 ? (
                       <span className="text-[#10b981]">FREE</span>
                     ) : (
-                      `$${shippingCost.toFixed(2)}`
+                      `AED ${shippingCost.toFixed(2)}`
                     )}
                   </span>
                 </div>
                 <div className="flex justify-between text-[18px] font-extrabold text-[#141233] pt-3 border-t border-[#e5e7f0]">
                   <span>Total</span>
-                  <span className="text-[#4f46e5]">${total.toFixed(2)}</span>
+                  <span className="text-[#4f46e5]">AED {total.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -341,7 +341,7 @@ export default function CartPage() {
                   </Link>
                   <div className="flex items-center justify-between mt-2">
                     <span className="text-[15px] font-extrabold text-[#4f46e5]">
-                      ${p.price.toFixed(2)}
+                      AED {p.price.toFixed(2)}
                     </span>
                     <button
                       type="button"

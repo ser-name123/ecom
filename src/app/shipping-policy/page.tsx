@@ -19,9 +19,9 @@ export default function ShippingPolicyPage() {
         subtitle="Fast, insured, climate-neutral express shipping from our 6 global fulfillment hubs directly to your doorstep."
         breadcrumbs={[{ label: "Shipping & Delivery Policy" }]}
         rightStats={[
-          { value: "Free", label: "Orders Over $500" },
+          { value: "Free", label: "Orders Over AED 500" },
           { value: "1–2 Days", label: "Express Air" },
-          { value: "$10,000", label: "Transit Insurance" },
+          { value: "AED 10,000", label: "Transit Insurance" },
         ]}
       />
 
@@ -43,33 +43,33 @@ export default function ShippingPolicyPage() {
                   <tr className="bg-[#f8f9fc] border-b border-[#eaeaea] text-[#141233] font-extrabold">
                     <th className="p-4">Service Tier</th>
                     <th className="p-4">Delivery Window</th>
-                    <th className="p-4">Orders Under $500</th>
-                    <th className="p-4">Orders $500+</th>
+                    <th className="p-4">Orders Under AED 500</th>
+                    <th className="p-4">Orders AED 500+</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-[#eceef5]">
                   <tr>
                     <td className="p-4 font-bold text-[#141233]">Standard Ground Insured</td>
                     <td className="p-4 text-[#555555]">3 – 5 Business Days</td>
-                    <td className="p-4 font-semibold">$9.00</td>
+                    <td className="p-4 font-semibold">AED 9.00</td>
                     <td className="p-4 font-extrabold text-[#10b981]">FREE</td>
                   </tr>
                   <tr className="bg-[#fafbfe]">
                     <td className="p-4 font-bold text-[#4f46e5]">Express Air Priority (DHL / FedEx)</td>
                     <td className="p-4 text-[#555555]">1 – 2 Business Days</td>
-                    <td className="p-4 font-semibold">$19.00</td>
+                    <td className="p-4 font-semibold">AED 19.00</td>
                     <td className="p-4 font-extrabold text-[#10b981]">FREE</td>
                   </tr>
                   <tr>
                     <td className="p-4 font-bold text-[#141233]">Same-Day Electric Courier</td>
-                    <td className="p-4 text-[#555555]">Same Day by 8:00 PM (6 Flagship Cities)</td>
-                    <td className="p-4 font-semibold">$29.00</td>
-                    <td className="p-4 font-extrabold text-[#4f46e5]">$15.00</td>
+                    <td className="p-4 text-[#555555]">Same Day by 8:00 PM (Dubai & Flagship Cities)</td>
+                    <td className="p-4 font-semibold">AED 29.00</td>
+                    <td className="p-4 font-extrabold text-[#4f46e5]">AED 15.00</td>
                   </tr>
                   <tr className="bg-[#fafbfe]">
                     <td className="p-4 font-bold text-[#141233]">International Priority DDP</td>
                     <td className="p-4 text-[#555555]">3 – 6 Business Days (65+ Countries)</td>
-                    <td className="p-4 font-semibold">$24.00</td>
+                    <td className="p-4 font-semibold">AED 24.00</td>
                     <td className="p-4 font-extrabold text-[#10b981]">FREE</td>
                   </tr>
                 </tbody>
@@ -85,8 +85,8 @@ export default function ShippingPolicyPage() {
                 body: "Before any laptop, camera, smartwatch, or headphone leaves our fulfillment center, our technicians verify packaging seal integrity, register the hardware serial number to your 2-Year Nexova Care+ warranty, and pack the unit inside anti-static air-cell cushioning.",
               },
               {
-                title: "2. Full Replacement Transit Insurance ($10,000 Coverage)",
-                body: "Every shipment is insured against loss, theft, or carrier damage up to $10,000 at zero additional cost. High-value orders ($750+) require an adult signature or secure one-time delivery PIN upon arrival.",
+                title: "2. Full Replacement Transit Insurance (AED 10,000 Coverage)",
+                body: "Every shipment is insured against loss, theft, or carrier damage up to AED 10,000 at zero additional cost. High-value orders (AED 750+) require an adult signature or secure one-time delivery PIN upon arrival.",
               },
               {
                 title: "3. International Customs, Duties & Taxes (DDP)",
@@ -134,7 +134,7 @@ export default function ShippingPolicyPage() {
 
             <div>
               <label className="block text-[12px] font-bold text-[#141233] mb-1">
-                Estimated Cart Value: <strong>${orderValue}</strong>
+                Estimated Cart Value: <strong>AED {orderValue}</strong>
               </label>
               <input
                 type="range"
@@ -155,7 +155,7 @@ export default function ShippingPolicyPage() {
                     ? "Los Angeles / NY"
                     : region.includes("Europe")
                     ? "London / Paris"
-                    : "Bangkok Regional Hub"}
+                    : "Dubai Regional Hub"}
                 </strong>
               </div>
               <div className="flex justify-between">
@@ -165,7 +165,7 @@ export default function ShippingPolicyPage() {
               <div className="flex justify-between">
                 <span className="text-[#666666]">Shipping Fee:</span>
                 <strong className={isFree ? "text-[#10b981]" : "text-[#141233]"}>
-                  {isFree ? "FREE ($500+ Tier)" : "$19.00"}
+                  {isFree ? "FREE (AED 500+ Tier)" : "AED 19.00"}
                 </strong>
               </div>
             </div>

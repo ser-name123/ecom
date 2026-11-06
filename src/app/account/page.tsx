@@ -601,7 +601,7 @@ export default function CustomerPanelPage() {
                         </div>
                         <div className="pt-2.5 mt-2.5 border-t border-[#eceef5] flex items-center justify-between">
                           <span className="text-[15px] font-extrabold text-[#4f46e5]">
-                            ${prod.price.toFixed(2)}
+                            AED {prod.price.toFixed(2)}
                           </span>
                           <button
                             type="button"
@@ -731,7 +731,7 @@ export default function CustomerPanelPage() {
                               </div>
                             </div>
                             <span className="text-[15px] font-extrabold text-[#141233]">
-                              ${(it.price * it.qty).toFixed(2)}
+                              AED {(it.price * it.qty).toFixed(2)}
                             </span>
                           </div>
                         ))}
@@ -742,7 +742,7 @@ export default function CustomerPanelPage() {
                           Destination: <strong className="text-[#141233]">{ord.destination}</strong>
                         </span>
                         <span className="text-[16px] font-extrabold text-[#4f46e5]">
-                          Total Paid: ${ord.totalAmount.toFixed(2)}
+                          Total Paid: AED {ord.totalAmount.toFixed(2)}
                         </span>
                       </div>
                     </div>
@@ -925,7 +925,7 @@ export default function CustomerPanelPage() {
                         </div>
                         <div className="pt-3 mt-3 border-t border-[#e6e8f0] flex items-center justify-between">
                           <span className="text-[17px] font-extrabold text-[#4f46e5]">
-                            ${prod.price.toFixed(2)}
+                            AED {prod.price.toFixed(2)}
                           </span>
                           <button
                             type="button"
@@ -1077,7 +1077,7 @@ export default function CustomerPanelPage() {
                         </div>
                       </div>
                       <span className="text-[15px] font-extrabold text-[#4f46e5]">
-                        ${r.amount.toFixed(2)}
+                        AED {r.amount.toFixed(2)}
                       </span>
                     </div>
                   ))}
@@ -1099,7 +1099,7 @@ export default function CustomerPanelPage() {
                     >
                       {ordersList.map((o) => (
                         <option key={o.orderId} value={o.orderId}>
-                          Order #{o.orderId} (${o.totalAmount})
+                          Order #{o.orderId} (AED {o.totalAmount})
                         </option>
                       ))}
                     </select>
@@ -1510,7 +1510,7 @@ export default function CustomerPanelPage() {
                     <strong>{it.qty}x</strong> {it.title}
                   </span>
                   <span className="font-extrabold text-[#141233]">
-                    ${(it.price * it.qty).toFixed(2)}
+                    AED {(it.price * it.qty).toFixed(2)}
                   </span>
                 </div>
               ))}
@@ -1518,7 +1518,7 @@ export default function CustomerPanelPage() {
 
             <div className="flex items-center justify-between text-[17px] font-extrabold text-[#141233]">
               <span>Total Amount (Incl. Warranty & Tax)</span>
-              <span className="text-[#4f46e5]">${invoiceOrder.totalAmount.toFixed(2)}</span>
+              <span className="text-[#4f46e5]">AED {invoiceOrder.totalAmount.toFixed(2)}</span>
             </div>
 
             <div className="flex items-center justify-end gap-3 pt-2">

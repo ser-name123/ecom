@@ -56,7 +56,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                 </span>
               ) : (
                 <span>
-                  Add <strong className="text-[#38bdf8]">${remainingForFree.toFixed(2)}</strong> more for FREE Express Shipping
+                  Add <strong className="text-[#38bdf8]">AED {remainingForFree.toFixed(2)}</strong> more for FREE Express Shipping
                 </span>
               )}
               <span>{Math.round(progressPct)}%</span>
@@ -144,7 +144,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                       </button>
                     </div>
                     <span className="text-[14px] font-extrabold text-[#141233]">
-                      ${(item.product.price * item.quantity).toFixed(2)}
+                      AED {(item.product.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -166,7 +166,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
           <div className="flex items-center justify-between text-[14px]">
             <span className="text-[#666666] font-medium">Subtotal</span>
             <span className="text-[18px] font-extrabold text-[#141233]">
-              ${subtotal.toFixed(2)}
+              AED {subtotal.toFixed(2)}
             </span>
           </div>
           <div className="grid grid-cols-2 gap-2.5">

@@ -21,11 +21,11 @@ export default function CheckoutPage() {
 
   const [fullName, setFullName] = useState("Alex Morgan");
   const [email, setEmail] = useState("alex.morgan@nexova.io");
-  const [phone, setPhone] = useState("+1 (555) 234-8910");
-  const [address, setAddress] = useState("452 Broadway, Suite 4B");
-  const [city, setCity] = useState("New York");
-  const [zip, setZip] = useState("10013");
-  const [country, setCountry] = useState("United States");
+  const [phone, setPhone] = useState("+971 50 234 8910");
+  const [address, setAddress] = useState("Downtown Boulevard, Tower 4, Suite 4B");
+  const [city, setCity] = useState("Dubai");
+  const [zip, setZip] = useState("00000");
+  const [country, setCountry] = useState("United Arab Emirates");
 
   const [deliveryMethod, setDeliveryMethod] = useState<"express" | "sameday">("express");
   const [paymentMethod, setPaymentMethod] = useState<"card" | "paypal" | "cod">("card");
@@ -74,7 +74,7 @@ export default function CheckoutPage() {
             </h2>
             <p className="text-[15px] text-[#444444] max-w-[540px] mx-auto leading-relaxed">
               Your order <strong className="text-[#141233]">#{orderPlacedId}</strong> totaling{" "}
-              <strong className="text-[#4f46e5]">${confirmedTotal.toFixed(2)}</strong> has been confirmed and sent to our Los Angeles Fulfillment Lab. A receipt was emailed to{" "}
+              <strong className="text-[#4f46e5]">AED {confirmedTotal.toFixed(2)}</strong> has been confirmed and sent to our Dubai Fulfillment Lab. A receipt was emailed to{" "}
               <strong>{email}</strong>.
             </p>
 
@@ -176,6 +176,7 @@ export default function CheckoutPage() {
                       onChange={(e) => setCountry(e.target.value)}
                       className="w-full h-[44px] px-3.5 rounded-[10px] border border-[#dcdce5] bg-white text-[14px]"
                     >
+                      <option>United Arab Emirates</option>
                       <option>United States</option>
                       <option>United Kingdom</option>
                       <option>France</option>
@@ -251,7 +252,7 @@ export default function CheckoutPage() {
                     <div className="flex items-center justify-between font-extrabold text-[14px] text-[#141233]">
                       <span>Insured Express Air</span>
                       <span className="text-[#10b981]">
-                        {shippingCost === 0 ? "FREE" : `$${shippingCost}`}
+                        {shippingCost === 0 ? "FREE" : `AED ${shippingCost}`}
                       </span>
                     </div>
                     <p className="text-[12px] text-[#666666] mt-1">
@@ -270,7 +271,7 @@ export default function CheckoutPage() {
                   >
                     <div className="flex items-center justify-between font-extrabold text-[14px] text-[#141233]">
                       <span>Same-Day Priority Courier</span>
-                      <span className="text-[#4f46e5]">+$15.00</span>
+                      <span className="text-[#4f46e5]">+AED 15.00</span>
                     </div>
                     <p className="text-[12px] text-[#666666] mt-1">
                       Arrives Today by 8:00 PM • Direct Van
@@ -393,7 +394,7 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                     <span className="text-[13.5px] font-extrabold text-[#141233] shrink-0">
-                      ${(item.product.price * item.quantity).toFixed(2)}
+                      AED {(item.product.price * item.quantity).toFixed(2)}
                     </span>
                   </div>
                 ))}
@@ -420,12 +421,12 @@ export default function CheckoutPage() {
               <div className="space-y-2 text-[14px] pt-3 border-t border-[#e5e7f0]">
                 <div className="flex justify-between text-[#555555]">
                   <span>Subtotal</span>
-                  <span className="font-bold text-[#141233]">${subtotal.toFixed(2)}</span>
+                  <span className="font-bold text-[#141233]">AED {subtotal.toFixed(2)}</span>
                 </div>
                 {discountPercent > 0 && (
                   <div className="flex justify-between text-[#10b981] font-bold">
                     <span>Discount (-{discountPercent}%)</span>
-                    <span>−${discountAmount.toFixed(2)}</span>
+                    <span>−AED {discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-[#555555]">
@@ -433,12 +434,12 @@ export default function CheckoutPage() {
                   <span className="font-bold text-[#141233]">
                     {shippingCost + extraShipping === 0
                       ? "FREE"
-                      : `$${(shippingCost + extraShipping).toFixed(2)}`}
+                      : `AED ${(shippingCost + extraShipping).toFixed(2)}`}
                   </span>
                 </div>
                 <div className="flex justify-between text-[20px] font-extrabold text-[#141233] pt-3 border-t border-[#e5e7f0]">
                   <span>Total Due</span>
-                  <span className="text-[#4f46e5]">${finalTotal.toFixed(2)}</span>
+                  <span className="text-[#4f46e5]">AED {finalTotal.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -446,7 +447,7 @@ export default function CheckoutPage() {
                 type="submit"
                 className="btn-shine w-full py-4 rounded-full bg-[#4f46e5] hover:bg-[#4f46e5] text-white text-[13.5px] font-extrabold uppercase tracking-wider shadow-lg transition-colors cursor-pointer"
               >
-                🔒 Complete Order • ${finalTotal.toFixed(2)}
+                🔒 Complete Order • AED {finalTotal.toFixed(2)}
               </button>
             </div>
           </form>

@@ -14,7 +14,7 @@ export default function TermsConditionsPage() {
     {
       id: "authenticity",
       title: "2. Product Authenticity & Pricing Accuracy",
-      body: "All products sold on Nexova are 100% brand-new, factory-sealed, and sourced directly from authorized manufacturers. Prices are displayed in USD and include applicable promotional discounts such as our 'Buy 3 Save 30%' bundle program.",
+      body: "All products sold on Nexova are 100% brand-new, factory-sealed, and sourced directly from authorized manufacturers. Prices are displayed in AED (UAE Dirham) and include applicable promotional discounts such as our 'Buy 3 Save 30%' bundle program.",
     },
     {
       id: "warranty",
@@ -29,7 +29,7 @@ export default function TermsConditionsPage() {
     {
       id: "liability",
       title: "5. Limitation of Liability & Governing Law",
-      body: "Nexova's maximum liability for any claim arising out of an order shall not exceed the total purchase price paid for the product, plus insured transit coverage up to $10,000.",
+      body: "Nexova's maximum liability for any claim arising out of an order shall not exceed the total purchase price paid for the product, plus insured transit coverage up to AED 10,000.",
     },
   ];
 

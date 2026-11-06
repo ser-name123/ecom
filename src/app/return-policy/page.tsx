@@ -25,7 +25,7 @@ export default function ReturnPolicyPage() {
         breadcrumbs={[{ label: "Return & Refund Policy" }]}
         rightStats={[
           { value: "30 Days", label: "Return Window" },
-          { value: "$0", label: "Restocking Fee" },
+          { value: "AED 0", label: "Restocking Fee" },
           { value: "24 Hours", label: "Refund Processing" },
         ]}
       />

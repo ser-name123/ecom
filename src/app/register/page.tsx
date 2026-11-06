@@ -192,6 +192,7 @@ export default function CustomerSignupPage() {
                       aria-label="Country Code"
                       className="h-[48px] px-2.5 rounded-[12px] border border-[#dcdce5] bg-[#fafbfe] text-[13.5px] font-bold text-[#141233]"
                     >
+                      <option value="+971">🇦🇪 +971</option>
                       <option value="+1">🇺🇸 +1</option>
                       <option value="+91">🇮🇳 +91</option>
                       <option value="+44">🇬🇧 +44</option>
@@ -412,7 +413,7 @@ export default function CustomerSignupPage() {
                 INSTANT SIGNUP REWARD
               </span>
               <h3 className="text-[24px] font-extrabold leading-tight mb-2">
-                Get 500 VIP Points ($5.00 Value) Instantly
+                Get 500 VIP Points (AED 5.00 Value) Instantly
               </h3>
               <p className="text-[13.5px] text-white/80 leading-relaxed mb-5">
                 Every new customer account starts with 500 bonus points in their Nexova Wallet plus a 30% Bundle Coupon (`NEXOVA30`).
@@ -420,7 +421,7 @@ export default function CustomerSignupPage() {
 
               <div className="space-y-3">
                 {[
-                  { tier: "Silver Member (Free)", pts: "0 – 999 Pts", perk: "3% Cashback + Free Shipping $500+" },
+                  { tier: "Silver Member (Free)", pts: "0 – 999 Pts", perk: "3% Cashback + Free Shipping AED 500+" },
                   { tier: "Gold VIP", pts: "1,000 – 2,000 Pts", perk: "4% Cashback + Priority Dispatch" },
                   { tier: "Platinum VIP", pts: "2,000+ Pts", perk: "5% Cashback + 2-Yr Care+ Express Swap" },
                 ].map((t, i) => (

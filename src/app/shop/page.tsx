@@ -35,10 +35,10 @@ const BRANDS = [
 ];
 const PRICE_RANGES = [
   { label: "All Prices", min: 0, max: 99999 },
-  { label: "Under $150", min: 0, max: 150 },
-  { label: "$150 – $400", min: 150, max: 400 },
-  { label: "$400 – $900", min: 400, max: 900 },
-  { label: "$900+", min: 900, max: 99999 },
+  { label: "Under AED 150", min: 0, max: 150 },
+  { label: "AED 150 – AED 400", min: 150, max: 400 },
+  { label: "AED 400 – AED 900", min: 400, max: 900 },
+  { label: "AED 900+", min: 900, max: 99999 },
 ];
 
 function ShopContent() {
@@ -113,7 +113,7 @@ function ShopContent() {
         rightStats={[
           { value: `${PRODUCTS.length}+`, label: "Flagship Models" },
           { value: "9", label: "Departments" },
-          { value: "Free", label: "Shipping $500+" },
+          { value: "Free", label: "Shipping AED 500+" },
         ]}
       />
 
@@ -480,11 +480,11 @@ function ShopContent() {
                       <div className="flex items-baseline justify-between mb-3">
                         <div className="flex items-baseline gap-2">
                           <span className="text-[18px] font-extrabold text-[#141233]">
-                            ${product.price.toFixed(2)}
+                            AED {product.price.toFixed(2)}
                           </span>
                           {product.oldPrice && (
                             <span className="text-[12.5px] text-[#999999] line-through">
-                              ${product.oldPrice.toFixed(2)}
+                              AED {product.oldPrice.toFixed(2)}
                             </span>
                           )}
                         </div>
@@ -553,11 +553,11 @@ function ShopContent() {
                     <div className="flex flex-wrap items-center justify-between gap-4 mt-4 pt-3 border-t border-[#f2f2f2]">
                       <div className="flex items-baseline gap-2">
                         <span className="text-[20px] font-extrabold text-[#141233]">
-                          ${product.price.toFixed(2)}
+                          AED {product.price.toFixed(2)}
                         </span>
                         {product.oldPrice && (
                           <span className="text-[13px] text-[#999999] line-through">
-                            ${product.oldPrice.toFixed(2)}
+                            AED {product.oldPrice.toFixed(2)}
                           </span>
                         )}
                       </div>
@@ -598,7 +598,7 @@ function ShopContent() {
             <button
               type="button"
               onClick={() => setQuickViewProduct(null)}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#f4f4f8] hover:bg-[#f43777] hover:text-white font-bold flex items-center justify-center cursor-pointer"
+              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-[#f4f4f8] hover:bg-[#4f46e5] hover:text-white font-bold flex items-center justify-center cursor-pointer"
             >
               ✕
             </button>
@@ -618,12 +618,12 @@ function ShopContent() {
                   {quickViewProduct.title}
                 </h3>
                 <div className="flex items-baseline gap-2.5 my-3">
-                  <span className="text-[24px] font-extrabold text-[#f43777]">
-                    ${quickViewProduct.price.toFixed(2)}
+                  <span className="text-[24px] font-extrabold text-[#4f46e5]">
+                    AED {quickViewProduct.price.toFixed(2)}
                   </span>
                   {quickViewProduct.oldPrice && (
                     <span className="text-[14px] text-[#999999] line-through">
-                      ${quickViewProduct.oldPrice.toFixed(2)}
+                      AED {quickViewProduct.oldPrice.toFixed(2)}
                     </span>
                   )}
                 </div>

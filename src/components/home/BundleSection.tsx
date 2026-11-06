@@ -274,15 +274,15 @@ export default function BundleSection() {
                         {product.oldPrice ? (
                           <>
                             <span className="text-[16px] font-semibold text-[#4f46e5]">
-                              ${product.price.toFixed(2)}
+                              AED {product.price.toFixed(2)}
                             </span>
                             <span className="text-[14px] text-[#999999] line-through font-normal">
-                              ${product.oldPrice.toFixed(2)}
+                              AED {product.oldPrice.toFixed(2)}
                             </span>
                           </>
                         ) : (
                           <span className="text-[16px] font-semibold text-[#000000]">
-                            ${product.price.toFixed(2)}
+                            AED {product.price.toFixed(2)}
                           </span>
                         )}
                       </div>
@@ -341,7 +341,7 @@ export default function BundleSection() {
                                 {item.title}
                               </p>
                               <p className="text-[13px] font-semibold text-[#4f46e5] mt-0.5">
-                                ${item.price.toFixed(2)}
+                                AED {item.price.toFixed(2)}
                               </p>
                             </div>
                             <button
@@ -381,11 +381,11 @@ export default function BundleSection() {
                     <div className="flex items-baseline gap-2">
                       {isComplete && (
                         <span className="text-[13px] text-white/45 line-through">
-                          ${rawTotal.toFixed(2)}
+                          AED {rawTotal.toFixed(2)}
                         </span>
                       )}
                       <span className="text-[18px] font-semibold text-white">
-                        ${finalTotal.toFixed(2)}
+                        AED {finalTotal.toFixed(2)}
                       </span>
                     </div>
                   </div>

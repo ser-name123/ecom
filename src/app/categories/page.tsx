@@ -97,7 +97,7 @@ export default function CategoriesPage() {
                               {catProducts[0].title}
                             </Link>
                             <div className="text-[12.5px] font-extrabold text-[#141233]">
-                              ${catProducts[0].price.toFixed(2)}
+                              AED {catProducts[0].price.toFixed(2)}
                             </div>
                           </div>
                         </div>

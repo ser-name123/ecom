@@ -211,10 +211,10 @@ export default function SaleOffSection() {
                 {/* Price & Compare Price */}
                 <div className="flex items-baseline justify-center gap-2.5 mb-4">
                   <span className="text-[22px] sm:text-[26px] font-semibold text-[#4f46e5]">
-                    ${currentProduct.price.toFixed(2)}
+                    AED {currentProduct.price.toFixed(2)}
                   </span>
                   <span className="text-[20px] sm:text-[23px] font-normal text-[#999999] line-through">
-                    ${currentProduct.oldPrice.toFixed(2)}
+                    AED {currentProduct.oldPrice.toFixed(2)}
                   </span>
                 </div>
               </div>

@@ -7,7 +7,7 @@ const POLICIES = [
   {
     id: "shipping",
     title: "Free Shipping",
-    subtitle: "Free Shipping for orders over $99",
+    subtitle: "Free Shipping for orders over AED 99",
     icon: "/assets/policy-1.svg",
   },
   {

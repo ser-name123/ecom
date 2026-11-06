@@ -41,7 +41,7 @@ function TrackOrderContent() {
         rightStats={[
           { value: activeRecord.orderId, label: "Active Order" },
           { value: activeRecord.status, label: "Live Status" },
-          { value: "Insured", label: "Up to $10,000" },
+          { value: "Insured", label: "Up to AED 10,000" },
         ]}
       />
 
@@ -200,7 +200,7 @@ function TrackOrderContent() {
                     </div>
                   </div>
                   <span className="text-[15px] font-extrabold text-[#141233]">
-                    ${item.price.toFixed(2)}
+                    AED {item.price.toFixed(2)}
                   </span>
                 </div>
               ))}

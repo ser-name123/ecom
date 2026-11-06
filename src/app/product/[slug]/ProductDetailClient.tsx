@@ -290,16 +290,16 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
           <div className="p-4 rounded-[18px] bg-[#f8f9fc] border border-[#e6e8f0] flex flex-wrap items-baseline justify-between gap-4">
             <div className="flex items-baseline gap-3">
               <span className="text-[32px] font-extrabold text-[#4f46e5]">
-                ${product.price.toFixed(2)}
+                AED {product.price.toFixed(2)}
               </span>
               {product.oldPrice && (
                 <span className="text-[17px] text-[#999999] line-through font-semibold">
-                  ${product.oldPrice.toFixed(2)}
+                  AED {product.oldPrice.toFixed(2)}
                 </span>
               )}
             </div>
             <span className="text-[12px] font-bold text-[#4f46e5] bg-[#eef2ff] px-3 py-1 rounded-full">
-              ⚡ Or 4 interest-free payments of ${(product.price / 4).toFixed(2)}
+              ⚡ Or 4 interest-free payments of AED {(product.price / 4).toFixed(2)}
             </span>
           </div>
 
@@ -416,7 +416,7 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
               onClick={() => addToCart(product, quantity, selectedColor, selectedEdition)}
               className="btn-shine flex-1 min-w-[170px] h-[48px] rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[13px] font-extrabold uppercase tracking-wider transition-colors cursor-pointer"
             >
-              Add to Cart • ${(product.price * quantity).toFixed(2)}
+              Add to Cart • AED {(product.price * quantity).toFixed(2)}
             </button>
 
             <button
@@ -445,7 +445,7 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-3 border-t border-[#eaeaea] text-[12px]">
             <div className="p-3 rounded-[12px] bg-[#fafbfe] border border-[#eceef5]">
               <strong className="block text-[#141233]">🚀 Express Air Delivery</strong>
-              <span className="text-[#666666]">Free on orders $500+</span>
+              <span className="text-[#666666]">Free on orders AED 500+</span>
             </div>
             <div className="p-3 rounded-[12px] bg-[#fafbfe] border border-[#eceef5]">
               <strong className="block text-[#141233]">🛡️ 2-Year Care+ Warranty</strong>
@@ -644,7 +644,7 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
                   Insured Global Express Delivery
                 </h4>
                 <p className="text-[14px] text-[#555555] leading-relaxed mb-3">
-                  Orders placed before 4:00 PM local hub time dispatch the same business day. Orders over $500 receive complimentary Express Air shipping with live GPS tracking.
+                  Orders placed before 4:00 PM local hub time dispatch the same business day. Orders over AED 500 receive complimentary Express Air shipping with live GPS tracking.
                 </p>
                 <Link
                   href="/shipping-policy"
@@ -703,7 +703,7 @@ export default function ProductDetailClient({ slug }: { slug: string }) {
                 </Link>
                 <div className="flex items-center justify-between mt-2">
                   <span className="text-[16px] font-extrabold text-[#4f46e5]">
-                    ${rel.price.toFixed(2)}
+                    AED {rel.price.toFixed(2)}
                   </span>
                   <button
                     type="button"

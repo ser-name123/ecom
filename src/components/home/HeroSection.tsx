@@ -251,7 +251,7 @@ export default function HeroSection() {
                   Wireless
                 </h2>
                 <p className="text-[11px] sm:text-[12px] font-normal text-white uppercase tracking-wide mb-2.5 sm:mb-3.5">
-                  STARTING AT $100
+                  STARTING AT AED 100
                 </p>
                 <Link
                   href="/categories/headphone"
@@ -288,7 +288,7 @@ export default function HeroSection() {
                   HD
                 </h2>
                 <p className="text-[11px] sm:text-[12px] font-normal text-white uppercase tracking-wide mb-2.5 sm:mb-3.5">
-                  STARTING AT $200
+                  STARTING AT AED 200
                 </p>
                 <Link
                   href="/categories/camera"

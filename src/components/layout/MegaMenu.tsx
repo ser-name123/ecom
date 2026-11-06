@@ -272,7 +272,7 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   Wireless
                 </h5>
                 <p className="text-[11.5px] text-white/90 mb-4">
-                  Starting at $100
+                  Starting at AED 100
                 </p>
                 <a
                   href="#headphones"
@@ -412,8 +412,8 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
               </Link>
               <div className="flex items-center justify-between">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-[16px] font-extrabold text-[#4f46e5]">$291.00</span>
-                  <span className="text-[12.5px] text-[#999999] line-through">$350.00</span>
+                  <span className="text-[16px] font-extrabold text-[#4f46e5]">AED 291.00</span>
+                  <span className="text-[12.5px] text-[#999999] line-through">AED 350.00</span>
                 </div>
                 <button
                   type="button"
@@ -736,10 +736,10 @@ export default function MegaMenu({ activeDropdown }: MegaMenuProps) {
                   <div className="flex items-center justify-between gap-1 mt-1">
                     <div className="flex items-baseline gap-1">
                       <span className="text-[13.5px] font-extrabold text-[#4f46e5]">
-                        ${deal.price.toFixed(0)}
+                        AED {deal.price.toFixed(0)}
                       </span>
                       <span className="text-[11px] text-[#999999] line-through">
-                        ${deal.oldPrice.toFixed(0)}
+                        AED {deal.oldPrice.toFixed(0)}
                       </span>
                     </div>
                     <button

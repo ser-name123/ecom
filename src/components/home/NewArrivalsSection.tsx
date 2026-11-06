@@ -367,15 +367,15 @@ export default function NewArrivalsSection() {
                       {product.oldPrice ? (
                         <>
                           <span className="text-[16px] font-semibold text-[#4f46e5]">
-                            ${product.price.toFixed(2)}
+                            AED {product.price.toFixed(2)}
                           </span>
                           <span className="text-[14px] text-[#999999] line-through font-normal">
-                            ${product.oldPrice.toFixed(2)}
+                            AED {product.oldPrice.toFixed(2)}
                           </span>
                         </>
                       ) : (
                         <span className="text-[16px] font-semibold text-[#000000]">
-                          ${product.price.toFixed(2)}
+                          AED {product.price.toFixed(2)}
                         </span>
                       )}
                     </div>
@@ -416,7 +416,7 @@ export default function NewArrivalsSection() {
                   Ultra GPS
                 </h3>
                 <p className="text-[12px] md:text-[13px] text-white uppercase tracking-wide mb-4">
-                  Starting at $499
+                  Starting at AED 499
                 </p>
                 <Link
                   href="/categories/smartwatch"
@@ -455,7 +455,7 @@ export default function NewArrivalsSection() {
                   Controller
                 </h3>
                 <p className="text-[12px] md:text-[13px] text-white uppercase tracking-wide mb-4">
-                  Starting at $100
+                  Starting at AED 100
                 </p>
                 <Link
                   href="/categories/game"

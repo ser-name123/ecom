@@ -274,7 +274,7 @@ export default function FeaturedProductsSection() {
                     Galaxy S30 Ultra
                   </h3>
                   <p className="text-[12px] md:text-[13px] text-white uppercase tracking-wide mb-3.5">
-                    Starting at $479
+                    Starting at AED 479
                   </p>
                   <Link
                     href="/product/galaxy-s30-ultra-5g-titanium-256gb"
@@ -403,15 +403,15 @@ export default function FeaturedProductsSection() {
                         {product.oldPrice ? (
                           <>
                             <span className="text-[16px] font-semibold text-[#4f46e5]">
-                              ${product.price.toFixed(2)}
+                              AED {product.price.toFixed(2)}
                             </span>
                             <span className="text-[14px] text-[#999999] line-through font-normal">
-                              ${product.oldPrice.toFixed(2)}
+                              AED {product.oldPrice.toFixed(2)}
                             </span>
                           </>
                         ) : (
                           <span className="text-[16px] font-semibold text-[#000000]">
-                            ${product.price.toFixed(2)}
+                            AED {product.price.toFixed(2)}
                           </span>
                         )}
                       </div>

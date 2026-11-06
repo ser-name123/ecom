@@ -269,11 +269,11 @@ export default function BrandsAndTestimonialSection() {
                         <div className="pt-3 mt-3 border-t border-[#f0f0f0]">
                           <div className="flex items-baseline gap-2 mb-2.5">
                             <span className="text-[17px] font-extrabold text-[#4f46e5]">
-                              ${product.price.toFixed(2)}
+                              AED {product.price.toFixed(2)}
                             </span>
                             {product.oldPrice && (
                               <span className="text-[12px] text-[#999999] line-through">
-                                ${product.oldPrice.toFixed(2)}
+                                AED {product.oldPrice.toFixed(2)}
                               </span>
                             )}
                           </div>

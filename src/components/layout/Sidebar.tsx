@@ -920,10 +920,10 @@ export default function Sidebar() {
                           <div className="flex items-center justify-between">
                             <div className="flex items-baseline gap-2">
                               <span className="text-[17px] font-extrabold text-[#4f46e5]">
-                                ${hoveredItem.featuredProduct.price.toFixed(2)}
+                                AED {hoveredItem.featuredProduct.price.toFixed(2)}
                               </span>
                               <span className="text-[13px] text-[#999999] line-through">
-                                ${hoveredItem.featuredProduct.oldPrice.toFixed(2)}
+                                AED {hoveredItem.featuredProduct.oldPrice.toFixed(2)}
                               </span>
                             </div>
                             <button
@@ -1001,7 +1001,7 @@ export default function Sidebar() {
                   ))}
                 </div>
                 <span className="text-[11.5px] text-[#4f46e5] font-semibold">
-                  Free Express Shipping $500+
+                  Free Express Shipping AED 500+
                 </span>
               </div>
             </div>
@@ -1260,10 +1260,10 @@ export default function Sidebar() {
                                 <div className="flex items-center justify-between gap-2 mt-1">
                                   <div className="flex items-baseline gap-1.5">
                                     <span className="text-[13.5px] font-extrabold text-[#4f46e5]">
-                                      ${cat.featuredProduct.price.toFixed(2)}
+                                      AED {cat.featuredProduct.price.toFixed(2)}
                                     </span>
                                     <span className="text-[11px] text-[#999999] line-through">
-                                      ${cat.featuredProduct.oldPrice.toFixed(2)}
+                                      AED {cat.featuredProduct.oldPrice.toFixed(2)}
                                     </span>
                                   </div>
                                   <button

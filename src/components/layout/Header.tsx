@@ -132,7 +132,7 @@ export default function Header() {
                 HOT
               </span>
               <span className="text-[11.5px] sm:text-[13px] md:text-[14px] font-normal text-white truncate">
-                Free Express Shipping on orders $500!
+                Free Express Shipping on orders AED 500!
               </span>
             </div>
 
