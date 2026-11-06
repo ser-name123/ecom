@@ -168,11 +168,10 @@ export default function SaleOffSection() {
                     type="button"
                     onClick={() => setActiveIndex(idx)}
                     aria-label={item.title}
-                    className={`relative w-[62px] h-[62px] sm:w-[74px] sm:h-[74px] lg:w-[92px] lg:h-[74px] flex items-center justify-center p-2 transition-all duration-300 cursor-pointer ${
-                      isSelected
+                    className={`relative w-[62px] h-[62px] sm:w-[74px] sm:h-[74px] lg:w-[92px] lg:h-[74px] flex items-center justify-center p-2 transition-all duration-300 cursor-pointer ${isSelected
                         ? "bg-white shadow-[0_8px_25px_rgba(0,0,0,0.09)] lg:w-[106px] lg:-mr-3 rounded-[8px] z-10"
                         : "bg-white hover:bg-gray-50 opacity-85 hover:opacity-100"
-                    }`}
+                      }`}
                   >
                     <img
                       src={item.image}
