@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  ...(process.env.VERCEL ? {} : { distDir: ".next-local" }),
+  ...(process.env.VERCEL ? {} : { distDir: ".next-app" }),
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

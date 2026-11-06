@@ -46,7 +46,7 @@ const NAV_ITEMS = [
 
 export default function Header() {
   const router = useRouter();
-  const { cartCount, wishlistCount } = useStore();
+  const { cartCount, wishlistCount, customer } = useStore();
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All Categories");
@@ -306,17 +306,66 @@ export default function Header() {
 
             {/* Right Column: User Icon + Wishlist Icon + Cart Pill Button */}
             <div className="col-span-5 sm:col-span-6 md:col-span-3 flex items-center justify-end gap-2.5 sm:gap-4 md:gap-5">
-              {/* Account Icon */}
-              <Link
-                href="/account"
-                title="My Account"
-                className="text-white hover:text-[#38bdf8] transition-colors cursor-pointer p-1"
-              >
-                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </Link>
+              {/* Account Icon + Quick Customer Portal Dropdown */}
+              <div className="relative group/acct">
+                <Link
+                  href="/account"
+                  title="Customer Panel & Login"
+                  className="text-white hover:text-[#38bdf8] transition-colors cursor-pointer p-1 flex items-center gap-1.5"
+                >
+                  <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </Link>
+
+                {/* Hover Customer Menu */}
+                <div className="hidden group-hover/acct:block absolute right-0 top-full pt-2.5 w-[250px] z-50">
+                  <div className="rounded-[18px] bg-white text-[#141233] border border-[#e6e8f0] shadow-[0_20px_50px_rgba(12,11,34,0.22)] p-3.5 space-y-2 animate-fade-up">
+                    <div className="pb-2.5 border-b border-[#f0f0f0]">
+                      <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#4f46e5]">
+                        {customer.tier} • {customer.points} PTS
+                      </div>
+                      <div className="text-[14px] font-extrabold text-[#141233] truncate">
+                        {customer.name}
+                      </div>
+                      <div className="text-[11.5px] text-[#666666] truncate">
+                        Wallet: ${customer.walletBalance.toFixed(2)}
+                      </div>
+                    </div>
+                    <div className="space-y-1 text-[12.5px] font-bold">
+                      <Link
+                        href="/account"
+                        className="flex items-center justify-between px-3 py-2 rounded-[10px] bg-[#eef2ff] text-[#4f46e5] hover:bg-[#4f46e5] hover:text-white transition-colors"
+                      >
+                        <span>📊 Customer Panel</span>
+                        <span>→</span>
+                      </Link>
+                      <Link
+                        href="/login"
+                        className="flex items-center justify-between px-3 py-2 rounded-[10px] hover:bg-[#f4f5f9] text-[#333333] transition-colors"
+                      >
+                        <span>🔐 Customer Login</span>
+                        <span>→</span>
+                      </Link>
+                      <Link
+                        href="/register"
+                        className="flex items-center justify-between px-3 py-2 rounded-[10px] hover:bg-[#f4f5f9] text-[#333333] transition-colors"
+                      >
+                        <span>✨ Customer Signup</span>
+                        <span>+500 Pts</span>
+                      </Link>
+                      <Link
+                        href="/track-order"
+                        className="flex items-center justify-between px-3 py-2 rounded-[10px] hover:bg-[#f4f5f9] text-[#333333] transition-colors"
+                      >
+                        <span>🚚 Track Order GPS</span>
+                        <span>→</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               {/* Wishlist Icon with Top-Right Indigo Badge */}
               <Link

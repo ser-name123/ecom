@@ -12,6 +12,21 @@ export interface CartItem {
   selectedEdition: string;
 }
 
+export interface CustomerProfile {
+  name: string;
+  email: string;
+  phone: string;
+  avatar: string;
+  tier: "Silver Member" | "Gold VIP" | "Platinum VIP";
+  memberId: string;
+  points: number;
+  walletBalance: number;
+  joinedDate: string;
+  interests: string[];
+  twoFactorEnabled: boolean;
+  biometricEnabled: boolean;
+}
+
 interface StoreContextType {
   cart: CartItem[];
   wishlist: string[]; // array of product slugs
@@ -23,6 +38,18 @@ interface StoreContextType {
   discountAmount: number;
   shippingCost: number;
   total: number;
+  customer: CustomerProfile;
+  isAuthenticated: boolean;
+  loginCustomer: (data: { email: string; name?: string; phone?: string }) => void;
+  registerCustomer: (data: {
+    name: string;
+    email: string;
+    phone: string;
+    interests?: string[];
+    bonusPoints?: number;
+  }) => void;
+  logoutCustomer: () => void;
+  updateCustomerProfile: (partial: Partial<CustomerProfile>) => void;
   addToCart: (product: Product, quantity?: number, color?: string, edition?: string) => void;
   removeFromCart: (slug: string) => void;
   updateCartQty: (slug: string, quantity: number) => void;
@@ -55,12 +82,29 @@ const DEFAULT_WISHLIST: string[] = [
   PRODUCTS[6].slug,
 ];
 
+const DEFAULT_CUSTOMER: CustomerProfile = {
+  name: "Alex Morgan",
+  email: "alex.morgan@nexova.io",
+  phone: "+1 (888) 456-7890",
+  avatar: "/assets/testimonial-2.jpg",
+  tier: "Platinum VIP",
+  memberId: "NX-VIP-88421",
+  points: 2450,
+  walletBalance: 145.0,
+  joinedDate: "March 2025",
+  interests: ["Pro Laptops", "5G Smartphones", "Hi-Res Audio", "Gaming & VR"],
+  twoFactorEnabled: true,
+  biometricEnabled: true,
+};
+
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [cart, setCart] = useState<CartItem[]>(DEFAULT_CART);
   const [wishlist, setWishlist] = useState<string[]>(DEFAULT_WISHLIST);
+  const [customer, setCustomer] = useState<CustomerProfile>(DEFAULT_CUSTOMER);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(true);
   const [couponCode, setCouponCode] = useState<string>("");
   const [discountPercent, setDiscountPercent] = useState<number>(0);
   const [toast, setToast] = useState<{ message: string; actionLabel?: string; actionHref?: string } | null>(null);
@@ -86,10 +130,35 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         const parsedW = JSON.parse(savedWish);
         if (Array.isArray(parsedW)) setWishlist(parsedW);
       }
+      const savedCustomer = localStorage.getItem("nexova_customer_v1");
+      if (savedCustomer) {
+        const parsedC = JSON.parse(savedCustomer);
+        if (parsedC && parsedC.email) setCustomer({ ...DEFAULT_CUSTOMER, ...parsedC });
+      }
+      const savedAuth = localStorage.getItem("nexova_auth_v1");
+      if (savedAuth !== null) {
+        setIsAuthenticated(savedAuth === "true");
+      }
     } catch {
       // ignore storage errors
     }
   }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("nexova_customer_v1", JSON.stringify(customer));
+    } catch {
+      // ignore
+    }
+  }, [customer]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("nexova_auth_v1", String(isAuthenticated));
+    } catch {
+      // ignore
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     try {
@@ -185,6 +254,61 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const isInWishlist = (slug: string) => wishlist.includes(slug);
 
+  const loginCustomer = (data: { email: string; name?: string; phone?: string }) => {
+    const derivedName =
+      data.name?.trim() ||
+      (data.email.includes("@")
+        ? data.email
+            .split("@")[0]
+            .replace(/[._-]/g, " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase())
+        : "Alex Morgan");
+    setCustomer((prev) => ({
+      ...prev,
+      email: data.email.trim() || prev.email,
+      name: derivedName,
+      phone: data.phone || prev.phone,
+    }));
+    setIsAuthenticated(true);
+    showToast(`Welcome back, ${derivedName}!`, "Dashboard", "/account");
+  };
+
+  const registerCustomer = (data: {
+    name: string;
+    email: string;
+    phone: string;
+    interests?: string[];
+    bonusPoints?: number;
+  }) => {
+    const newId = "NX-VIP-" + Math.floor(10000 + Math.random() * 89999);
+    setCustomer((prev) => ({
+      ...prev,
+      name: data.name.trim() || "Nexova Member",
+      email: data.email.trim(),
+      phone: data.phone.trim() || "+1 (888) 456-7890",
+      memberId: newId,
+      points: prev.points + (data.bonusPoints ?? 500),
+      joinedDate: "Nov 2026",
+      interests: data.interests && data.interests.length > 0 ? data.interests : prev.interests,
+    }));
+    setIsAuthenticated(true);
+    showToast(
+      `Account created! +${data.bonusPoints ?? 500} VIP Welcome Points added.`,
+      "My Panel",
+      "/account"
+    );
+  };
+
+  const logoutCustomer = () => {
+    setIsAuthenticated(false);
+    showToast("Signed out of your Nexova account safely", "Sign In", "/login");
+  };
+
+  const updateCustomerProfile = (partial: Partial<CustomerProfile>) => {
+    setCustomer((prev) => ({ ...prev, ...partial }));
+    showToast("Customer profile updated successfully!");
+  };
+
   const applyCoupon = (code: string) => {
     const clean = code.trim().toUpperCase();
     if (clean === "NEXOVA30" || clean === "BUNDLE30") {
@@ -193,7 +317,13 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       showToast("Coupon applied: 30% OFF unlocked!");
       return { success: true, message: "30% Bundle Discount applied!" };
     }
-    if (clean === "WELCOME10" || clean === "SAVE10") {
+    if (clean === "VIP15" || clean === "PLATINUM15") {
+      setCouponCode(clean);
+      setDiscountPercent(15);
+      showToast("VIP Coupon applied: 15% OFF unlocked!");
+      return { success: true, message: "15% VIP Member Discount applied!" };
+    }
+    if (clean === "WELCOME10" || clean === "SAVE10" || clean === "FREESHIP") {
       setCouponCode(clean);
       setDiscountPercent(10);
       showToast("Coupon applied: 10% OFF unlocked!");
@@ -201,7 +331,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     }
     return {
       success: false,
-      message: "Invalid code. Try NEXOVA30 (30% off) or WELCOME10 (10% off).",
+      message: "Invalid code. Try NEXOVA30 (30% off), VIP15 (15% off), or WELCOME10 (10% off).",
     };
   };
 
@@ -226,6 +356,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         discountAmount,
         shippingCost,
         total,
+        customer,
+        isAuthenticated,
+        loginCustomer,
+        registerCustomer,
+        logoutCustomer,
+        updateCustomerProfile,
         addToCart,
         removeFromCart,
         updateCartQty,
