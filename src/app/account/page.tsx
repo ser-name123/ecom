@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import PageHero from "@/components/ui/PageHero";
-import { SAMPLE_ORDERS, PRODUCTS, OrderTrackingInfo } from "@/lib/storeData";
+import { SAMPLE_ORDERS, PRODUCTS, OrderTrackingRecord } from "@/lib/storeData";
 import { useStore } from "@/lib/StoreContext";
 
 type PanelTab =
@@ -81,7 +81,7 @@ export default function CustomerPanelPage() {
   const ordersList = Object.values(SAMPLE_ORDERS);
   const [orderFilter, setOrderFilter] = useState<string>("All");
   const [orderSearch, setOrderSearch] = useState<string>("");
-  const [invoiceOrder, setInvoiceOrder] = useState<OrderTrackingInfo | null>(null);
+  const [invoiceOrder, setInvoiceOrder] = useState<OrderTrackingRecord | null>(null);
 
   // 2. Registered Warranty Devices State
   const [devices, setDevices] = useState<RegisteredDevice[]>([
@@ -786,7 +786,7 @@ export default function CustomerPanelPage() {
                             {ord.status}
                           </span>
                           <span className="text-[12.5px] text-[#666666]">
-                            Ordered: {ord.orderDate}
+                            Ordered: {ord.timeline[0]?.timestamp || "Nov 2026"}
                           </span>
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
@@ -1755,7 +1755,9 @@ export default function CustomerPanelPage() {
               </div>
               <div className="text-right">
                 <div className="font-bold text-[#888888] uppercase text-[11px]">Invoice Details</div>
-                <div className="font-extrabold text-[#141233] mt-0.5">Date: {invoiceOrder.orderDate}</div>
+                <div className="font-extrabold text-[#141233] mt-0.5">
+                  Date: {invoiceOrder.timeline[0]?.timestamp || "Nov 2026"}
+                </div>
                 <div className="text-[#10b981] font-bold">Status: Paid in Full</div>
               </div>
             </div>
