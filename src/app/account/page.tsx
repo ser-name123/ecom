@@ -288,7 +288,7 @@ export default function CustomerPanelPage() {
     { id: "overview", icon: "📊", label: "Dashboard Overview" },
     { id: "orders", icon: "📦", label: "My Orders & Invoices", badge: `${ordersList.length}` },
     { id: "warranties", icon: "🛡️", label: "Warranty & Devices", badge: `${devices.length}` },
-    { id: "wishlist", icon: "♥", label: "Saved Wishlist", badge: `${wishlistCount}` },
+    { id: "wishlist", icon: "❤️", label: "Saved Wishlist", badge: `${wishlistCount}` },
     { id: "addresses", icon: "📍", label: "Address Book", badge: `${addresses.length}` },
     { id: "returns", icon: "↩️", label: "Returns & RMA", badge: `${rmaList.length}` },
     { id: "tickets", icon: "🎧", label: "Support Concierge", badge: `${tickets.length}` },
@@ -383,13 +383,15 @@ export default function CustomerPanelPage() {
                       : "text-[#444444] hover:bg-[#eef2ff] hover:text-[#4f46e5]"
                   }`}
                 >
-                  <span className="flex items-center gap-2.5 truncate">
-                    <span className="text-[16px]">{item.icon}</span>
+                  <span className="flex items-center gap-3 min-w-0">
+                    <span className="w-6 h-6 inline-flex items-center justify-center shrink-0 text-[16px] leading-none">
+                      {item.icon}
+                    </span>
                     <span className="truncate">{item.label}</span>
                   </span>
                   {item.badge && (
                     <span
-                      className={`px-2 py-0.5 rounded-full text-[10.5px] font-extrabold ${
+                      className={`px-2 py-0.5 rounded-full text-[10.5px] font-extrabold shrink-0 ${
                         active
                           ? "bg-[#4f46e5] text-white"
                           : "bg-[#f4f5f9] text-[#555555]"
@@ -406,10 +408,15 @@ export default function CustomerPanelPage() {
             <div className="pt-3 mt-3 border-t border-[#f0f0f0] space-y-1">
               <Link
                 href="/shop"
-                className="flex items-center justify-between px-3.5 py-2.5 rounded-[12px] text-[13px] font-bold text-[#141233] hover:bg-[#f4f5f9] transition-colors"
+                className="w-full flex items-center justify-between px-3.5 py-3 rounded-[14px] text-[13.5px] font-bold text-[#141233] hover:bg-[#f4f5f9] transition-colors"
               >
-                <span>🛍️ Continue Shopping</span>
-                <span>→</span>
+                <span className="flex items-center gap-3 min-w-0">
+                  <span className="w-6 h-6 inline-flex items-center justify-center shrink-0 text-[16px] leading-none">
+                    🛍️
+                  </span>
+                  <span className="truncate">Continue Shopping</span>
+                </span>
+                <span className="shrink-0">→</span>
               </Link>
             </div>
           </aside>
