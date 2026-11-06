@@ -10,7 +10,6 @@ type PanelTab =
   | "overview"
   | "orders"
   | "warranties"
-  | "wallet"
   | "wishlist"
   | "addresses"
   | "returns"
@@ -119,20 +118,7 @@ export default function CustomerPanelPage() {
   const [newDeviceModel, setNewDeviceModel] = useState(PRODUCTS[1].title);
   const [newDeviceSerial, setNewDeviceSerial] = useState("");
 
-  // 3. Wallet & Saved Cards State
-  const [savedCards, setSavedCards] = useState([
-    { id: "card-1", brand: "Visa Platinum", last4: "4242", expiry: "09/29", holder: customer.name, isDefault: true },
-    { id: "card-2", brand: "Mastercard World", last4: "8891", expiry: "12/28", holder: customer.name, isDefault: false },
-  ]);
-  const [newCardNumber, setNewCardNumber] = useState("");
-  const [newCardExpiry, setNewCardExpiry] = useState("");
-  const [walletHistory, setWalletHistory] = useState([
-    { id: "tx-1", title: "5% VIP Cashback — Order #NX-884920", date: "Nov 04, 2026", amount: "+$32.10", type: "credit" },
-    { id: "tx-2", title: "Welcome VIP Bonus Credited", date: "Oct 18, 2026", amount: "+$25.00", type: "credit" },
-    { id: "tx-3", title: "Price-Drop Protection Auto-Credit", date: "Oct 05, 2026", amount: "+$87.90", type: "credit" },
-  ]);
-
-  // 4. Address Book State
+  // 3. Address Book State
   const [addresses, setAddresses] = useState<SavedAddress[]>([
     {
       id: "addr-1",
@@ -243,63 +229,6 @@ export default function CustomerPanelPage() {
     showToast(`Device ${newDev.serialNumber} registered for 2-Year Care+ Warranty!`);
   };
 
-  const handleTopUpWallet = (amount: number) => {
-    updateCustomerProfile({ walletBalance: customer.walletBalance + amount });
-    setWalletHistory([
-      {
-        id: "tx-" + Date.now(),
-        title: `Instant Wallet Top-Up`,
-        date: "Just Now",
-        amount: `+$${amount.toFixed(2)}`,
-        type: "credit",
-      },
-      ...walletHistory,
-    ]);
-    showToast(`+$${amount.toFixed(2)} added to your Nexova Pay Wallet!`);
-  };
-
-  const handleConvertPoints = () => {
-    if (customer.points < 500) {
-      showToast("Minimum 500 VIP points required to convert.");
-      return;
-    }
-    updateCustomerProfile({
-      points: customer.points - 500,
-      walletBalance: customer.walletBalance + 5,
-    });
-    setWalletHistory([
-      {
-        id: "tx-" + Date.now(),
-        title: "Redeemed 500 VIP Points to Wallet Cash",
-        date: "Just Now",
-        amount: "+$5.00",
-        type: "credit",
-      },
-      ...walletHistory,
-    ]);
-    showToast("Converted 500 VIP Points into $5.00 Wallet Balance!");
-  };
-
-  const handleAddCard = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!newCardNumber.trim()) return;
-    const last4 = newCardNumber.replace(/\D/g, "").slice(-4) || "9012";
-    setSavedCards([
-      ...savedCards,
-      {
-        id: "card-" + Date.now(),
-        brand: "Visa Signature",
-        last4,
-        expiry: newCardExpiry || "08/30",
-        holder: customer.name,
-        isDefault: false,
-      },
-    ]);
-    setNewCardNumber("");
-    setNewCardExpiry("");
-    showToast(`Card ending in •••• ${last4} saved to your vault`);
-  };
-
   const handleAddAddress = (e: React.FormEvent) => {
     e.preventDefault();
     if (!addrLabel.trim() || !addrLine1.trim()) return;
@@ -359,12 +288,11 @@ export default function CustomerPanelPage() {
     { id: "overview", icon: "📊", label: "Dashboard Overview" },
     { id: "orders", icon: "📦", label: "My Orders & Invoices", badge: `${ordersList.length}` },
     { id: "warranties", icon: "🛡️", label: "Warranty & Devices", badge: `${devices.length}` },
-    { id: "wallet", icon: "💳", label: "Wallet & VIP Rewards", badge: `$${customer.walletBalance.toFixed(0)}` },
     { id: "wishlist", icon: "♥", label: "Saved Wishlist", badge: `${wishlistCount}` },
     { id: "addresses", icon: "📍", label: "Address Book", badge: `${addresses.length}` },
     { id: "returns", icon: "↩️", label: "Returns & RMA", badge: `${rmaList.length}` },
     { id: "tickets", icon: "🎧", label: "Support Concierge", badge: `${tickets.length}` },
-    { id: "coupons", icon: "🎟️", label: "My VIP Coupons", badge: "4" },
+    { id: "coupons", icon: "🎟️", label: "My Coupons", badge: "4" },
     { id: "security", icon: "🔒", label: "Profile & Security" },
   ];
 
@@ -374,12 +302,12 @@ export default function CustomerPanelPage() {
         badge={`MEMBER ID: ${customer.memberId} • ${customer.tier.toUpperCase()}`}
         title={`Hello, ${customer.name}`}
         highlight="• Customer Panel"
-        subtitle="Manage your orders, downloadable tax invoices, 2-Year Nexova Care+ device warranties, Nexova Pay wallet balance, and priority tech support in one unified command center."
+        subtitle="Manage your orders, downloadable tax invoices, 2-Year Nexova Care+ device warranties, saved addresses, and priority tech support in one unified command center."
         breadcrumbs={[{ label: "Customer Panel" }]}
         rightStats={[
-          { value: `${customer.points.toLocaleString()}`, label: "VIP Points" },
-          { value: `$${customer.walletBalance.toFixed(2)}`, label: "Wallet Balance" },
+          { value: `${ordersList.length}`, label: "Active Orders" },
           { value: `${devices.length}`, label: "Care+ Devices" },
+          { value: `${wishlistCount}`, label: "Saved Wishlist" },
         ]}
       />
 
@@ -477,13 +405,6 @@ export default function CustomerPanelPage() {
             {/* Bottom Direct Utility Links */}
             <div className="pt-3 mt-3 border-t border-[#f0f0f0] space-y-1">
               <Link
-                href="/track-order"
-                className="flex items-center justify-between px-3.5 py-2.5 rounded-[12px] text-[13px] font-bold text-[#4f46e5] hover:bg-[#eef2ff] transition-colors"
-              >
-                <span>🚚 Live GPS Order Map</span>
-                <span>→</span>
-              </Link>
-              <Link
                 href="/shop"
                 className="flex items-center justify-between px-3.5 py-2.5 rounded-[12px] text-[13px] font-bold text-[#141233] hover:bg-[#f4f5f9] transition-colors"
               >
@@ -503,29 +424,13 @@ export default function CustomerPanelPage() {
                 {/* 4 Executive KPI Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                   <div
-                    onClick={() => setActiveTab("wallet")}
+                    onClick={() => setActiveTab("orders")}
                     className="p-5 rounded-[20px] bg-[#141233] text-white cursor-pointer hover:-translate-y-1 transition-transform"
                   >
                     <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#38bdf8]">
-                      NEXOVA PAY WALLET
-                    </div>
-                    <div className="text-[28px] font-extrabold mt-1">
-                      ${customer.walletBalance.toFixed(2)}
-                    </div>
-                    <div className="text-[12px] text-white/75 mt-1">
-                      + {customer.points.toLocaleString()} VIP Points ($
-                      {(customer.points / 100).toFixed(2)})
-                    </div>
-                  </div>
-
-                  <div
-                    onClick={() => setActiveTab("orders")}
-                    className="p-5 rounded-[20px] bg-white border border-[#e6e8f0] cursor-pointer hover:border-[#4f46e5] hover:-translate-y-1 transition-all"
-                  >
-                    <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#4f46e5]">
                       ACTIVE ORDERS
                     </div>
-                    <div className="text-[28px] font-extrabold text-[#141233] mt-1">
+                    <div className="text-[28px] font-extrabold mt-1">
                       {ordersList.length} Orders
                     </div>
                     <div className="text-[12px] text-[#10b981] font-semibold mt-1">
@@ -562,45 +467,21 @@ export default function CustomerPanelPage() {
                       Price-drop alerts active
                     </div>
                   </div>
-                </div>
 
-                {/* VIP Tier Progress Banner */}
-                <div
-                  className="rounded-[24px] p-6 text-white flex flex-wrap items-center justify-between gap-6"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, #141233 0%, #2a2468 55%, #4f46e5 100%)",
-                  }}
-                >
-                  <div className="flex-1 min-w-[260px]">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="px-2.5 py-0.5 rounded-full bg-white/15 text-[10px] font-extrabold uppercase tracking-wider text-[#38bdf8]">
-                        VIP LOYALTY PROGRESS
-                      </span>
-                      <span className="text-[12px] font-bold text-white/85">
-                        {customer.tier} • 5% Cashback Active
-                      </span>
-                    </div>
-                    <h3 className="text-[20px] font-extrabold">
-                      You have {customer.points.toLocaleString()} Nexova VIP Points
-                    </h3>
-                    <div className="w-full h-2.5 rounded-full bg-white/15 overflow-hidden mt-3 mb-1.5">
-                      <div
-                        className="h-full bg-gradient-to-r from-[#38bdf8] to-[#10b981] rounded-full"
-                        style={{ width: `${Math.min(100, (customer.points / 3000) * 100)}%` }}
-                      />
-                    </div>
-                    <p className="text-[12px] text-white/80">
-                      Convert 500 points into $5.00 instant Nexova Pay Wallet cash anytime.
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={handleConvertPoints}
-                    className="btn-shine px-6 py-3 rounded-full bg-white text-[#141233] hover:bg-[#38bdf8] hover:text-[#0b0a1f] text-[12px] font-extrabold uppercase tracking-wider transition-colors cursor-pointer shrink-0"
+                  <div
+                    onClick={() => setActiveTab("tickets")}
+                    className="p-5 rounded-[20px] bg-white border border-[#e6e8f0] cursor-pointer hover:border-[#4f46e5] hover:-translate-y-1 transition-all"
                   >
-                    Redeem 500 Pts → +$5.00 Wallet
-                  </button>
+                    <div className="text-[11px] font-extrabold uppercase tracking-wider text-[#4f46e5]">
+                      SUPPORT CONCIERGE
+                    </div>
+                    <div className="text-[28px] font-extrabold text-[#141233] mt-1">
+                      {tickets.length} Ticket
+                    </div>
+                    <div className="text-[12px] text-[#10b981] font-semibold mt-1">
+                      ● Engineer Replied
+                    </div>
+                  </div>
                 </div>
 
                 {/* Live Active Shipment Spotlight */}
@@ -961,153 +842,6 @@ export default function CustomerPanelPage() {
                       </button>
                     </div>
                   </form>
-                </div>
-              </div>
-            )}
-
-            {/* =========================================================
-                TAB 4: WALLET, CARDS & VIP POINTS
-               ========================================================= */}
-            {activeTab === "wallet" && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Nexova Pay Wallet Card */}
-                  <div
-                    className="rounded-[24px] p-6 text-white flex flex-col justify-between"
-                    style={{
-                      background: "linear-gradient(135deg, #0b0a1f 0%, #272262 60%, #4f46e5 100%)",
-                    }}
-                  >
-                    <div>
-                      <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#38bdf8]">
-                        NEXOVA PAY INSTANT BALANCE
-                      </span>
-                      <div className="text-[36px] font-extrabold mt-1">
-                        ${customer.walletBalance.toFixed(2)}
-                      </div>
-                      <p className="text-[12.5px] text-white/80 mt-1">
-                        Available for 1-click checkout on any order. Never expires.
-                      </p>
-                    </div>
-                    <div className="pt-5 mt-5 border-t border-white/15 flex flex-wrap gap-2">
-                      {[25, 50, 100].map((amt) => (
-                        <button
-                          key={amt}
-                          type="button"
-                          onClick={() => handleTopUpWallet(amt)}
-                          className="px-4 py-2 rounded-full bg-white/15 hover:bg-[#38bdf8] hover:text-[#0b0a1f] text-[12px] font-extrabold transition-colors cursor-pointer"
-                        >
-                          + Add ${amt}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* VIP Points Conversion Card */}
-                  <div className="rounded-[24px] border border-[#e6e8f0] bg-white p-6 flex flex-col justify-between">
-                    <div>
-                      <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#4f46e5]">
-                        VIP REWARDS POINTS
-                      </span>
-                      <div className="text-[34px] font-extrabold text-[#141233] mt-1">
-                        {customer.points.toLocaleString()} Pts
-                      </div>
-                      <p className="text-[13px] text-[#666666] mt-1">
-                        Conversion Rate: <strong>100 Points = $1.00 USD</strong> instant wallet credit.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleConvertPoints}
-                      className="btn-shine mt-5 w-full py-3 rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[12.5px] font-extrabold uppercase tracking-wider cursor-pointer"
-                    >
-                      Convert 500 Points → +$5.00 Wallet Cash
-                    </button>
-                  </div>
-                </div>
-
-                {/* Saved Cards + Add New Card */}
-                <div className="rounded-[24px] border border-[#e6e8f0] bg-white p-6 space-y-5">
-                  <h3 className="text-[19px] font-extrabold text-[#141233]">
-                    Saved Payment Methods (PCI-DSS Tokenized)
-                  </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {savedCards.map((c) => (
-                      <div
-                        key={c.id}
-                        className="p-4 rounded-[16px] border border-[#e6e8f0] bg-[#fafbfe] flex items-center justify-between"
-                      >
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-[14px] font-extrabold text-[#141233]">
-                              {c.brand} •••• {c.last4}
-                            </span>
-                            {c.isDefault && (
-                              <span className="px-2 py-0.5 rounded-full bg-[#eef2ff] text-[#4f46e5] text-[10px] font-bold">
-                                Default
-                              </span>
-                            )}
-                          </div>
-                          <div className="text-[12px] text-[#666666] mt-0.5">
-                            Expires {c.expiry} • {c.holder}
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setSavedCards(savedCards.filter((x) => x.id !== c.id));
-                            showToast("Card removed");
-                          }}
-                          className="text-[12px] font-bold text-[#888888] hover:text-[#141233] cursor-pointer"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-
-                  <form onSubmit={handleAddCard} className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
-                    <input
-                      type="text"
-                      required
-                      value={newCardNumber}
-                      onChange={(e) => setNewCardNumber(e.target.value)}
-                      placeholder="Card Number (•••• •••• •••• 4242)"
-                      className="h-[44px] px-3.5 rounded-[10px] border border-[#dcdce5] text-[13px]"
-                    />
-                    <input
-                      type="text"
-                      required
-                      value={newCardExpiry}
-                      onChange={(e) => setNewCardExpiry(e.target.value)}
-                      placeholder="MM/YY (e.g. 08/29)"
-                      className="h-[44px] px-3.5 rounded-[10px] border border-[#dcdce5] text-[13px]"
-                    />
-                    <button
-                      type="submit"
-                      className="h-[44px] rounded-full bg-[#141233] hover:bg-[#4f46e5] text-white text-[12px] font-bold uppercase tracking-wider cursor-pointer"
-                    >
-                      + Save New Card
-                    </button>
-                  </form>
-                </div>
-
-                {/* Wallet Ledger */}
-                <div className="rounded-[24px] border border-[#e6e8f0] bg-white p-6">
-                  <h3 className="text-[18px] font-extrabold text-[#141233] mb-4">
-                    Recent Wallet & Rewards Ledger
-                  </h3>
-                  <div className="divide-y divide-[#f0f0f0]">
-                    {walletHistory.map((tx) => (
-                      <div key={tx.id} className="py-3 flex items-center justify-between text-[13.5px]">
-                        <div>
-                          <div className="font-bold text-[#141233]">{tx.title}</div>
-                          <div className="text-[11.5px] text-[#777777]">{tx.date}</div>
-                        </div>
-                        <span className="font-extrabold text-[#10b981]">{tx.amount}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
             )}
@@ -1525,13 +1259,13 @@ export default function CustomerPanelPage() {
             )}
 
             {/* =========================================================
-                TAB 9: MY COUPONS & VIP VOUCHERS
+                TAB 9: MY COUPONS
                ========================================================= */}
             {activeTab === "coupons" && (
               <div className="rounded-[24px] border border-[#e6e8f0] bg-white p-6 space-y-6">
                 <div>
                   <h3 className="text-[22px] font-extrabold text-[#141233]">
-                    Exclusive VIP Member Coupons & Vouchers
+                    My Coupons & Vouchers
                   </h3>
                   <p className="text-[13px] text-[#666666]">
                     Click any voucher below to automatically apply the discount to your shopping cart.

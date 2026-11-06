@@ -324,13 +324,13 @@ export default function Header() {
                   <div className="rounded-[18px] bg-white text-[#141233] border border-[#e6e8f0] shadow-[0_20px_50px_rgba(12,11,34,0.22)] p-3.5 space-y-2 animate-fade-up">
                     <div className="pb-2.5 border-b border-[#f0f0f0]">
                       <div className="text-[10px] font-extrabold uppercase tracking-wider text-[#4f46e5]">
-                        {customer.tier} • {customer.points} PTS
+                        {customer.tier}
                       </div>
                       <div className="text-[14px] font-extrabold text-[#141233] truncate">
                         {customer.name}
                       </div>
                       <div className="text-[11.5px] text-[#666666] truncate">
-                        Wallet: ${customer.walletBalance.toFixed(2)}
+                        {customer.email}
                       </div>
                     </div>
                     <div className="space-y-1 text-[12.5px] font-bold">
